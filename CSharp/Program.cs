@@ -4,6 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        var tom = new Person();
+        tom.Eat();
+        tom.Move();
     }
 }

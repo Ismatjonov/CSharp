@@ -122,6 +122,55 @@ class Program
         {
             Console.WriteLine($"{person.name} - {person.age}");
         }
+        
+        // Records
+        var bmw = new Car("BMW", 2022);
+        // bmw.Name = "Mercedes-Benz";  // Нельзя изменить инизиализированное сначение, так как у нас модификатор init
+        Console.WriteLine(bmw.Name);
+        
+        var car1 = new Car("Toyota", 2011);
+        var car2 = new Car("Toyota", 2011);
+        Console.WriteLine(car1.Equals(car2));
+        Console.WriteLine(car1 == car2);
+        
+        var book1 = new Book("Atomic Habits");
+        var book2 = new Book("Atomic Habits");
+        Console.WriteLine(book1.Equals(book2));
+        Console.WriteLine(book1 == book2);
+        
+        // Оператор with
+        var honda = new Car("Honda", 2016);
+        var opel = honda with { Name = "Opel" };
+        var crv = honda with { };
+        Console.WriteLine($"{opel.Name} - {opel.Year}");
+        Console.WriteLine($"{crv.Name} - {crv.Year}");
+
+        var kia = new Car("Kia", 2024);
+        Console.WriteLine(kia.Name);
+        var (varName, varYear) = kia;
+        Console.WriteLine(varName);
+        Console.WriteLine(varYear);
+        Console.WriteLine();
+        
+        var ford = new Car("Ford", 2023) { Color = "Black" };
+        Console.WriteLine(ford.Color);
+        ford.Color = "Blue";
+        Console.WriteLine(ford.Color);
+        Console.WriteLine();
+
+        var cat = new Animal("Moshon", 3);
+        cat.Name = "Murka"; // Значение исменилось, так как это struct а не class
+        Console.WriteLine(cat.Name);
+        
+        // ToString()
+        var mercedes = new Car("Mercedes", 2025);
+        Console.WriteLine(mercedes);
+        
+        // Наследование
+        var ferrari = new Car("Supra", 2014);
+        var supra = new Supercar("Supra", 2006, "Toyota Motors");
+        Console.WriteLine(ferrari);
+        Console.WriteLine(supra);
     }
 }
 

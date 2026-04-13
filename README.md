@@ -71,3 +71,24 @@ public class Person
         Console.WriteLine($"Имя: {_name}, Возраст: {_age}");
     }
 }
+```
+## 🛠️ Требования и установка
+
+### Требования
+- **.NET 6.0** или выше
+- **Visual Studio 2022** / **Visual Studio Code**
+- **C# 10.0** или выше
+
+### Установка
+
+```bash
+# Клонируйте репозиторий
+git clone https://github.com/Ismatjonov/CSharp.git
+cd CSharp
+
+# Постройте проект
+dotnet build
+
+# Запустите примеры
+dotnet run
+```

@@ -173,6 +173,8 @@ class Program
         Console.WriteLine(supra);
         Console.WriteLine();
         
+        
+        
         // Ref-структуры
         var csharp = new Book("C#");
         Console.WriteLine(csharp.Title);

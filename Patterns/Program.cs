@@ -77,6 +77,25 @@ class Program
                     break;
             }
         }
+        
+        // Паттерн свойст
+        Person bakhtovar = new Person() { Language = "tajik", Status = "user", Name = "Bakhtovar"};
+        Person pierre = new Person() { Language = "french", Status = "user", Name = "Pierre" };
+        Person admin = new Person() { Language = "english", Status = "admin", Name = "Admin" };
+
+        SayHello(bakhtovar);
+        SayHello(pierre);
+        SayHello(admin);
+        
+        void SayHello(Person person)
+        {
+            if(person is Person { Language: "english", Status: "admin" })
+                Console.WriteLine("Hello, admin");
+            else if (person is Person { Language: "french"})
+                Console.WriteLine("Salut");
+            else
+                Console.WriteLine("Salom");
+        }
     }
 }
 
@@ -89,4 +108,12 @@ class Manager : Employee
 {
     public override void Work() => Console.WriteLine("Manager works.");
     public bool IsOnVacation { get; set; }
+}
+
+// Person Class here
+class Person
+{
+    public string Name { get; set; } = "";  // имя пользователя
+    public string Status { get; set; } = "";    // сиатус пользователя
+    public string Language { get; set; } = "";  // язык пользователя
 }

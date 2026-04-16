@@ -133,10 +133,10 @@ class Program
         Console.WriteLine(car1.Equals(car2));
         Console.WriteLine(car1 == car2);
         
-        var book1 = new Book("Atomic Habits");
-        var book2 = new Book("Atomic Habits");
-        Console.WriteLine(book1.Equals(book2));
-        Console.WriteLine(book1 == book2);
+        // var book1 = new Book("Atomic Habits");
+        // var book2 = new Book("Atomic Habits");
+        // Console.WriteLine(book1.Equals(book2));
+        // Console.WriteLine(book1 == book2);
         
         // Оператор with
         var honda = new Car("Honda", 2016);
@@ -171,6 +171,31 @@ class Program
         var supra = new Supercar("Supra", 2006, "Toyota Motors");
         Console.WriteLine(ferrari);
         Console.WriteLine(supra);
+        Console.WriteLine();
+        
+        // Ref-структуры
+        var csharp = new Book("C#");
+        Console.WriteLine(csharp.Title);
+        
+        int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        
+        Sum summator = new Sum(numbers, 1..3);
+        Console.WriteLine((summator.Get()));
+
+        summator = new Sum(numbers, 2..4);
+        Console.WriteLine(summator.Get());
+
+        Shape myShape = new();
+        myShape.Draw();
+
+        void Draw_Shape(IShape shape)
+        {
+            shape.Draw();
+        }
+        // Draw_Shape(myShape); // Error!
+        // var shape2 = (IShape)shape;  // Error!
+        
+        
     }
 }
 

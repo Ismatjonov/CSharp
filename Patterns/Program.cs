@@ -163,6 +163,27 @@ class Program
             (_, _, "admin") => "Hello, Admin",
             _ => "Здрасьть"
         };
+
+        Console.WriteLine();
+        // Position Pattern
+        
+        MessageDetails details1 = new MessageDetails { Language = "english", DateTime = "evening", Status = "user" };
+        string m = getWelcome(details1);
+        Console.WriteLine(m);  // Good evening
+ 
+        MessageDetails details2 = new MessageDetails { Language = "french", DateTime = "morning", Status = "admin" };
+        m = getWelcome(details2);
+        Console.WriteLine(m);  // Hello, Admin
+        
+        string getWelcome(MessageDetails details) => details switch
+        {
+            ("english", "morning", _) => "Good morning",
+            ("english", "evening", _) => "Good evening",
+            ("german", "morning", _) => "Guten Morgen",
+            ("german", "evening", _) => "Guten Abend",
+            (_, _, "admin") => "Hello, Admin",
+            _ => "Здрасьть"
+        };
         
     }
 }
@@ -202,4 +223,18 @@ class Person
     public string Name { get; set; } = "";  // имя пользователя
     public string Status { get; set; } = "";    // сиатус пользователя
     public string Language { get; set; } = "";  // язык пользователя
+}
+
+class MessageDetails
+{
+    public string Language { get; set; } = "";
+    public string DateTime { get; set; } = "";
+    public string Status { get; set; } = "";
+
+    public void Deconstruct(out string lang, out string datetime, out string status)
+    {
+        lang = Language;
+        datetime = DateTime;
+        status = Status;
+    }
 }

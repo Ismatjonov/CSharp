@@ -131,6 +131,39 @@ class Program
             else
                 Console.WriteLine($"{employee.Name} works somewhere");
         }
+
+        Console.WriteLine();
+        
+        // Паттерны кортижей
+
+        string msg = GetWelcome("english", "evening");
+        Console.WriteLine(msg);
+
+        msg = GetWelcome("french", "morning");
+        Console.WriteLine(msg);
+
+        Console.WriteLine(Getwelcome("english", "evening", "user"));
+        Console.WriteLine(Getwelcome("french", "morning", "admin"));
+        
+        string GetWelcome(string lang, string daytime) => (lang, daytime) switch
+        {
+            ("english", "morning") => "Good morning",
+            ("english", "evening") => "Good evening",
+            ("german", "morning") => "Guten Morgen",
+            ("german", "evening") => "Guten Abend",
+            _ => "Здрасьть"
+        };
+
+        string Getwelcome(string lang, string daytime, string status) => (lang, daytime, status) switch
+        {
+            ("english", "morning", _) => "Good morning",
+            ("english", "evening", _) => "Good evening",
+            ("german", "morning", _) => "Guten Morgen",
+            ("german", "evening", _) => "Guten Abend",
+            (_, _, "admin") => "Hello, Admin",
+            _ => "Здрасьть"
+        };
+        
     }
 }
 

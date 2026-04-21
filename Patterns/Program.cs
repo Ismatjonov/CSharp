@@ -175,6 +175,10 @@ class Program
         m = getWelcome(details2);
         Console.WriteLine(m);  // Hello, Admin
         
+        MessageDetails details3 = new MessageDetails { Language = "chinese", DateTime = "night", Status = "moderator" };
+        m = getWelcome(details3);
+        Console.WriteLine(m);
+        
         string getWelcome(MessageDetails details) => details switch
         {
             ("english", "morning", _) => "Good morning",
@@ -182,7 +186,56 @@ class Program
             ("german", "morning", _) => "Guten Morgen",
             ("german", "evening", _) => "Guten Abend",
             (_, _, "admin") => "Hello, Admin",
+            var (lang, datetime, status) => $"{lang} not found, {datetime} unknown, {status} undefined",
             _ => "Здрасьть"
+        };
+        Console.WriteLine();
+        
+        // Relation & Logical Patterns
+        
+        // Using relation pattern
+        Console.WriteLine(Calculare(-200));
+        Console.WriteLine(Calculare(0));
+        Console.WriteLine(Calculare(10000));
+        Console.WriteLine(Calculare(60000));
+        Console.WriteLine(Calculare(200000));
+        
+        // Using logical pattern
+        Console.WriteLine(CheckAge(200));
+        Console.WriteLine(CheckAge(17));
+        Console.WriteLine(CheckAge(0));
+        Console.WriteLine(CheckAge(18));
+
+        Console.WriteLine(checkAge(18));
+        Console.WriteLine(checkAge(33));
+        
+        // relation pattern
+        decimal Calculare(decimal sum)
+        {
+            return sum switch
+            {
+                <= 0 => 0,
+                < 50000 => sum * 0.05m,
+                < 100000 => sum * 0.1m,
+                _ => sum * 0.2m
+            };
+        }
+        
+        // logical pattern
+        string CheckAge(int age)
+        {
+            return age switch
+            {
+                < 1 or > 110 => "Недействительный возраст",
+                >= 1 and < 18 => "Доступ запрещен",
+                _ => "Доступ разрешен"
+            };
+        }
+
+        string checkAge(int age) => age switch
+        {
+            not 33 => "Обычный возраст",
+            _ => "Вам 33 года"
         };
         
     }

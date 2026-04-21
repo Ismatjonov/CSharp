@@ -1,4 +1,6 @@
-﻿namespace Patterns;
+﻿using System.Xml.Schema;
+
+namespace Patterns;
 
 class Program
 {
@@ -209,7 +211,7 @@ class Program
         Console.WriteLine(checkAge(18));
         Console.WriteLine(checkAge(33));
         
-        // relation pattern
+        // relation pattern [<=, >=, <, >]
         decimal Calculare(decimal sum)
         {
             return sum switch
@@ -221,7 +223,7 @@ class Program
             };
         }
         
-        // logical pattern
+        // logical pattern [or, and, not]
         string CheckAge(int age)
         {
             return age switch
@@ -237,7 +239,135 @@ class Program
             not 33 => "Обычный возраст",
             _ => "Вам 33 года"
         };
+        Console.WriteLine();
         
+        // List Patterns
+        Console.WriteLine(GetNumber(new[] { 1, 2, 3, 4, 5}));
+        Console.WriteLine(GetNumber(new[] { 1, 2}));
+        Console.WriteLine(GetNumber(new int[] {}));
+        Console.WriteLine(GetNumber(new[] { 1, 2, 5}));
+
+        int GetNumber(int[] values) => values switch
+        {
+            [1, 2, 3, 4, 5] => 1,
+            [1, 2, 3] => 2,
+            [1, 2] => 3,
+            [] => 4,
+            _ => 5
+        };
+
+        Console.WriteLine();
+        List<int> numbers = new List<int> { 1, 2, 3 };
+        Console.WriteLine(getNumber(numbers));
+        
+        int[] array = { 1, 2, 3, 4, 5 };
+        if (array is [1, 2, 3, 4, 5])
+        {
+            Console.WriteLine("[1, 2, 3, 4, 5]");
+        }
+        Console.WriteLine();
+        
+        // Using _ pattern
+        Console.WriteLine(getnumber(new[] { 2, 3, 5 }));
+        Console.WriteLine(getnumber(new[] { 2, 4, 6 }));
+        Console.WriteLine(getnumber(new[] { 1, 2, 5 }));
+        Console.WriteLine(getnumber(new[] { 1, 2, 3 }));
+        Console.WriteLine(getnumber(new int[] { }));
+        
+        
+        int getNumber(List<int> numbers) => numbers switch
+        {
+            [1, 2, 3, 4, 5] => 1,
+            [1, 2, 3] => 2,
+            [1, 2] => 3,
+            [] => 4,
+            _ => 5
+        };
+
+        int getnumber(int[] values) => values switch
+        {
+            [2, _, 5] => 1,
+            [2, _, _] => 2,
+            [_, _, 5] => 3,
+            [_, _, _] => 4,
+            _ => 5
+        };
+        Console.WriteLine();
+        
+        // Slice Pattern [..]
+        Console.WriteLine(Getnumber(new[] { 2, 5 }));
+        Console.WriteLine(Getnumber(new[] { 2, 3, 4, 5 }));
+        
+        Console.WriteLine(Getnumber(new[] { 2 }));
+        Console.WriteLine(Getnumber(new[] { 2, 3, 4 }));
+        
+        Console.WriteLine(Getnumber(new[] { 3, 4, 5 }));
+        Console.WriteLine(Getnumber(new[] { 5 }));
+        
+        Console.WriteLine(Getnumber(new int[] { }));
+        Console.WriteLine(Getnumber(new[] { 1 }));
+        Console.WriteLine(Getnumber(new[] { 1, 2, 3 }));
+
+        Console.WriteLine();
+
+        Console.WriteLine(gn(new[] { 1, 2, 3, 4 }));
+        Console.WriteLine(gn(new[] { 1, 2, 3 }));
+        Console.WriteLine(gn(new[] { 1, 2 }));
+        Console.WriteLine(gn(new[] { 1 }));
+        Console.WriteLine(gn(new int[] { }));
+
+        int Getnumber(int[] values) => values switch
+        {
+            [2, .., 5] => 1,
+            [2, ..] => 2,
+            [.., 5] => 3,
+            [..] => 4
+        };
+
+        int gn(int[] values) => values switch
+        {
+            [_, .., _] => 1,
+            [..] => 2
+        };
+        
+        // Getting elements in variables
+        int[] ints = { 2, 3, 5 };
+        if (ints is [var first, var second, .., var last])
+        {
+            Console.WriteLine($"first: {first}, second: {second}, last: {last}");
+        }
+        Console.WriteLine();
+
+        Console.WriteLine(GetData(new[] { 1, 2, 3 }));
+        Console.WriteLine(GetData(new[] { 2, 4, 6, 8 }));
+        Console.WriteLine(GetData(new[] { 1, 2 }));
+        Console.WriteLine();
+        string GetData(int[] values) => values switch
+        {
+            [var first, var second, .., var last] => $"First: {first}, Second: {second}, Last: {last}",
+            [..] => "Array has less element than 3 elements"
+        };
+
+        Console.WriteLine(GetSlice(new[] { 2, 3, 4, 5 }));
+        Console.WriteLine(GetSlice(new[] { 2, 4, 6, 8 }));
+        Console.WriteLine(GetSlice(new[] { 1, 2, 3, 5 }));
+        Console.WriteLine(GetSlice(new[] { 1, 2, 3, 4 }));
+        Console.WriteLine(GetSlice(new int[] { }));
+        Console.WriteLine();
+        string GetSlice(int[] values) => values switch
+        {
+            [2, .. var middle, 5] => $"Middle: {string.Join(", ", middle)}",
+            [2, .. var end] => $"End: {string.Join(", ", end)}",
+            [.. var start, 5] => $"Start: {string.Join(", ", start)}",
+            [.. var all] => $"All: {string.Join(", ", all)}",
+        };
+        
+        // Collection's properties
+        int[] nums = { 2, 3, 5 };
+        if (nums is { Length: 3 } and [var _first, var _second, var _third])
+        {
+            Console.WriteLine($"First:{_first}, Second:{_second}, Third:{_third}");
+        }
     }
 }
 

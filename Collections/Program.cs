@@ -159,6 +159,66 @@ class Program
         company.AddLast(new Person("Bill"));
 
         foreach (var person in company) Console.WriteLine(person.Name);
+        Console.WriteLine();
+        
+        // ====== QUEUE<T> ======
+        
+        Queue<string> queue = new Queue<string>();
+        Queue<string> queue2 = new Queue<string>(16);
+        
+        var employees3 = new List<string> { "Tom", "Sam", "Bob" };
+        Queue<string> people4 = new Queue<string>(employees3);
+        foreach (var person in people4) Console.WriteLine(person);
+        Console.WriteLine(people4.Count);
+        Console.WriteLine();
+        
+        // Using Queue methods
+        var people5 = new Queue<string>();
+        
+        // Add elements
+        people5.Enqueue("Tom");
+        people5.Enqueue("Bob");
+        people5.Enqueue("Sam");
+        
+        // Getting element from the first queue
+        var firstPerson = people5.Peek();
+        Console.WriteLine(firstPerson);
+        Console.WriteLine();
+        
+        // Deleting elements
+        var person1 = people5.Dequeue();
+        Console.WriteLine(person1);
+        var person2 = people5.Dequeue();
+        Console.WriteLine(person2);
+        var person3 = people5.Dequeue();
+        Console.WriteLine(person3);
+
+        if (people5.Count > 0)
+        {
+            var person = people5.Peek();
+            people5.Dequeue();
+        }
+        people5.Clear();
+        
+        // Add elements
+        people5.Enqueue("Tom");
+
+        // Removing elements
+        var success1 = people5.TryDequeue(out var person4);  // success1 = true
+        if (success1) Console.WriteLine(person4);
+        
+        var success2 = people5.TryPeek(out var person5);  // success2 = false
+        if (success2) Console.WriteLine(person5);
+        Console.WriteLine();
+        
+        // Usage of Queue<T>
+        var patients = new Queue<Person>();
+        patients.Enqueue(new Person("Tom"));
+        patients.Enqueue(new Person("Bob"));
+        patients.Enqueue(new Person("Sam"));
+
+        var practitioner = new Doctor();
+        practitioner.TakePatients(patients);
     }
 }
 
@@ -166,4 +226,17 @@ class Person
 {
     public string Name { get; set; }
     public Person(string name) => Name = name;
+}
+
+class Doctor
+{
+    public void TakePatients(Queue<Person> patients)
+    {
+        while (patients.Count > 0)
+        {
+            var patient = patients.Dequeue();
+            Console.WriteLine($"Осмотр пациента: {patient.Name}");
+        }
+        Console.WriteLine("Доктор закончил осматривать пациентов");
+    }
 }

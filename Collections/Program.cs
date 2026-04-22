@@ -272,6 +272,55 @@ class Program
         
         var success4 = people8.TryPeek(out var person11);  // success = false
         if (success4) Console.WriteLine(person11);
+        Console.WriteLine();
+        
+        // ======== Dictionary<K, V> ========
+        
+        var people67 = new Dictionary<int, string>()
+        {
+            { 5, "Tom" },
+            { 3, "Sam" },
+            { 11, "Bob" }
+            
+            // [5] = "Tom",
+            // [3] = "Sam",
+            // [11] = "Bob"
+        };
+        
+        var mike = new KeyValuePair<int, string>(56, "Mike");
+        var employees5 = new List<KeyValuePair<int, string>>() { mike };
+        var people69 = new Dictionary<int, string>(employees5)
+        {
+            [5] = "Tom",
+            [6] = "Sam",
+            [7] = "Bob",
+        };
+        
+        foreach (var person in people69) Console.WriteLine($"Key: {person.Key}, Value: {person.Value}");
+        Console.WriteLine();
+        foreach (var (key, value) in people69) Console.WriteLine($"Key: {key}, Value: {value}");
+
+        // Dictionary<T> methods
+        var phoneBook = new Dictionary<string, string>();
+        
+        // Add element: key - phone number, value - abonent's name
+        phoneBook.Add("+123456", "Tom");
+        
+        // Checking
+        var phoneExists1 = phoneBook.ContainsKey("+123456");
+        Console.WriteLine($"+123456: {phoneExists1}");
+        var phoneExists2 = phoneBook.ContainsKey("+567456");
+        Console.WriteLine($"+567456: {phoneExists2}");
+        var abonentExists1 = phoneBook.ContainsValue("Tom");
+        Console.WriteLine($"Tom: {abonentExists1}");
+        var abonentExists2 = phoneBook.ContainsValue("Bob");
+        Console.WriteLine($"Bob: {abonentExists2}");
+        
+        // Removing element
+        phoneBook.Remove("+123456");
+        
+        // Checking the count of elements after deletion
+        Console.WriteLine($"Count: {phoneBook.Count}");
     }
 }
 

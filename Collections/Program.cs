@@ -102,11 +102,63 @@ class Program
         // Reverse all collection
         people.Reverse();   // ["Bob","Sam", "Mike", "Tom", "Eugene"]
         
-        var people2 = people;
-        people2.Reverse(1, 3);  // ["Eugene","Sam", "Mike", "Tom", "Bob"]
-        foreach (var person in people2)
+        var p = people;
+        p.Reverse(1, 3);  // ["Eugene","Sam", "Mike", "Tom", "Bob"]
+        foreach (var person in p)
             Console.Write(person + " ");
         Console.WriteLine();
+        Console.WriteLine();
+        // ===== LINKEDLIST<T> =====
+        
+        var employees2 = new List<string>() { "Tom", "Sam", "Bob" };
+        LinkedList<string> people2 = new LinkedList<string>(employees2);
+        foreach (var person in people2)
+        {
+            Console.WriteLine(person);
+        }
+        Console.WriteLine();
+
+        Console.WriteLine(people2.Count);
+        Console.WriteLine(people2.First?.Value);
+        Console.WriteLine(people2.Last?.Value);
+
+        Console.WriteLine();
+        
+        var currentNode = people2.First;
+        while (currentNode != null)
+        {
+            Console.WriteLine(currentNode.Value);
+            currentNode = currentNode.Next;
+        }
+        
+        Console.WriteLine();
+        
+        currentNode = people2.Last;
+        while (currentNode != null)
+        {
+            Console.WriteLine(currentNode.Value);
+            currentNode = currentNode.Previous;
+        }
+        Console.WriteLine();
+        
+        // Using LinkedList methods
+        var people3 = new LinkedList<string>();
+        people3.AddLast("Tom");
+        people3.AddFirst("Bob");
+        
+        if (people3.First != null) people3.AddAfter(people3.First, "Mike");
+        
+        foreach(var person in people3) Console.WriteLine(person);
+        Console.WriteLine();
+        
+        // With another types
+        var company = new LinkedList<Person>();
+
+        company.AddLast(new Person("Tom"));
+        company.AddLast(new Person("Sam"));
+        company.AddLast(new Person("Bill"));
+
+        foreach (var person in company) Console.WriteLine(person.Name);
     }
 }
 

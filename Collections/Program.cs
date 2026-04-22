@@ -219,6 +219,59 @@ class Program
 
         var practitioner = new Doctor();
         practitioner.TakePatients(patients);
+        Console.WriteLine();
+        
+        
+        // ======= Stack<T> =======
+        Stack<string> stack = new Stack<string>();
+        Stack<string> stack2 = new Stack<string>(16);
+        
+        var employees4 = new List<string>() { "Tom", "Sam", "Bob" };
+        Stack<string> people6 = new Stack<string>(employees4);
+        foreach (var person in people6) Console.WriteLine(person);
+
+        Console.WriteLine(people6.Count);
+        Console.WriteLine();
+        
+        
+        // Using Stack<T> methods
+        var people7 = new Stack<string>();
+        
+        // Add elements
+        people7.Push("Tom");
+        people7.Push("Sam");
+        people7.Push("Bob");
+        
+        // Getting first element from stack without removing
+        string headPerson = people7.Peek();
+        Console.WriteLine(headPerson);
+        
+        string person6 = people7.Pop();
+        Console.WriteLine(person6);
+        
+        string person7 = people7.Pop();
+        Console.WriteLine(person7);
+        
+        string person8 = people7.Pop();
+        Console.WriteLine(person8);
+
+        Console.WriteLine();
+        
+        if(people7.Count > 0)
+        {
+            var person9 = people7.Peek();
+            people7.Pop();
+        }
+        Console.WriteLine();
+        
+        var people8 = new Stack<string>();
+        people8.Push("Tom");
+        
+        var success3 = people8.TryPeek(out var person10);  // success3 = true
+        if (success3) Console.WriteLine(person10);  // Tom
+        
+        var success4 = people8.TryPeek(out var person11);  // success = false
+        if (success4) Console.WriteLine(person11);
     }
 }
 

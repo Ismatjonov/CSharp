@@ -335,6 +335,10 @@ class Program
         {
             "Tom", "Sam", "Bob"
         };
+
+        Console.WriteLine(observable1[0]);
+        observable1[0] = "Tomas";
+        Console.WriteLine(observable1[0]);
     }
 }
 

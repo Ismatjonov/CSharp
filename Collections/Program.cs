@@ -339,6 +339,13 @@ class Program
         Console.WriteLine(observable1[0]);
         observable1[0] = "Tomas";
         Console.WriteLine(observable1[0]);
+        Console.WriteLine();
+        
+        foreach (var person in observable1) Console.WriteLine(person);
+
+        Console.WriteLine();
+        
+        for(int i = 0; i < observable1.Count; i++) Console.WriteLine(observable1[i]);
     }
 }
 

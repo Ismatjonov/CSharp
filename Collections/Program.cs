@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+
 namespace Collections;
 
 class Program
@@ -318,9 +321,20 @@ class Program
         
         // Removing element
         phoneBook.Remove("+123456");
-        
         // Checking the count of elements after deletion
         Console.WriteLine($"Count: {phoneBook.Count}");
+        Console.WriteLine();
+        
+        // ======== Class ObservableCollection ========
+
+        ObservableCollection<string> observable = new ObservableCollection<string>();
+        
+        var observable1 = new ObservableCollection<string>(new string[] { "Tom", "Sam", "Bob" });
+
+        var observable2 = new ObservableCollection<string>()
+        {
+            "Tom", "Sam", "Bob"
+        };
     }
 }
 

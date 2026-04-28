@@ -346,6 +346,24 @@ class Program
         Console.WriteLine();
         
         for(int i = 0; i < observable1.Count; i++) Console.WriteLine(observable1[i]);
+        
+        // Using ObservableCollection<T> Methods
+        var people77 = new ObservableCollection<string>();
+        
+        // add element
+        people77.Add("Bob");
+        // insert element to index 0
+        people77.Insert(0, "Tom");
+        
+        // checking elements
+        bool bobExists = people77.Contains("Bob");
+        Console.WriteLine($"Bob exists: {bobExists}");
+        bool mikeExists = people77.Contains("Mike");
+        Console.WriteLine($"Mike exists: {mikeExists}");
+        
+        // Remove elements
+        people77.Remove("Bob");
+        people77.RemoveAt(0);
     }
 }
 

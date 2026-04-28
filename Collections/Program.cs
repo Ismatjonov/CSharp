@@ -364,6 +364,43 @@ class Program
         // Remove elements
         people77.Remove("Bob");
         people77.RemoveAt(0);
+        
+        // Notification about changes in collection
+        var people80 = new ObservableCollection<Person>()
+        {
+            new Person("Tom"),
+            new Person("Sam"),
+        };
+        people80.CollectionChanged += People_CollectionChenged;
+        
+        people80.Add(new Person("Bob"));
+
+        people80.RemoveAt(0);
+        
+        people80[0] = new Person("Eugene");
+
+        Console.WriteLine("\n User list:");
+        foreach (var person in people80) Console.WriteLine(person.Name);
+        Console.WriteLine();
+
+        void People_CollectionChenged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems?[0] is Person newPerson)
+                        Console.WriteLine($"Added new object: {newPerson.Name}");
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems?[0] is Person oldPerson)
+                        Console.WriteLine($"Removed object: {oldPerson.Name}");
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    if ((e.NewItems?[0] is Person replacingPerson) && (e.OldItems?[0] is Person replacedPerson))
+                        Console.WriteLine($"Replaced object: {replacingPerson.Name}");
+                    break;
+            }
+        }
     }
 }
 

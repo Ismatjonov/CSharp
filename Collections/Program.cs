@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -383,7 +384,7 @@ class Program
         foreach (var person in people80) Console.WriteLine(person.Name);
         Console.WriteLine();
 
-        void People_CollectionChenged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        void People_CollectionChenged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
@@ -401,6 +402,30 @@ class Program
                     break;
             }
         }
+
+        Console.WriteLine();
+        
+        // IEnumerable and IEnumerator
+        string[] peoples = {"Tom", "Sam", "Bob"};
+        
+        IEnumerator peopleEnamerator = peoples.GetEnumerator();
+        while (peopleEnamerator.MoveNext())
+        {
+            string item = (string)peopleEnamerator.Current;
+            Console.WriteLine(item);
+        }
+        peopleEnamerator.Reset();
+        Console.WriteLine();
+        
+        // Realization
+        Week week = new Week();
+        foreach (var day in week)
+        {
+            Console.WriteLine(day);
+        }
+        Console.WriteLine();
+        
+        
     }
 }
 
@@ -421,4 +446,42 @@ class Doctor
         }
         Console.WriteLine("Доктор закончил осматривать пациентов");
     }
+}
+
+class Week
+{
+    string[] days = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+    public IEnumerator GetEnumerator() => new WeekEnaumerator(days);
+}
+
+class WeekEnaumerator : IEnumerator
+{
+    private string[] days;
+    int position = -1;
+    public WeekEnaumerator(string[] days) => this.days = days;
+
+    public object Current
+    {
+        get
+        {
+            if (position == -1 || position >= days.Length)
+                throw new InvalidOperationException();
+            return days[position];
+        }
+    }
+
+    public bool MoveNext()
+    {
+        if (position < days.Length - 1)
+        {
+            position++;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public void Reset() => position = -1;
+    public void Dispose() { }
 }

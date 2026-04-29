@@ -460,6 +460,20 @@ class Program
         
         Array.Sort(array, 1, 3);
         foreach (var person in array) Console.WriteLine(person);
+        
+        int tomFirstIndex = Array.IndexOf(array, "Tom");
+        int tomLastIndex = Array.LastIndexOf(array, "Tom");
+        int lengthFirstIndex = Array.FindIndex(array, person => person.Length > 3);
+        int lengthLastIndex = Array.FindLastIndex(array, person => person.Length > 3);
+
+        Console.WriteLine($"Tom First Index: {tomFirstIndex}");
+        Console.WriteLine($"Tom Last Index: {tomLastIndex}");
+        Console.WriteLine($"Tom Length First: {lengthFirstIndex}");
+        Console.WriteLine($"Tom Length Last: {lengthLastIndex}");
+        
+        // Array.Sort(_people);
+        int bobIndex = Array.BinarySearch(_people, "Bob");
+        Console.WriteLine($"Bob Index: {bobIndex}");
     }
 }
 
@@ -479,6 +493,9 @@ class Doctor
             Console.WriteLine($"Осмотр пациента: {patient.Name}");
         }
         Console.WriteLine("Доктор закончил осматривать пациентов");
+        
+        
+        
     }
 }
 

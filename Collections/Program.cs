@@ -450,6 +450,16 @@ class Program
         {
             Console.WriteLine(employee.Name);
         }
+        Console.WriteLine();
+        
+        // Class Array
+        string[] array = { "Tom", "Sam", "Bob", "Kate", "Tom", "Alice" };
+        // Array.Sort(array);
+        // foreach (var person in array) Console.WriteLine(person);
+        // Console.WriteLine();
+        
+        Array.Sort(array, 1, 3);
+        foreach (var person in array) Console.WriteLine(person);
     }
 }
 

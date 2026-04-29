@@ -472,8 +472,45 @@ class Program
         Console.WriteLine($"Tom Length Last: {lengthLastIndex}");
         
         // Array.Sort(_people);
-        int bobIndex = Array.BinarySearch(_people, "Bob");
-        Console.WriteLine($"Bob Index: {bobIndex}");
+        // int bobIndex = Array.BinarySearch(_people, "Bob");
+        // Console.WriteLine($"Bob Index: {bobIndex}");
+        
+        // Search
+        string[] ppl = { "Tom", "Sam", "Bob", "Kate", "Tom", "Alice" };
+        
+        // находим первый и последний элементы
+        // где длина строки больше 3 символов
+        string? first = Array.Find(ppl, person => person.Length > 3);
+        Console.WriteLine(first);
+        
+        string? last = Array.Find(ppl, person => person.Length > 3);
+        Console.WriteLine(last);
+        
+        Console.WriteLine();
+        
+        // находим элементы, у которых длина строки равна 3
+        string[] group = Array.FindAll(ppl, person => person.Length == 3);
+        foreach (var person in group) Console.WriteLine(person);
+
+        Console.WriteLine();
+        
+        Array.Reverse(ppl);
+        foreach (var person in group) Console.WriteLine(person);
+
+        Console.WriteLine();
+        
+        string[] people123 =  { "Tom", "Sam", "Bob", "Kate", "Tom", "Alice" };
+        Array.Resize(ref people123, 4);
+        foreach (var person in people123) Console.WriteLine(person);
+        Console.WriteLine();
+        
+        // Copy
+        people123 = [ "Tom", "Sam", "Bob", "Kate", "Tom", "Alice" ];
+        var employees123 = new string[3];
+        Array.Copy(people123, 1, employees123, 0, 3);
+        foreach (var person in employees123) Console.WriteLine(person);
+        Console.WriteLine();
+        
     }
 }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Data.SqlTypes;
 
 namespace Collections;
 
@@ -425,7 +426,30 @@ class Program
         }
         Console.WriteLine();
         
+        // Yeild
+        Numbers numbers = new Numbers();
+        foreach (var n in numbers)
+        {
+            Console.WriteLine(n);
+        }
+        Console.WriteLine();
         
+        foreach(var n in 5) Console.WriteLine(n);
+        foreach(var n in -5) Console.WriteLine(n);
+        Console.WriteLine();
+
+        var _people = new Person[]
+        {
+            new Person("Tom"),
+            new Person("Sam"),
+            new Person("Bob")
+        };
+        var microsoft = new Company(_people);
+
+        foreach (Person employee in microsoft.GetPersonnel(5))
+        {
+            Console.WriteLine(employee.Name);
+        }
     }
 }
 
@@ -484,4 +508,51 @@ class WeekEnaumerator : IEnumerator
     }
     public void Reset() => position = -1;
     public void Dispose() { }
+}
+
+class Numbers
+{
+    public IEnumerator<int> GetEnumerator()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            yield return i * i;
+        }
+    }
+}
+
+static class Int32Extention
+{
+    public static IEnumerator<int> GetEnumerator(this int number)
+    {
+        int k = (number > 0)? number : 0;
+        for(int i = number - k; i < k; i++) yield return i;
+    }
+}
+
+class Company
+{
+    private Person[] personnel;
+    public Company(Person[] personnel) => this.personnel = personnel;
+    public int Length => personnel.Length;
+
+    public IEnumerable<Person> GetPersonnel(int max)
+    {
+        for (int i = 0; i < max; i++)
+        {
+            if (i == personnel.Length)
+            {
+                yield break;
+            }
+            else
+            {
+                yield return personnel[i];
+            }
+        }
+    }
+
+    public IEnumerator<Person> GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
 }

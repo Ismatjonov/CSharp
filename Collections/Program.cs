@@ -561,14 +561,58 @@ class Program
         Index myIndex1 = 2;
         Index myIndex2 = ^2;
 
+        // Main Array
         string[] people300 = { "Tom", "Bob", "Sam", "Kate", "Alice" };
+        
+        
         string selected1 = people300[myIndex1];
         string selected2 = people300[myIndex2];
         Console.WriteLine(selected1);
         Console.WriteLine(selected2);
         Console.WriteLine();
         
+        // Ranges
+        Range myRange = 1..4;
+
+        Index start = 1;
+        Index end = 4;
+        Range myRange1 = start..end;
         
+        Range myRange2 = 1..4;
+
+        string[] peopleRange = people300[1..4];
+        foreach(string person in peopleRange) Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // Other version
+        peopleRange = people300[..4];
+        foreach(string person in peopleRange) Console.Write(person + " ");
+        Console.WriteLine();
+        
+        peopleRange = people300[1..];
+        foreach(string person in peopleRange) Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // Operations with ^
+        peopleRange = people300[^2..];
+        foreach(string person in peopleRange) Console.Write(person + " ");
+        Console.WriteLine();
+        
+        peopleRange = people300[..^1];
+        foreach(string person in peopleRange) Console.Write(person + " ");
+        Console.WriteLine();
+        
+        peopleRange = people300[^3..^1];
+        foreach(string person in peopleRange) Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // Using object Span and ReadOnlySpan
+        Span<string> peopleSpan = people300;
+        Span<string> selectedPeopleSpan = peopleSpan[1..4];
+        foreach(string person in selectedPeopleSpan) Console.Write(person + " ");
+        Console.WriteLine();
+
+
     }
 }
 

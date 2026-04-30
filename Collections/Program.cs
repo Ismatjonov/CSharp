@@ -540,7 +540,17 @@ class Program
         foreach (int decade in firstDecade) Console.Write(decade + " ");
         Console.WriteLine();
         foreach (int decade in secondDecade) Console.Write(decade + " ");
-
+        Console.WriteLine();
+        
+        // ReadonlySpan
+        string text = "hello, world";
+        string wordString = text.Substring(startIndex: 7, length: 5);
+        ReadOnlySpan<char> wordSpan = text.AsSpan().Slice(start: 7, length: 5);
+        // wordSpan[0] = 'A';   // You can't change
+        Console.WriteLine(wordSpan[0]);
+        
+        // Character Enumeration
+        foreach (char c in wordSpan) Console.Write(c + " ");
     }
 }
 

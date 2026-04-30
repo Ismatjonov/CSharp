@@ -551,6 +551,24 @@ class Program
         
         // Character Enumeration
         foreach (char c in wordSpan) Console.Write(c + " ");
+        Console.WriteLine();
+        Console.WriteLine("Index and diapasons\n--------------------");
+        // ======== Index and diapasons ========
+
+        Index myIndex = 2;
+        myIndex = ^2;
+
+        Index myIndex1 = 2;
+        Index myIndex2 = ^2;
+
+        string[] people300 = { "Tom", "Bob", "Sam", "Kate", "Alice" };
+        string selected1 = people300[myIndex1];
+        string selected2 = people300[myIndex2];
+        Console.WriteLine(selected1);
+        Console.WriteLine(selected2);
+        Console.WriteLine();
+        
+        
     }
 }
 

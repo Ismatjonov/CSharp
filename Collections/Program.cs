@@ -612,7 +612,6 @@ class Program
         foreach(string person in selectedPeopleSpan) Console.Write(person + " ");
         Console.WriteLine();
 
-
     }
 }
 
@@ -632,9 +631,6 @@ class Doctor
             Console.WriteLine($"Осмотр пациента: {patient.Name}");
         }
         Console.WriteLine("Доктор закончил осматривать пациентов");
-        
-        
-        
     }
 }
 

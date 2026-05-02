@@ -38,5 +38,30 @@ class Program
         string message1 = "Hello";
         string message2 = "Hello";
         Console.WriteLine(message1 == message2);
+        
+        // Multi-line strings
+        Print();
+        PrintValue("hello");
+
+        void Print()
+        {
+            string text = """
+                          <element attr="content">
+                            <body>
+                            </body>
+                          </element>
+                          """;
+        }
+
+        void PrintValue(string val)
+        {
+            string text = $"""
+                           <element attr="content">
+                           <body>
+                            {val}
+                           </body>
+                           </element>
+                           """;
+        }
     }
 }

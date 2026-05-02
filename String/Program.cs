@@ -62,6 +62,10 @@ class Program
                            </body>
                            </element>
                            """;
+            Console.WriteLine(text);
         }
+
+        // Testing methods
+        // ...
     }
 }

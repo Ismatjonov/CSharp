@@ -152,5 +152,38 @@ class Program
         
         text = text.Substring(0, text.Length - 2);
         Console.WriteLine(text);
+        
+        // Insert
+        text = "Хороший день";
+        substring = "замечательный ";
+        
+        text = text.Insert(8, substring);
+        Console.WriteLine(text);
+        Console.WriteLine();
+        
+        // Remove
+        text = "Хороший день";
+
+        int ind = text.Length - 1;
+        
+        text = text.Remove(ind);
+        Console.WriteLine(text);
+
+        text = text.Remove(0, 2);
+        Console.WriteLine(text);
+        
+        // Replace
+        text = "Хороший день";
+        text = text.Replace("Хороший", "Плохой");
+        Console.WriteLine(text);
+
+        text = text.Replace("о", "");
+        Console.WriteLine(text);
+        
+        // ToUpper() & ToLower()
+        string hello = "Hello World!";
+
+        Console.WriteLine(hello.ToUpper());
+        Console.WriteLine(hello.ToLower());
     }
 }

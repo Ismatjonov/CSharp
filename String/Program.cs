@@ -84,5 +84,20 @@ class Program
         
         string s10 = string.Join(" ", values);
         Console.WriteLine(s10);
+        
+        // Compare
+        int result = string.Compare(str1, str2);
+        if (result < 0)
+        {
+            Console.WriteLine("Строка str1 перед строкой str2");
+        }
+        else if (result > 0)
+        {
+            Console.WriteLine("Строка str1 стоит после строки str2");
+        }
+        else
+        {
+            Console.WriteLine("Строки str1 и str2 илентичны");
+        }
     }
 }

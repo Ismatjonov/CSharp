@@ -125,5 +125,32 @@ class Program
             if (files[i].EndsWith(".exe"))
                 Console.WriteLine(files[i]);
         }
+        Console.WriteLine();
+        
+        // Split
+        string text = "И поэтому все так произошло";
+        string[] words = text.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+        foreach (string s in words)
+        {
+            Console.WriteLine(s);
+        }
+
+        Console.WriteLine();
+        
+        // Trim
+        text = "hello world";
+
+        text = text.Trim();
+        Console.WriteLine(text);
+        text = text.Trim(new[] { 'd', 'h' });
+        Console.WriteLine(text);
+        
+        // Substring 
+        text = "Хороший день";
+        text = text.Substring(2);
+        Console.WriteLine(text);
+        
+        text = text.Substring(0, text.Length - 2);
+        Console.WriteLine(text);
     }
 }

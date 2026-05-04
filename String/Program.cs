@@ -99,5 +99,31 @@ class Program
         {
             Console.WriteLine("Строки str1 и str2 илентичны");
         }
+        Console.WriteLine();
+        
+        // Searching in strings
+        string st1 = "hello world";
+        char ch = 'o';
+        int indexOfChar = st1.IndexOf(ch);
+        Console.WriteLine(indexOfChar);
+
+        string substring = "wor";
+        int indexOfSubstring = st1.IndexOf(substring);
+        Console.WriteLine(indexOfSubstring);
+        Console.WriteLine();
+
+        var files = new string[]
+        {
+            "myapp.exe",
+            "forest.jpg",
+            "main.exe",
+            "book.pdf",
+            "river.png"
+        };
+        for(int i = 0; i < files.Length; i++)
+        {
+            if (files[i].EndsWith(".exe"))
+                Console.WriteLine(files[i]);
+        }
     }
 }

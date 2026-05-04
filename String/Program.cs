@@ -64,8 +64,25 @@ class Program
                            """;
             Console.WriteLine(text);
         }
+        Console.WriteLine();
 
-        // Testing methods
-        // ...
+        // ======== Operation with strings ========
+
+        // Concat & Join
+        string str1 = "hello";
+        string str2 = "world";
+        string str3 = str1 + " " + str2;
+        string str4 = string.Concat(str3, "!!!");
+        Console.WriteLine(str4);
+
+        string s5 = "apple";
+        string s6 = "a day";
+        string s7 = "keeps";
+        string s8 = "a doctor";
+        string s9 = "away";
+        string[] values = new string[] { s5, s6, s7, s8, s9 };
+        
+        string s10 = string.Join(" ", values);
+        Console.WriteLine(s10);
     }
 }

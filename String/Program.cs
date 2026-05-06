@@ -239,5 +239,27 @@ class Program
         Console.WriteLine(money.ToString("C2"));
         Console.WriteLine();
         
+        // == Interpolation ==
+        name = "Tom";
+        age = 23;
+        Console.WriteLine($"Имя: {name}, Возраст: {age}");
+
+        int x = 8;
+        int y = 7;
+        string _result = $"{x} + {y} = {x + y}";
+        Console.WriteLine(_result);
+        _result = $"{x} * {y} = {Multiply(x, y)}";
+        Console.WriteLine(_result);
+        int Multiply(int a, int b) => a * b;
+        Console.WriteLine();
+
+        long phone = 992937770771;
+        Console.WriteLine($"{phone:+### ## ### ## ##}");
+        Console.WriteLine();
+
+        name = "Bakhtovar";
+        age = 19;
+        Console.WriteLine($"Имя: {name, -5} Возраст: {age}");
+        Console.WriteLine($"Имя: {name, 5} Возраст: {age}");    // didn't get it...
     }
 }

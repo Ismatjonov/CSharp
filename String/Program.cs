@@ -202,6 +202,25 @@ class Program
         Console.WriteLine(r2);
         Console.WriteLine();
         
+        // Integer formating
+        int num = 23;
+        string r3 = string.Format("{0:d}", num);
+        Console.WriteLine(r3);
+        string r4 = string.Format("{0:d4}", num);
+        Console.WriteLine(r4);
+        Console.WriteLine();
         
+        // Formating fractional numbers
+        int number1 = 23;
+        string r5 = string.Format("{0:f}", number1);
+        Console.WriteLine(r5);
+
+        double number2 = 45.08;
+        string r6 = string.Format("{0:f4}", number2);
+        Console.WriteLine(r6);
+        
+        double number3 = 25.07;
+        string r7 = string.Format("{0:f1}", number3);
+        Console.WriteLine(r7);
     }
 }

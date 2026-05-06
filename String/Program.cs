@@ -222,5 +222,22 @@ class Program
         double number3 = 25.07;
         string r7 = string.Format("{0:f1}", number3);
         Console.WriteLine(r7);
+        Console.WriteLine();
+        
+        // Percent formation
+        decimal n = 0.15345m;
+        Console.WriteLine("{0:P2}", n);
+        Console.WriteLine();
+        
+        // Customize formation
+        long l = 19876543210;
+        string rs = string.Format("{0:+# (###) ###-##-##}", l);
+        Console.WriteLine(rs);
+        // Method: ToString()
+        Console.WriteLine(l.ToString("+# (###) ###-##-##"));
+        double money = 24.8;
+        Console.WriteLine(money.ToString("C2"));
+        Console.WriteLine();
+        
     }
 }

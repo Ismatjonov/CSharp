@@ -185,5 +185,23 @@ class Program
 
         Console.WriteLine(hello.ToUpper());
         Console.WriteLine(hello.ToLower());
+        Console.WriteLine();
+        
+        // ======== String formating and interpolation ========
+        string name = "Tom";
+        int age = 23;
+        string output = string.Format("Имя: {0} Возраст: {1}", name, age);
+        Console.WriteLine(output);
+        Console.WriteLine();
+        
+        // Currency formating
+        double number = 23.7;
+        string r = string.Format("{0:C0}", number);
+        Console.WriteLine(r);
+        string r2 = string.Format("{0:C2}", number);
+        Console.WriteLine(r2);
+        Console.WriteLine();
+        
+        
     }
 }

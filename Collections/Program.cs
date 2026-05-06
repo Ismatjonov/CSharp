@@ -610,7 +610,7 @@ class Program
         Span<string> peopleSpan = people300;
         Span<string> selectedPeopleSpan = peopleSpan[1..4];
         foreach(string person in selectedPeopleSpan) Console.Write(person + " ");
-        Console.WriteLine();0
+        Console.WriteLine();
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Text;
 
 namespace String;
 
@@ -261,5 +261,56 @@ class Program
         age = 19;
         Console.WriteLine($"Имя: {name, -5} Возраст: {age}");
         Console.WriteLine($"Имя: {name, 5} Возраст: {age}");    // didn't get it...
+        Console.WriteLine();
+        
+        
+        // ======== Class StringBuilder ========
+        // StringBuilder sb = new StringBuilder();  // Creating StringBuilder class
+        
+        // StringBuilder sb = new StringBuilder("Привет мир");  // Creating with initializer
+
+        var sb = new StringBuilder("Hello World");
+        Console.WriteLine(sb.ToString());
+        Console.WriteLine(sb);
+
+        Console.WriteLine($"Length: {sb.Length}");
+        Console.WriteLine($"Capacity: {sb.Capacity}");
+
+        var sb2 = new StringBuilder("Hello World", 32);
+        Console.WriteLine();
+        
+        // Operations with string in StringBuilder
+        sb = new StringBuilder("Название: ");
+        Console.WriteLine(sb);
+        Console.WriteLine($"Length: {sb.Length}");
+        Console.WriteLine($"Capacity: {sb.Capacity}");
+
+        sb.Append(" Руководство");
+        Console.WriteLine(sb);
+        Console.WriteLine($"Length: {sb.Length}");
+        Console.WriteLine($"Capacity: {sb.Capacity}");
+
+        sb.Append(" по C#");
+        Console.WriteLine(sb);
+        Console.WriteLine($"Length: {sb.Length}");
+        Console.WriteLine($"Capacity: {sb.Capacity}");
+        Console.WriteLine();
+
+        sb = new StringBuilder("Привет мир");
+        sb.Append("!");
+        sb.Insert(7, "компютерный ");
+        Console.WriteLine(sb.ToString());
+        
+        // Replacing word
+        sb.Replace("мир", "world");
+        Console.WriteLine(sb);
+        
+        // Removing
+        sb.Remove(7, 12);
+        Console.WriteLine(sb);
+        Console.WriteLine();
+        
+        string t = sb.ToString();
+        Console.WriteLine(t);
     }
 }

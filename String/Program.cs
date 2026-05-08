@@ -364,6 +364,22 @@ class Program
                 Console.WriteLine(data2[i]);
             }
         }
+        Console.WriteLine();
+        
+        // Replace and method Replace()
+        string txt = "Мама  мыла  раму.";
+        string patternn = @"\s+";
+        string target = " ";
+        Regex rgx = new Regex(patternn);
+        string rslt = rgx.Replace(txt, target);
+        Console.WriteLine(rslt);
+        Console.WriteLine();
 
+        string phoneNumber = "+992(93)-777-07-71";
+        string patt = @"\D+";
+        string tgt = "";
+        Regex rgx2 = new Regex(patt);
+        string rslt2 = rgx2.Replace(phoneNumber, tgt);
+        Console.WriteLine(rslt2);
     }
 }

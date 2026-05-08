@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace String;
 
@@ -312,5 +313,36 @@ class Program
         
         string t = sb.ToString();
         Console.WriteLine(t);
+        Console.WriteLine();
+        
+        // ======= Regular Expressions ========
+        string S = "Бык тупогуб, тупогубенький бычок, у быка губа бела была тупа";
+        Regex regex = new Regex(@"туп(\w*)");
+        MatchCollection matches = regex.Matches(S);
+        if (matches.Count > 0)
+        {
+            foreach (Match match in matches)
+                Console.WriteLine(match.Value);
+        }
+        else
+        {
+            Console.WriteLine("Совпадений не найдено");
+        }
+        Console.WriteLine();
+
+        Regex reg = new Regex(@"\w*губ\w*", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        matches = reg.Matches(S);
+        if (matches.Count > 0)
+            foreach (var match in matches)
+                Console.WriteLine(match);
+        else
+            Console.WriteLine("No matches");
+        Console.WriteLine();
+
+        string _s = "456-435-23118";
+        Regex regex2 = new Regex(@"\d{3}-\d{3}-\d{4}");
+
+        
+
     }
 }

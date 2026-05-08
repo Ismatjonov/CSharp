@@ -342,7 +342,28 @@ class Program
         string _s = "456-435-23118";
         Regex regex2 = new Regex(@"\d{3}-\d{3}-\d{4}");
 
+        regex2 = new Regex(@"[0-9]{3}-[0-9]{3}-[0-9]{4}");
         
+        // Checking if a string matches the format
+        string pattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                         @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
+        var data2 = new string[]
+        {
+            "tom@gmail.com",
+            "+12345678999",
+            "bob@yahoo.com",
+            "+12345465566",
+            "sam@yandex.ru",
+            "+43743989393"
+        };
+        Console.WriteLine("Email List");
+        for (int i = 0; i < data2.Length; i++)
+        {
+            if (Regex.IsMatch(data2[i], pattern, RegexOptions.IgnoreCase))
+            {
+                Console.WriteLine(data2[i]);
+            }
+        }
 
     }
 }

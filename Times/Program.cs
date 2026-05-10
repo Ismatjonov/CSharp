@@ -1,4 +1,5 @@
 ﻿using System.Threading.Channels;
+using System.Globalization;
 
 namespace Times;
 
@@ -76,5 +77,38 @@ class Program
         Console.WriteLine(now.ToString("hh:mm:ss:fff K"));
         Console.WriteLine(now.ToString("dd MMMM yyyy | dddd"));
         Console.WriteLine();
+        
+        // ======== DateOnly & TimeOnly ========
+        
+        // DateOnly
+        DateOnly dateOnly = new DateOnly();
+        Console.WriteLine(dateOnly);
+        
+        dateOnly = new DateOnly(2022,1,6);
+        Console.WriteLine(dateOnly);
+
+        DateOnly julianDate = new DateOnly(2022, 1, 6, new JulianCalendar());
+        Console.WriteLine(julianDate);
+        Console.WriteLine();
+        
+        // DateOnly properties:
+        dateOnly = new DateOnly(2022, 1, 6);
+        Console.WriteLine(dateOnly.Day);
+        Console.WriteLine(dateOnly.DayNumber);
+        Console.WriteLine(dateOnly.DayOfWeek);
+        Console.WriteLine(dateOnly.DayOfYear);
+        Console.WriteLine(dateOnly.Month);
+        Console.WriteLine(dateOnly.Year);
+        Console.WriteLine();
+        
+        // DateOnly methods:
+        dateOnly = DateOnly.Parse("26.06.2006");
+        Console.WriteLine(dateOnly);
+        dateOnly = dateOnly.AddDays(1);
+        dateOnly = dateOnly.AddMonths(4);
+        dateOnly = dateOnly.AddYears(-1);
+        Console.WriteLine(dateOnly.ToShortDateString());
+        Console.WriteLine(dateOnly.ToLongDateString());
+        
     }
 }

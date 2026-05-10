@@ -109,6 +109,39 @@ class Program
         dateOnly = dateOnly.AddYears(-1);
         Console.WriteLine(dateOnly.ToShortDateString());
         Console.WriteLine(dateOnly.ToLongDateString());
+        Console.WriteLine();
         
+        // x -------- x -------- x
+        
+        // TimeOnly
+        TimeOnly timeOnly = new TimeOnly();
+        Console.WriteLine(timeOnly);
+
+        TimeOnly time1 = new TimeOnly(4, 30);
+        Console.WriteLine(time1);
+        
+        TimeOnly time2 = new TimeOnly(14,23, 30);
+        Console.WriteLine(time2);
+        
+        Console.WriteLine();
+        
+        // TimeOnly properties:
+        TimeOnly time = new TimeOnly(14,23,30);
+        Console.WriteLine(time.Hour);
+        Console.WriteLine(time.Minute);
+        Console.WriteLine(time.Second);
+        Console.WriteLine();
+        
+        // TimeOnly methods:
+        time = TimeOnly.Parse("20:23:05");
+        Console.WriteLine(time);
+        time = time.AddHours(1);
+        time = time.AddMinutes(-23);
+        
+        Console.WriteLine(time.ToShortTimeString());
+        Console.WriteLine(time.ToLongTimeString());
+        
+        time = time.Add(TimeSpan.Parse("04:12:36"));
+        Console.WriteLine(time.ToLongTimeString());
     }
 }

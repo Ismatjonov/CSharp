@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collections", "Collections\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "String", "String\String.csproj", "{F9D460D2-8AA1-465A-9434-D1434A00E8F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Times", "Times\Times.csproj", "{1F1EC81E-B1A2-44EE-B6C6-093DA495FD7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{F9D460D2-8AA1-465A-9434-D1434A00E8F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9D460D2-8AA1-465A-9434-D1434A00E8F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9D460D2-8AA1-465A-9434-D1434A00E8F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1EC81E-B1A2-44EE-B6C6-093DA495FD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1EC81E-B1A2-44EE-B6C6-093DA495FD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1EC81E-B1A2-44EE-B6C6-093DA495FD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1EC81E-B1A2-44EE-B6C6-093DA495FD7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

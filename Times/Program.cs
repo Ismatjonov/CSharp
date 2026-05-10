@@ -70,6 +70,11 @@ class Program
         Console.WriteLine($"U: {now:U}");
         Console.WriteLine($"u: {now:u}");
         Console.WriteLine($"Y: {now:Y}");
+        Console.WriteLine();
         
+        // Setting the time and date format
+        Console.WriteLine(now.ToString("hh:mm:ss:fff K"));
+        Console.WriteLine(now.ToString("dd MMMM yyyy | dddd"));
+        Console.WriteLine();
     }
 }

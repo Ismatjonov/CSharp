@@ -1,4 +1,6 @@
-﻿namespace Addition;
+﻿using System.Globalization;
+
+namespace Addition;
 
 class Program
 {
@@ -72,7 +74,22 @@ class Program
         IFormatProvider formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
         double number = double.Parse("23.56", formatter);
         Console.WriteLine(number);
-    }
+        Console.WriteLine();
+        
+        Console.Write("Введите строку: ");
+        string? input = Console.ReadLine();
+        
+        bool resltat = int.TryParse(input, out var number2);
+        if (resltat == true)
+            Console.WriteLine($"Преобразование прошло успешно. Число: {number2}");
+        else
+            Console.WriteLine("Преобразование завершилось неудачно");
+        Console.WriteLine();
+
+        int n = Convert.ToInt32("23");
+        bool boo = true;
+        double dou = Convert.ToDouble(boo);
+        Console.WriteLine($"n={n}, dou={dou}");
     }
 }
 

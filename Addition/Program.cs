@@ -58,6 +58,21 @@ class Program
         double area = Math.PI * Math.Pow(radius, 2);
         Console.WriteLine($"Площадь круга с радиусом {radius} равна {Math.Round(area, 2)}");
         Console.WriteLine();
+        
+        // ======== Class Convert ========
+        
+        // Method Parse()
+        int a = int.Parse("10");
+        double b = double.Parse("23,56");
+        decimal c = decimal.Parse("12,45");
+        byte d = byte.Parse("4");
+        Console.WriteLine($"a={a}, b={b}, c={c}, d={d}");
+        Console.WriteLine();
+        
+        IFormatProvider formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+        double number = double.Parse("23.56", formatter);
+        Console.WriteLine(number);
+    }
     }
 }
 

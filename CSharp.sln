@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Times", "Times\Times.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Addition", "Addition\Addition.csproj", "{CDAE638F-D54C-42E8-A010-9A1C150DCF39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threading", "Threading\Threading.csproj", "{D6CB5A6E-2A05-4576-ACE7-E079F554F1A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{CDAE638F-D54C-42E8-A010-9A1C150DCF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDAE638F-D54C-42E8-A010-9A1C150DCF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDAE638F-D54C-42E8-A010-9A1C150DCF39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6CB5A6E-2A05-4576-ACE7-E079F554F1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6CB5A6E-2A05-4576-ACE7-E079F554F1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6CB5A6E-2A05-4576-ACE7-E079F554F1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6CB5A6E-2A05-4576-ACE7-E079F554F1A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

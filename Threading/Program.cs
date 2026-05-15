@@ -76,16 +76,31 @@ class Program
         //
         // void Show(object? message) => Console.WriteLine(message);
 
-        int number = 4;
-        Thread myThread = new Thread(Print);
-        myThread.Start(number);
+        /*
+         int number = 4;
+         Thread myThread = new Thread(Print);
+         myThread.Start(number);
 
-        void Print(object? obj)
+         void Print(object? obj)
+         {
+             if (obj is int n)
+             {
+                 Console.WriteLine($"n * n = {n * n}");
+             }
+         }
+         */
+        Person tom = new Person("Tom", 37);
+        Thread myThread = new Thread(Print);
+        myThread.Start(tom);
+
+        void Print(object obj)
         {
-            if (obj is int n)
+            if (obj is Person person)
             {
-                Console.WriteLine($"n * n = {n * n}");
+                Console.WriteLine($"Name = {person.Name}");
+                Console.WriteLine($"Age = {person.Age}");
             }
         }
     }
 }
+record class Person(string Name, int Age);

@@ -89,6 +89,8 @@ class Program
              }
          }
          */
+        
+        /*
         Person tom = new Person("Tom", 37);
         Thread myThread = new Thread(Print);
         myThread.Start(tom);
@@ -101,6 +103,19 @@ class Program
                 Console.WriteLine($"Age = {person.Age}");
             }
         }
+        */
+
+        Person tom = new Person("Tom", 37);
+        Thread myThread = new Thread(tom.Print);
+        myThread.Start();
     }
 }
-record class Person(string Name, int Age);
+
+record class Person(string Name, int Age)
+{
+    public void Print()
+    {
+        Console.WriteLine($"Name = {Name}");
+        Console.WriteLine($"Age = {Age}");
+    }
+}

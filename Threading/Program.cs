@@ -110,6 +110,8 @@ class Program
         // myThread.Start();
         
         // ======== Thread Synchronization ========
+        // Running test thread
+        /*
         int x = 0;
         
         // run 5 threads
@@ -119,7 +121,6 @@ class Program
             myThread.Name = $"Thread {i}";
             myThread.Start();
         }
-
         void Print()
         {
             x = 1;
@@ -127,7 +128,31 @@ class Program
             {
                 Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
                 x++;
-                Thread.Sleep(100);
+                Thread.Sleep(500);
+            }
+        }
+        */
+
+        int x = 0;
+        object locker = new(); // lock-object
+        for (int i = 0; i < 6; i++)
+        {
+            Thread myThread = new Thread(Print);
+            myThread.Name = $"Thread {i}";
+            myThread.Start();
+        }
+
+        void Print()
+        {
+            lock (locker)
+            {
+                x = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
+                    x++;
+                    Thread.Sleep(100);
+                }
             }
         }
     }

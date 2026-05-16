@@ -105,9 +105,31 @@ class Program
         }
         */
 
-        Person tom = new Person("Tom", 37);
-        Thread myThread = new Thread(tom.Print);
-        myThread.Start();
+        // Person tom = new Person("Tom", 37);
+        // Thread myThread = new Thread(tom.Print);
+        // myThread.Start();
+        
+        // ======== Thread Synchronization ========
+        int x = 0;
+        
+        // run 5 threads
+        for (int i = 0; i < 6; i++)
+        {
+            Thread myThread = new(Print);
+            myThread.Name = $"Thread {i}";
+            myThread.Start();
+        }
+
+        void Print()
+        {
+            x = 1;
+            for (int i = 0; i < 6; i++)
+            {
+                Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
+                x++;
+                Thread.Sleep(100);
+            }
+        }
     }
 }
 

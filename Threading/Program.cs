@@ -133,6 +133,8 @@ class Program
         }
         */
 
+        // Synchronizing threads
+        /*
         int x = 0;
         object locker = new(); // lock-object
         for (int i = 0; i < 6; i++)
@@ -141,7 +143,6 @@ class Program
             myThread.Name = $"Thread {i}";
             myThread.Start();
         }
-
         void Print()
         {
             lock (locker)
@@ -153,6 +154,40 @@ class Program
                     x++;
                     Thread.Sleep(100);
                 }
+            }
+        }
+        */
+        
+        // ======== Monitors ========
+        int x = 0;
+        object locker = new object();
+        for (int i = 0; i < 6; i++)
+        {
+            Thread myThread = new Thread(Print);
+            myThread.Name = "Thread " + i;
+            myThread.Start();
+        }
+        void Print()
+        {
+            bool acquiredLock = false;
+            try
+            {
+                Monitor.Enter(locker, ref acquiredLock);
+                x = 1;
+                for (int i = 0; i < 6; i++)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.Name} : {x++}");
+                    Thread.Sleep(100);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                if(acquiredLock) Monitor.Exit(locker);
             }
         }
     }

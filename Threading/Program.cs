@@ -194,6 +194,7 @@ class Program
         */
         
         // ======== Class Lock & Synchronization ========
+        /* Class Lock
         int x = 0; // some common resource
         Lock _lockobj = new();
 
@@ -214,6 +215,37 @@ class Program
                     Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
                     Thread.Sleep(100);
                 }
+            }
+        }
+        */
+        
+        // methhod Enter()
+        int x = 0; // some common resource
+        Lock _lockobj = new();
+
+        for (int i = 0; i < 6; i++)
+        {
+            Thread myThread = new Thread(Print);
+            myThread.Name = $"Thread {i}";
+            myThread.Start();
+        }
+
+        void Print()
+        {
+            _lockobj.Enter();
+            try
+            {
+                x = 1;
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
+                    Thread.Sleep(100);
+                }
+            }
+            finally
+            {
+                _lockobj.Exit();
+                Console.WriteLine();
             }
         }
     }

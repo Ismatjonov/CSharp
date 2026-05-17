@@ -159,6 +159,7 @@ class Program
         */
         
         // ======== Monitors ========
+        /*
         int x = 0;
         object locker = new object();
         for (int i = 0; i < 6; i++)
@@ -188,6 +189,31 @@ class Program
             finally
             {
                 if(acquiredLock) Monitor.Exit(locker);
+            }
+        }
+        */
+        
+        // ======== Class Lock & Synchronization ========
+        int x = 0; // some common resource
+        Lock _lockobj = new();
+
+        for (int i = 0; i < 6; i++)
+        {
+            Thread myThread = new Thread(Print);
+            myThread.Name = $"Thread {i}";
+            myThread.Start();
+        }
+
+        void Print()
+        {
+            lock (_lockobj)
+            {
+                x = 1;
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
+                    Thread.Sleep(100);
+                }
             }
         }
     }

@@ -220,15 +220,15 @@ class Program
         */
 
         // methhod Enter()
-        int x = 0; // some common resource
-        Lock _lockobj = new();
-
-        for (int i = 0; i < 6; i++)
-        {
-            Thread myThread = new Thread(Print);
-            myThread.Name = $"Thread {i}";
-            myThread.Start();
-        }
+        // int x = 0; // some common resource
+        // Lock _lockobj = new();
+        //
+        // for (int i = 0; i < 6; i++)
+        // {
+        //     Thread myThread = new Thread(Print);
+        //     myThread.Name = $"Thread {i}";
+        //     myThread.Start();
+        // }
 
         // method Enter()
         /*void Print()
@@ -272,19 +272,46 @@ class Program
         // }
 
         // method EnterScope()
+        // void Print()
+        // {
+        //     using (_lockobj.EnterScope())
+        //     {
+        //         x = 1;
+        //         for (int i = 0; i < 6; i++)
+        //         {
+        //             Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
+        //             Thread.Sleep(100);
+        //         }
+        //     }
+        // }
+        
+        // ======== Class AutoResetEvent ========
+        int x = 0;  // Common resource
+        
+        AutoResetEvent waitHandler = new AutoResetEvent(true);  // event-object
+        
+        // Running five threads
+        for (int i = 0; i < 6; i++)
+        {
+            Thread myThread = new Thread(Print);
+            myThread.Name = "Thread " + i;
+            myThread.Start();
+        }
+
         void Print()
         {
-            using (_lockobj.EnterScope())
+            // waitHandler.WaitOne();  // Waiting for signal
+            AutoResetEvent.WaitAll(new WaitHandle[] { waitHandler });   // if we use few objects of AutoResetEvent
+            x = 1;
+            for (int i = 0; i < 6; i++)
             {
-                x = 1;
-                for (int i = 0; i < 6; i++)
-                {
-                    Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
-                    Thread.Sleep(100);
-                }
+                Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
+                x++;
+                Thread.Sleep(100);
             }
+            waitHandler.Set();  // Signal that waitHandler is in the signaled state
         }
-}
+    }
 }
 
 record class Person(string Name, int Age)

@@ -313,28 +313,35 @@ class Program
         // }
         
         // ======== Mutex ========
-        int x = 0;
-        Mutex mutexObj = new Mutex();
+        // int x = 0;
+        // Mutex mutexObj = new Mutex();
+        //
+        // // Running five threads
+        // for (int i = 0; i < 6; i++)
+        // {
+        //     Thread myThread = new Thread(Print);
+        //     myThread.Name = "Thread " + i;
+        //     myThread.Start();
+        // }
+        //
+        // void Print()
+        // {
+        //     mutexObj.WaitOne(); // suspend the thread until a mutex is acquired
+        //     x = 1;
+        //     for (int i = 0; i < 6; i++)
+        //     {
+        //         Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
+        //         x++;
+        //         Thread.Sleep(100);
+        //     }
+        //     mutexObj.ReleaseMutex(); // release the mutex
+        // }
+        // Console.WriteLine();
         
-        // Running five threads
-        for (int i = 0; i < 6; i++)
+        // ========== Semaphores ==========
+        for (int i = 1; i < 6; i++)
         {
-            Thread myThread = new Thread(Print);
-            myThread.Name = "Thread " + i;
-            myThread.Start();
-        }
-
-        void Print()
-        {
-            mutexObj.WaitOne(); // suspend the thread until a mutex is acquired
-            x = 1;
-            for (int i = 0; i < 6; i++)
-            {
-                Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
-                x++;
-                Thread.Sleep(100);
-            }
-            mutexObj.ReleaseMutex(); // release the mutex
+            Reader reader = new Reader(i);
         }
     }
 }
@@ -345,5 +352,40 @@ record class Person(string Name, int Age)
     {
         Console.WriteLine($"Name = {Name}");
         Console.WriteLine($"Age = {Age}");
+    }
+}
+
+class Reader
+{
+    // Creating semaphore
+    static Semaphore sem = new Semaphore(3, 3);
+    private Thread thread;
+    private int count = 3;
+
+    public Reader(int i)
+    {
+        thread = new Thread(Read);
+        thread.Name = "Reader " + i;
+        thread.Start();
+    }
+
+    public void Read()
+    {
+        while (count > 0)
+        {
+            sem.WaitOne();
+
+            Console.WriteLine($"{Thread.CurrentThread.Name} arrives to the library");
+
+            Console.WriteLine($"{Thread.CurrentThread.Name} is reading");
+            Thread.Sleep(1000);
+
+            Console.WriteLine($"{Thread.CurrentThread.Name} leaves in the library");
+            
+            sem.Release();
+            
+            count--;
+            Thread.Sleep(1000);
+        }
     }
 }

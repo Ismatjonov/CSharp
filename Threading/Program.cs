@@ -286,9 +286,35 @@ class Program
         // }
         
         // ======== Class AutoResetEvent ========
-        int x = 0;  // Common resource
+        // int x = 0;  // Common resource
+        //
+        // AutoResetEvent waitHandler = new AutoResetEvent(true);  // event-object
+        //
+        // // Running five threads
+        // for (int i = 0; i < 6; i++)
+        // {
+        //     Thread myThread = new Thread(Print);
+        //     myThread.Name = "Thread " + i;
+        //     myThread.Start();
+        // }
+        //
+        // void Print()
+        // {
+        //     // waitHandler.WaitOne();  // Waiting for signal
+        //     AutoResetEvent.WaitAll(new WaitHandle[] { waitHandler });   // if we use few objects of AutoResetEvent
+        //     x = 1;
+        //     for (int i = 0; i < 6; i++)
+        //     {
+        //         Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
+        //         x++;
+        //         Thread.Sleep(100);
+        //     }
+        //     waitHandler.Set();  // Signal that waitHandler is in the signaled state
+        // }
         
-        AutoResetEvent waitHandler = new AutoResetEvent(true);  // event-object
+        // ======== Mutex ========
+        int x = 0;
+        Mutex mutexObj = new Mutex();
         
         // Running five threads
         for (int i = 0; i < 6; i++)
@@ -300,8 +326,7 @@ class Program
 
         void Print()
         {
-            // waitHandler.WaitOne();  // Waiting for signal
-            AutoResetEvent.WaitAll(new WaitHandle[] { waitHandler });   // if we use few objects of AutoResetEvent
+            mutexObj.WaitOne(); // suspend the thread until a mutex is acquired
             x = 1;
             for (int i = 0; i < 6; i++)
             {
@@ -309,7 +334,7 @@ class Program
                 x++;
                 Thread.Sleep(100);
             }
-            waitHandler.Set();  // Signal that waitHandler is in the signaled state
+            mutexObj.ReleaseMutex(); // release the mutex
         }
     }
 }

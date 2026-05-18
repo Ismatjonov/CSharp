@@ -89,7 +89,7 @@ class Program
              }
          }
          */
-        
+
         /*
         Person tom = new Person("Tom", 37);
         Thread myThread = new Thread(Print);
@@ -108,12 +108,12 @@ class Program
         // Person tom = new Person("Tom", 37);
         // Thread myThread = new Thread(tom.Print);
         // myThread.Start();
-        
+
         // ======== Thread Synchronization ========
         // Running test thread
         /*
         int x = 0;
-        
+
         // run 5 threads
         for (int i = 0; i < 6; i++)
         {
@@ -157,7 +157,7 @@ class Program
             }
         }
         */
-        
+
         // ======== Monitors ========
         /*
         int x = 0;
@@ -192,7 +192,7 @@ class Program
             }
         }
         */
-        
+
         // ======== Class Lock & Synchronization ========
         /* Class Lock
         int x = 0; // some common resource
@@ -218,7 +218,7 @@ class Program
             }
         }
         */
-        
+
         // methhod Enter()
         int x = 0; // some common resource
         Lock _lockobj = new();
@@ -249,28 +249,42 @@ class Program
                 Console.WriteLine();
             }
         }*/
-        
+
         // method TryEnter()
+        // void Print()
+        // {
+        //     if (_lockobj.TryEnter())
+        //     {
+        //         try
+        //         {
+        //             x = 1;
+        //             for (int i = 0; i < 6; i++)
+        //             {
+        //                 Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
+        //                 Thread.Sleep(100);
+        //             }
+        //         }
+        //         finally
+        //         {
+        //             _lockobj.Exit();
+        //         }
+        //     }
+        // }
+
+        // method EnterScope()
         void Print()
         {
-            if (_lockobj.TryEnter())
+            using (_lockobj.EnterScope())
             {
-                try
+                x = 1;
+                for (int i = 0; i < 6; i++)
                 {
-                    x = 1;
-                    for (int i = 0; i < 6; i++)
-                    {
-                        Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
-                        Thread.Sleep(100);
-                    }
-                }
-                finally
-                {
-                    _lockobj.Exit();
+                    Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
+                    Thread.Sleep(100);
                 }
             }
         }
-    }
+}
 }
 
 record class Person(string Name, int Age)

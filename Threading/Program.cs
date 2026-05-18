@@ -230,7 +230,8 @@ class Program
             myThread.Start();
         }
 
-        void Print()
+        // method Enter()
+        /*void Print()
         {
             _lockobj.Enter();
             try
@@ -246,6 +247,27 @@ class Program
             {
                 _lockobj.Exit();
                 Console.WriteLine();
+            }
+        }*/
+        
+        // method TryEnter()
+        void Print()
+        {
+            if (_lockobj.TryEnter())
+            {
+                try
+                {
+                    x = 1;
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Console.WriteLine($"{Thread.CurrentThread.Name}: {x++}");
+                        Thread.Sleep(100);
+                    }
+                }
+                finally
+                {
+                    _lockobj.Exit();
+                }
             }
         }
     }

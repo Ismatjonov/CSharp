@@ -16,6 +16,17 @@ class Program
         task1.Wait();
         task2.Wait();
         task3.Wait();
+        
+        // 
+        Console.WriteLine("MAin Starts");
 
+        Task task = new Task(() =>
+        {
+            Console.WriteLine("Task Starts");
+            Thread.Sleep(1000);
+            Console.WriteLine("Task Ends");
+        });
+        task.RunSynchronously();
+        Console.WriteLine("Main Ends");
     }
 }

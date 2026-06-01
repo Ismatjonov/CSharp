@@ -28,7 +28,7 @@ class Program
         // });
         // task.RunSynchronously();
         // Console.WriteLine("Main Ends");
-        
+
         // Properties of class Task
         // Task tsk = new Task(() =>
         // {
@@ -43,19 +43,34 @@ class Program
         // Console.WriteLine($"tsk Status: {tsk.Status}");
         // tsk.Wait();
         // Console.WriteLine($"tsk is Completed: {tsk.IsCompleted}");
-        
+
         // ======== Working with class Task ========
-        var outer = Task.Factory.StartNew(() =>
+        //     var outer = Task.Factory.StartNew(() =>
+        //     {
+        //         Console.WriteLine("Outer task starting...");
+        //         var inner = Task.Factory.StartNew(() =>
+        //         {
+        //             Console.WriteLine("Inner task starting...");
+        //             Thread.Sleep(2000);
+        //             Console.WriteLine("Inner task finished.");
+        //         }, TaskCreationOptions.AttachedToParent);
+        //     });
+        //     outer.Wait();
+        //     Console.WriteLine("End of Main");
+        // }
+
+        Task[] tasks1 = new Task[3]
         {
-            Console.WriteLine("Outer task starting...");
-            var inner = Task.Factory.StartNew(() =>
-            {
-                Console.WriteLine("Inner task starting...");
-                Thread.Sleep(2000);
-                Console.WriteLine("Inner task finished.");
-            }, TaskCreationOptions.AttachedToParent);
-        });
-        outer.Wait();
-        Console.WriteLine("End of Main");
+            new Task(() => Console.WriteLine("First Task")),
+            new Task(() => Console.WriteLine("Second Task")),
+            new Task(() => Console.WriteLine("Third Task"))
+        };
+        foreach (var t in tasks1)
+            t.Start();
+
+        Task[] tasks2 = new Task[3];
+        int j = 1;
+        for(int i = 0; i < tasks2.Length; i++)
+            tasks2[i] = Task.Factory.StartNew(() => Console.WriteLine("Task " + j++));
     }
 }

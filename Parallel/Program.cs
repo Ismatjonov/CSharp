@@ -1,4 +1,5 @@
 ﻿using System.Threading.Channels;
+using System.Threading.Tasks;
 
 namespace Parallel;
 
@@ -123,35 +124,59 @@ class Program
         //     Thread.Sleep(3000);
         // }
 
-        Task<int> sumTask = new Task<int>(() => Sum(4, 5));
+        // Task<int> sumTask = new Task<int>(() => Sum(4, 5));
+        //
+        // Task printTask = sumTask.ContinueWith(task => PrintResult(task.Result));
+        // sumTask.Start();
+        //
+        // printTask.Wait();
+        // Console.WriteLine("End of Main!");
+        //
+        // int Sum(int a, int b) => a + b;
+        //
+        // void PrintResult(int sum) => Console.WriteLine($"Sum: {sum}");
+        //
+        // // task chain
+        // Task task1 = new Task(() => Console.WriteLine($"Current Task: {Task.CurrentId}"));
+        //
+        // Task task2 = task1.ContinueWith(t => 
+        //     Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
+        //
+        // Task task3 = task2.ContinueWith(t => 
+        //     Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
+        //
+        // Task task4 = task3.ContinueWith(t => 
+        //     Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
+        //
+        // task1.Start();
+        //
+        // task4.Wait();
+        //
+        // Console.WriteLine("End of Main!");
         
-        Task printTask = sumTask.ContinueWith(task => PrintResult(task.Result));
-        sumTask.Start();
-        
-        printTask.Wait();
-        Console.WriteLine("End of Main!");
-        
-        int Sum(int a, int b) => a + b;
+        // ========== class Parallel ==========
+        System.Threading.Tasks.Parallel.Invoke(
+            Print,
+            () =>
+            {
+                Console.WriteLine($"Executing task: {Task.CurrentId}");
+                Thread.Sleep(3000);
+            },
+            () => Square(5)
+            );
 
-        void PrintResult(int sum) => Console.WriteLine($"Sum: {sum}");
-        
-        // task chain
-        Task task1 = new Task(() => Console.WriteLine($"Current Task: {Task.CurrentId}"));
+        void Print()
+        {
+            Console.WriteLine($"Executing task: {Task.CurrentId}");
+            Thread.Sleep(3000);
+        }
 
-        Task task2 = task1.ContinueWith(t => 
-            Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
-        
-        Task task3 = task2.ContinueWith(t => 
-            Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
-        
-        Task task4 = task3.ContinueWith(t => 
-            Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
-        
-        task1.Start();
-
-        task4.Wait();
-
-        Console.WriteLine("End of Main!");
+        void Square(int n)
+        {
+            Console.WriteLine($"Executing task: {Task.CurrentId}");
+            Thread.Sleep(3000);
+            Console.WriteLine($"Result: {n * n}");
+        }
     }
 }
 record class Person(string Name, int Age);

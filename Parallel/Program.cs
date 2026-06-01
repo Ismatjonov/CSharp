@@ -30,18 +30,32 @@ class Program
         // Console.WriteLine("Main Ends");
         
         // Properties of class Task
-        Task tsk = new Task(() =>
-        {
-            Console.WriteLine($"Task{Task.CurrentId} Starts");
-            Thread.Sleep(1000);
-            Console.WriteLine($"Task{Task.CurrentId} Ends");
-        });
-        tsk.Start();
-
-        Console.WriteLine($"tsk ID: {tsk.Id}");
-        Console.WriteLine($"tsk is Completed: {tsk.IsCompleted}");
-        Console.WriteLine($"tsk Status: {tsk.Status}");
+        // Task tsk = new Task(() =>
+        // {
+        //     Console.WriteLine($"Task{Task.CurrentId} Starts");
+        //     Thread.Sleep(1000);
+        //     Console.WriteLine($"Task{Task.CurrentId} Ends");
+        // });
+        // tsk.Start();
+        //
+        // Console.WriteLine($"tsk ID: {tsk.Id}");
+        // Console.WriteLine($"tsk is Completed: {tsk.IsCompleted}");
+        // Console.WriteLine($"tsk Status: {tsk.Status}");
+        // tsk.Wait();
+        // Console.WriteLine($"tsk is Completed: {tsk.IsCompleted}");
         
-        tsk.Wait();
+        // ======== Working with class Task ========
+        var outer = Task.Factory.StartNew(() =>
+        {
+            Console.WriteLine("Outer task starting...");
+            var inner = Task.Factory.StartNew(() =>
+            {
+                Console.WriteLine("Inner task starting...");
+                Thread.Sleep(2000);
+                Console.WriteLine("Inner task finished.");
+            }, TaskCreationOptions.AttachedToParent);
+        });
+        outer.Wait();
+        Console.WriteLine("End of Main");
     }
 }

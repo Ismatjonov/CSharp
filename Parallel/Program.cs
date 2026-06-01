@@ -97,11 +97,61 @@ class Program
         //
         // int Sum(int a, int b) => a + b;
 
-        Task<Person> defaultPersonTask = new Task<Person>(() => new Person("Tom", 37));
-        defaultPersonTask.Start();
+        // Task<Person> defaultPersonTask = new Task<Person>(() => new Person("Tom", 37));
+        // defaultPersonTask.Start();
+        //
+        // Person defaultPerson = defaultPersonTask.Result;
+        // Console.WriteLine($"{defaultPerson.Name} - {defaultPerson.Age}");
         
-        Person defaultPerson = defaultPersonTask.Result;
-        Console.WriteLine($"{defaultPerson.Name} - {defaultPerson.Age}");
+        // ======== Continuation Task ========
+        // Task task1 = new Task(() =>
+        // {
+        //     Console.WriteLine($"Task Id: {Task.CurrentId}");
+        // });
+        //
+        // Task task2 = task1.ContinueWith(PrintTask);
+        //
+        // task1.Start();
+        // task2.Wait();
+        //
+        // Console.WriteLine("End of Main!");
+        //
+        // void PrintTask(Task t)
+        // {
+        //     Console.WriteLine($"Task Id: {Task.CurrentId}");
+        //     Console.WriteLine($"Previous Task Id: {t.Id}");
+        //     Thread.Sleep(3000);
+        // }
+
+        Task<int> sumTask = new Task<int>(() => Sum(4, 5));
+        
+        Task printTask = sumTask.ContinueWith(task => PrintResult(task.Result));
+        sumTask.Start();
+        
+        printTask.Wait();
+        Console.WriteLine("End of Main!");
+        
+        int Sum(int a, int b) => a + b;
+
+        void PrintResult(int sum) => Console.WriteLine($"Sum: {sum}");
+        
+        // task chain
+        Task task1 = new Task(() => Console.WriteLine($"Current Task: {Task.CurrentId}"));
+
+        Task task2 = task1.ContinueWith(t => 
+            Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
+        
+        Task task3 = task2.ContinueWith(t => 
+            Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
+        
+        Task task4 = task3.ContinueWith(t => 
+            Console.WriteLine($"Current Task: {Task.CurrentId}  Previous Task: {t.Id}"));
+        
+        task1.Start();
+
+        task4.Wait();
+
+        Console.WriteLine("End of Main!");
     }
 }
 record class Person(string Name, int Age);

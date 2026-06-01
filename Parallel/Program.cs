@@ -73,27 +73,35 @@ class Program
         // for(int i = 0; i < tasks2.Length; i++)
         //     tasks2[i] = Task.Factory.StartNew(() => Console.WriteLine("Task " + j++));
 
-        Task[] tasks = new Task[3];
-        for (var i = 0; i < tasks.Length; i++)
-        {
-            tasks[i] = new Task(() =>
-            {
-                Thread.Sleep(1000);
-                Console.WriteLine($"Task{i} finished");
-            });
-            tasks[i].Start();
-        }
-        Console.WriteLine("End of Main");
-        Task.WaitAll(tasks);
+        // Task[] tasks = new Task[3];
+        // for (var i = 0; i < tasks.Length; i++)
+        // {
+        //     tasks[i] = new Task(() =>
+        //     {
+        //         Thread.Sleep(1000);
+        //         Console.WriteLine($"Task{i} finished");
+        //     });
+        //     tasks[i].Start();
+        // }
+        // Console.WriteLine("End of Main");
+        // Task.WaitAll(tasks);
+        //
         
-        // returning results from tasks
-        int n1 = 4, n2 = 5;
-        Task<int> sumTask = new Task<int>(() => Sum(n1, n2));
-        sumTask.Start();
+        // // returning results from tasks
+        // int n1 = 4, n2 = 5;
+        // Task<int> sumTask = new Task<int>(() => Sum(n1, n2));
+        // sumTask.Start();
+        //
+        // int result = sumTask.Result;
+        // Console.WriteLine($"{n1} + {n2} = {result}");
+        //
+        // int Sum(int a, int b) => a + b;
+
+        Task<Person> defaultPersonTask = new Task<Person>(() => new Person("Tom", 37));
+        defaultPersonTask.Start();
         
-        int result = sumTask.Result;
-        Console.WriteLine($"{n1} + {n2} = {result}");
-        
-        int Sum(int a, int b) => a + b;
+        Person defaultPerson = defaultPersonTask.Result;
+        Console.WriteLine($"{defaultPerson.Name} - {defaultPerson.Age}");
     }
 }
+record class Person(string Name, int Age);

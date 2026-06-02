@@ -1,7 +1,7 @@
 ﻿using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace Parallel;
+namespace Parallelism;
 
 class Program
 {
@@ -155,28 +155,30 @@ class Program
         // Console.WriteLine("End of Main!");
         
         // ========== class Parallel ==========
-        System.Threading.Tasks.Parallel.Invoke(
-            Print,
-            () =>
-            {
-                Console.WriteLine($"Executing task: {Task.CurrentId}");
-                Thread.Sleep(3000);
-            },
-            () => Square(5)
-            );
-
-        void Print()
-        {
-            Console.WriteLine($"Executing task: {Task.CurrentId}");
-            Thread.Sleep(3000);
-        }
+        // Parallel.Invoke(
+        //     Print,
+        //     () =>
+        //     {
+        //         Console.WriteLine($"Executing task: {Task.CurrentId}");
+        //         Thread.Sleep(3000);
+        //     },
+        //     () => Square(5)
+        //     );
+        //
+        // void Print()
+        // {
+        //     Console.WriteLine($"Executing task: {Task.CurrentId}");
+        //     Thread.Sleep(3000);
+        // }
 
         void Square(int n)
         {
             Console.WriteLine($"Executing task: {Task.CurrentId}");
+            Console.WriteLine($"Square of number {n} is equals {n * n}");
             Thread.Sleep(3000);
-            Console.WriteLine($"Result: {n * n}");
         }
+
+        Parallel.For(1, 5, Square);
     }
 }
 record class Person(string Name, int Age);

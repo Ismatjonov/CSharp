@@ -193,17 +193,22 @@ class Program
         //     Thread.Sleep(2000);
         // }
 
-        ParallelLoopResult result = Parallel.For(1, 10, Square);
-        if (!result.IsCompleted)
-            Console.WriteLine($"Выполнение цикла завершено на итерации {result.LowestBreakIteration}");
+        // ParallelLoopResult result = Parallel.For(1, 10, Square);
+        // if (!result.IsCompleted)
+        //     Console.WriteLine($"Выполнение цикла завершено на итерации {result.LowestBreakIteration}");
+        //
+        // void Square(int n, ParallelLoopState pls)
+        // {
+        //     if (n == 5) pls.Break();
+        //
+        //     Console.WriteLine($"Квадрат числа {n} равен {n * n}");
+        //     Thread.Sleep(2000);
+        // }
         
-        void Square(int n, ParallelLoopState pls)
-        {
-            if (n == 5) pls.Break();
- 
-            Console.WriteLine($"Квадрат числа {n} равен {n * n}");
-            Thread.Sleep(2000);
-        }
+        // ========== Cancellation tasks & Parallel operations | CancellationToken =========
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        CancellationToken token = cancellationTokenSource.Token;
+        Console.WriteLine(token);
     }
 }
 record class Person(string Name, int Age);

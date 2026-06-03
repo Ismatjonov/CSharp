@@ -181,15 +181,27 @@ class Program
         // Parallel.For(1, 5, Square);
         
         // Parallel.ForEach()
-        ParallelLoopResult result = Parallel.ForEach<int>(
-            new List<int> { 1, 3, 5, 8 },
-            Square
-        );
+        // ParallelLoopResult result = Parallel.ForEach<int>(
+        //     new List<int> { 1, 3, 5, 8 },
+        //     Square
+        // );
+        //
+        // void Square(int x)
+        // {
+        //     Console.WriteLine($"Выполняетя задача {Task.CurrentId}");
+        //     Console.WriteLine($"Квадрат числа {x} равен {x * x}");
+        //     Thread.Sleep(2000);
+        // }
 
-        void Square(int x)
+        ParallelLoopResult result = Parallel.For(1, 10, Square);
+        if (!result.IsCompleted)
+            Console.WriteLine($"Выполнение цикла завершено на итерации {result.LowestBreakIteration}");
+        
+        void Square(int n, ParallelLoopState pls)
         {
-            Console.WriteLine($"Выполняетя задача {Task.CurrentId}");
-            Console.WriteLine($"Квадрат числа {x} равно {x * x}");
+            if (n == 5) pls.Break();
+ 
+            Console.WriteLine($"Квадрат числа {n} равен {n * n}");
             Thread.Sleep(2000);
         }
     }

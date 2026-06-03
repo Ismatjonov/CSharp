@@ -171,14 +171,27 @@ class Program
         //     Thread.Sleep(3000);
         // }
 
-        void Square(int n)
-        {
-            Console.WriteLine($"Executing task: {Task.CurrentId}");
-            Console.WriteLine($"Square of number {n} is equals {n * n}");
-            Thread.Sleep(3000);
-        }
+        // void Square(int n)
+        // {
+        //     Console.WriteLine($"Executing task: {Task.CurrentId}");
+        //     Console.WriteLine($"Square of number {n} is equals {n * n}");
+        //     Thread.Sleep(3000);
+        // }
+        //
+        // Parallel.For(1, 5, Square);
+        
+        // Parallel.ForEach()
+        ParallelLoopResult result = Parallel.ForEach<int>(
+            new List<int> { 1, 3, 5, 8 },
+            Square
+        );
 
-        Parallel.For(1, 5, Square);
+        void Square(int x)
+        {
+            Console.WriteLine($"Выполняетя задача {Task.CurrentId}");
+            Console.WriteLine($"Квадрат числа {x} равно {x * x}");
+            Thread.Sleep(2000);
+        }
     }
 }
 record class Person(string Name, int Age);

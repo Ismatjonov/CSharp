@@ -272,7 +272,7 @@ class Program
         // Console.WriteLine($"Task status: {task.Status}");
         
         // -- Registration of task cancellation handler
-        Task task = new Task(() =>
+        /*Task task = new Task(() =>
         {
             int i = 1;
             token.Register(() =>
@@ -295,7 +295,46 @@ class Program
         Thread.Sleep(1000);
         // checking task status
         Console.WriteLine($"Task status: {task.Status}");
-        cancellationTokenSource.Dispose();  // freeing up resources
+        cancellationTokenSource.Dispose();  // freeing up resources*/
+        
+        // Passing a token to an external method
+        Task task = new Task(() => PrintSquare(token), token);
+        try
+        {
+            task.Start();
+            Thread.Sleep(1000);
+            cancellationTokenSource.Cancel();
+            Thread.Sleep(1000);
+            task.Wait();
+        }
+        catch (AggregateException ex)
+        {
+            foreach (Exception e in ex.InnerExceptions)
+            {
+                if (e is TaskCanceledException)
+                    Console.WriteLine("Operation cancelled");
+                else
+                    Console.WriteLine(e.Message);
+            }
+        }
+        finally
+        {
+            cancellationTokenSource.Dispose();
+        }
+        
+        // checking task status
+        Console.WriteLine($"Task status: {task.Status}");
+
+        void PrintSquare(CancellationToken token)
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                if (token.IsCancellationRequested)
+                    token.ThrowIfCancellationRequested();
+                Console.WriteLine($"The square nomber {i} is {i * i}");
+                Thread.Sleep(200);
+            }
+        }
     }
 }
 record class Person(string Name, int Age);

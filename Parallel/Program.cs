@@ -209,6 +209,28 @@ class Program
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         CancellationToken token = cancellationTokenSource.Token;
         Console.WriteLine(token);
+        
+        // Soft completion option
+        Task task = new Task(() =>
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    Console.WriteLine("Operation cancelled");
+                    return;
+                }
+                Console.WriteLine($"The Square {i} is {i * i}");
+                Thread.Sleep(200);
+            }
+        }, token);
+        task.Start();
+        
+        Thread.Sleep(500);
+        cancellationTokenSource.Cancel();
+        Thread.Sleep(1000);
+        Console.WriteLine($"Task status: {task.Status}");
+        cancellationTokenSource.Dispose();
     }
 }
 record class Person(string Name, int Age);

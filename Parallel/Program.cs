@@ -211,26 +211,67 @@ class Program
         Console.WriteLine(token);
         
         // Soft completion option
+        // Task task = new Task(() =>
+        // {
+        //     for (int i = 1; i < 10; i++)
+        //     {
+        //         if (token.IsCancellationRequested)
+        //         {
+        //             Console.WriteLine("Operation cancelled");
+        //             return;
+        //         }
+        //         Console.WriteLine($"The Square {i} is {i * i}");
+        //         Thread.Sleep(200);
+        //     }
+        // }, token);
+        // task.Start();
+        //
+        // Thread.Sleep(500);
+        // cancellationTokenSource.Cancel();
+        // Thread.Sleep(1000);
+        // Console.WriteLine($"Task status: {task.Status}");
+        // cancellationTokenSource.Dispose();
+        
+        // Cancel the tasks with generating an exception
         Task task = new Task(() =>
         {
             for (int i = 1; i < 10; i++)
             {
                 if (token.IsCancellationRequested)
-                {
-                    Console.WriteLine("Operation cancelled");
-                    return;
-                }
-                Console.WriteLine($"The Square {i} is {i * i}");
+                    token.ThrowIfCancellationRequested(); // generate an exception
+
+                Console.WriteLine($"The squaer of {i} is {i * i}");
                 Thread.Sleep(200);
             }
         }, token);
-        task.Start();
+
+        try
+        {
+            task.Start();
+            Thread.Sleep(1000);
+            // after a time delays cancel task execution
+            cancellationTokenSource.Cancel();
+
+            // wait for task to complete
+            task.Wait();
+        }
+        catch (AggregateException ae)
+        {
+            foreach (Exception e in ae.InnerExceptions)
+            {
+                if (e is OperationCanceledException)
+                    Console.WriteLine("Operation was canceled.");
+                else
+                    Console.WriteLine(e.Message);
+            }
+        }
+        finally
+        {
+            cancellationTokenSource.Dispose();
+        }
         
-        Thread.Sleep(500);
-        cancellationTokenSource.Cancel();
-        Thread.Sleep(1000);
+        // Checking task status
         Console.WriteLine($"Task status: {task.Status}");
-        cancellationTokenSource.Dispose();
     }
 }
 record class Person(string Name, int Age);

@@ -339,13 +339,14 @@ class Program
         // -- Cancel parallel operation Parallel
         new Task(() =>
         {
-            Thread.Sleep(400);
+            Thread.Sleep(100);
             cancellationTokenSource.Cancel();
         }).Start();
         try
         {
             Parallel.ForEach(new List<int> { 1, 2, 3, 4, 5 },
                 new ParallelOptions { CancellationToken = token }, Square);
+            // Parallel.For(1, 5, new ParallelOptions { CancellationToken = token }, Square);   // or like this
         }
         catch (OperationCanceledException)
         {

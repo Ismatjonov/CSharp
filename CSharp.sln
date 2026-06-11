@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threading", "Threading\Thre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parallel", "Parallel\Parallel.csproj", "{87DF5B18-7A90-4A1C-8BFD-3E52AE7300E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asynchronous", "Asynchronous\Asynchronous.csproj", "{5C0E96B8-0755-4A78-AA52-C3391D8233CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{87DF5B18-7A90-4A1C-8BFD-3E52AE7300E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87DF5B18-7A90-4A1C-8BFD-3E52AE7300E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87DF5B18-7A90-4A1C-8BFD-3E52AE7300E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C0E96B8-0755-4A78-AA52-C3391D8233CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C0E96B8-0755-4A78-AA52-C3391D8233CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C0E96B8-0755-4A78-AA52-C3391D8233CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C0E96B8-0755-4A78-AA52-C3391D8233CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

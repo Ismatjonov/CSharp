@@ -298,42 +298,68 @@ class Program
         cancellationTokenSource.Dispose();  // freeing up resources*/
         
         // Passing a token to an external method
-        Task task = new Task(() => PrintSquare(token), token);
+        // Task task = new Task(() => PrintSquare(token), token);
+        // try
+        // {
+        //     task.Start();
+        //     Thread.Sleep(1000);
+        //     cancellationTokenSource.Cancel();
+        //     Thread.Sleep(1000);
+        //     task.Wait();
+        // }
+        // catch (AggregateException ex)
+        // {
+        //     foreach (Exception e in ex.InnerExceptions)
+        //     {
+        //         if (e is TaskCanceledException)
+        //             Console.WriteLine("Operation cancelled");
+        //         else
+        //             Console.WriteLine(e.Message);
+        //     }
+        // }
+        // finally
+        // {
+        //     cancellationTokenSource.Dispose();
+        // }
+        //
+        // // checking task status
+        // Console.WriteLine($"Task status: {task.Status}");
+        //
+        // void PrintSquare(CancellationToken token)
+        // {
+        //     for (int i = 1; i < 10; i++)
+        //     {
+        //         if (token.IsCancellationRequested)
+        //             token.ThrowIfCancellationRequested();
+        //         Console.WriteLine($"The square nomber {i} is {i * i}");
+        //         Thread.Sleep(200);
+        //     }
+        // }
+        
+        // -- Cancel parallel operation Parallel
+        new Task(() =>
+        {
+            Thread.Sleep(400);
+            cancellationTokenSource.Cancel();
+        }).Start();
         try
         {
-            task.Start();
-            Thread.Sleep(1000);
-            cancellationTokenSource.Cancel();
-            Thread.Sleep(1000);
-            task.Wait();
+            Parallel.ForEach(new List<int> { 1, 2, 3, 4, 5 },
+                new ParallelOptions { CancellationToken = token }, Square);
         }
-        catch (AggregateException ex)
+        catch (OperationCanceledException)
         {
-            foreach (Exception e in ex.InnerExceptions)
-            {
-                if (e is TaskCanceledException)
-                    Console.WriteLine("Operation cancelled");
-                else
-                    Console.WriteLine(e.Message);
-            }
+            Console.WriteLine("Operation canceled");
         }
         finally
         {
             cancellationTokenSource.Dispose();
         }
-        
-        // checking task status
-        Console.WriteLine($"Task status: {task.Status}");
 
-        void PrintSquare(CancellationToken token)
+        void Square(int n)
         {
-            for (int i = 1; i < 10; i++)
-            {
-                if (token.IsCancellationRequested)
-                    token.ThrowIfCancellationRequested();
-                Console.WriteLine($"The square nomber {i} is {i * i}");
-                Thread.Sleep(200);
-            }
+            Thread.Sleep(3000);
+            Console.WriteLine($"Square of number {n} is equal to {n * n}");
         }
     }
 }

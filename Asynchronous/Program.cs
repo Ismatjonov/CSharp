@@ -43,13 +43,27 @@ class Program
         // }
         
         // -- Defining an asynchronous lambda expression
-        Func<string, Task> printer = async (message) =>
-        {
-            await Task.Delay(2000);
-            Console.WriteLine(message);
-        };
+        // Func<string, Task> printer = async (message) =>
+        // {
+        //     await Task.Delay(2000);
+        //     Console.WriteLine(message);
+        // };
+        //
+        // await printer("Hello World!");
+        // await printer("Hello METANIT.COM!");
         
-        await printer("Hello World!");
-        await printer("Hello METANIT.COM!");
+        // ========== Returning a result from an asynchronous method ==========
+        PrintAsync("Hello World");
+        PrintAsync("Hello Metanit.com");
+
+        Console.WriteLine("Main End");
+        await Task.Delay(3000); // waiting fot the task to complete
+        
+        // defining async method
+        async void PrintAsync(string message)
+        {
+            await Task.Delay(1000);
+            Console.WriteLine(message);
+        }
     }
 }

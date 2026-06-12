@@ -32,14 +32,24 @@ class Program
         //     Console.WriteLine("Hello Metanit.com");
         // }
 
-        // Benefits of asynchronous
-        await PrintNameAsync("Tom");
-        await PrintNameAsync("Bob");
-        await PrintNameAsync("Sam");
-        async Task PrintNameAsync(string name)
+        // -- Benefits of asynchronous
+        // await PrintNameAsync("Tom");
+        // await PrintNameAsync("Bob");
+        // await PrintNameAsync("Sam");
+        // async Task PrintNameAsync(string name)
+        // {
+        //     await Task.Delay(3000);
+        //     Console.WriteLine(name);
+        // }
+        
+        // -- Defining an asynchronous lambda expression
+        Func<string, Task> printer = async (message) =>
         {
-            await Task.Delay(3000);
-            Console.WriteLine(name);
-        }
+            await Task.Delay(2000);
+            Console.WriteLine(message);
+        };
+        
+        await printer("Hello World!");
+        await printer("Hello METANIT.COM!");
     }
 }

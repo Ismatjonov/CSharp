@@ -53,17 +53,43 @@ class Program
         // await printer("Hello METANIT.COM!");
         
         // ========== Returning a result from an asynchronous method ==========
-        PrintAsync("Hello World");
-        PrintAsync("Hello Metanit.com");
-
-        Console.WriteLine("Main End");
-        await Task.Delay(3000); // waiting fot the task to complete
+        // PrintAsync("Hello World");
+        // PrintAsync("Hello Metanit.com");
+        //
+        // Console.WriteLine("Main End");
+        // await Task.Delay(3000); // waiting fot the task to complete
+        //
+        // // defining async method
+        // async void PrintAsync(string message)
+        // {
+        //     await Task.Delay(1000);
+        //     Console.WriteLine(message);
+        // }
+        // -- Void: Example
+        Account account = new Account();
+        account.Added += PrintAsync;
         
-        // defining async method
-        async void PrintAsync(string message)
+        account.Put(500);
+
+        await Task.Delay(2000);
+
+        async void PrintAsync(object sender, string message)
         {
             await Task.Delay(1000);
             Console.WriteLine(message);
         }
+
+    }
+}
+
+class Account
+{
+    private int sum = 0;
+    public event EventHandler<string>? Added;
+
+    public void Put(int sum)
+    {
+        this.sum += sum;
+        Added?.Invoke(this, $"The account has been credited ${sum}.");
     }
 }

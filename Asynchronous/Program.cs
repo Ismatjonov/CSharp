@@ -20,16 +20,26 @@ class Program
         //     Console.WriteLine("End PrintAsync");
         // }
         
-        // Delay asynchronous operations and Task.Delay
-        await PrintAsync();
-        Console.WriteLine("Some actions in method Main");
+        // -- Delay asynchronous operations and Task.Delay
+        // await PrintAsync();
+        // Console.WriteLine("Some actions in method Main");
+        //
+        // async Task PrintAsync()
+        // {
+        //     await Task.Delay(3000);
+        //     // or like this
+        //     // await Task.Delay(TimeSpan.FromSeconds(3));
+        //     Console.WriteLine("Hello Metanit.com");
+        // }
 
-        async Task PrintAsync()
+        // Benefits of asynchronous
+        await PrintNameAsync("Tom");
+        await PrintNameAsync("Bob");
+        await PrintNameAsync("Sam");
+        async Task PrintNameAsync(string name)
         {
             await Task.Delay(3000);
-            // or like this
-            // await Task.Delay(TimeSpan.FromSeconds(3));
-            Console.WriteLine("Hello Metanit.com");
+            Console.WriteLine(name);
         }
     }
 }

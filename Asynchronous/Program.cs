@@ -122,21 +122,38 @@ class Program
         // }
         
         // -- Example --
-        var square5 = SquareAsync(5);
-        var square6 = SquareAsync(6);
+        // var square5 = SquareAsync(5);
+        // var square6 = SquareAsync(6);
+        //
+        // Console.WriteLine("Other actions in method Main");
+        //
+        // int n1 = await square5;
+        // int n2 = await square6;
+        // Console.WriteLine($"n1={n1}, n2={n2}");
+        //
+        // async Task<int> SquareAsync(int n)
+        // {
+        //     await Task.Delay(0);
+        //     var result =  n * n;
+        //     Console.WriteLine($"The square of number {n} is {n * n}");
+        //     return result;
+        // }
+        
+        // -- ValueTask<T> --
+        // var result = await AddAsync(4, 5);
+        // Console.WriteLine(result);
+        //
+        // Task<int> AddAsync(int a, int b)
+        // {
+        //     return Task.FromResult(a + b);
+        // }    // Extra memory allocation
 
-        Console.WriteLine("Other actions in method Main");
+        var result = await AddAsync(4, 5);
+        Console.WriteLine(result);
 
-        int n1 = await square5;
-        int n2 = await square6;
-        Console.WriteLine($"n1={n1}, n2={n2}");
-
-        async Task<int> SquareAsync(int n)
+        ValueTask<int> AddAsync(int x, int y)
         {
-            await Task.Delay(0);
-            var result =  n * n;
-            Console.WriteLine($"The square of number {n} is {n * n}");
-            return result;
+            return new ValueTask<int>(x + y);
         }
     }
 }

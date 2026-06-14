@@ -66,19 +66,39 @@ class Program
         //     Console.WriteLine(message);
         // }
         // -- Void: Example
-        Account account = new Account();
-        account.Added += PrintAsync;
+        // Account account = new Account();
+        // account.Added += PrintAsync;
+        //
+        // account.Put(500);
+        //
+        // await Task.Delay(2000);
+        //
+        // async void PrintAsync(object sender, string message)
+        // {
+        //     await Task.Delay(1000);
+        //     Console.WriteLine(message);
+        // }
         
-        account.Put(500);
+        // -- Task
+        // await PrintAsync("Hello Metanit.com");
+        //
+        // async Task PrintAsync(string message)
+        // {
+        //     await Task.Delay(1000);
+        //     Console.WriteLine(message);
+        // }
+        
+        // another way
+        var task = PrintAsync("Hello Metanit.com");
+        Console.WriteLine("Main works");
+        
+        await task;
 
-        await Task.Delay(2000);
-
-        async void PrintAsync(object sender, string message)
+        async Task PrintAsync(string message)
         {
             await Task.Delay(1000);
             Console.WriteLine(message);
         }
-
     }
 }
 

@@ -89,15 +89,36 @@ class Program
         // }
         
         // another way
-        var task = PrintAsync("Hello Metanit.com");
-        Console.WriteLine("Main works");
+        // var task = PrintAsync("Hello Metanit.com");
+        // Console.WriteLine("Main works");
+        //
+        // await task;
+        //
+        // async Task PrintAsync(string message)
+        // {
+        //     await Task.Delay(1000);
+        //     Console.WriteLine(message);
+        // }
         
-        await task;
-
-        async Task PrintAsync(string message)
+        // Task<T>
+        int n1 = await SquareAsync(5);
+        int n2 = await SquareAsync(6);
+        Console.WriteLine($"n1={n1}  n2={n2}");
+        async Task<int> SquareAsync(int n)
         {
-            await Task.Delay(1000);
-            Console.WriteLine(message);
+            await Task.Delay(0);
+            return n * n;
+        }
+
+        Person person = await GetPersonAsync("Tom");
+        Console.WriteLine(person.Name);
+
+        Console.WriteLine("Other actions in method Main");
+
+        async Task<Person> GetPersonAsync(string name)
+        {
+            await Task.Delay(0);
+            return new Person(name);
         }
     }
 }
@@ -113,3 +134,5 @@ class Account
         Added?.Invoke(this, $"The account has been credited ${sum}.");
     }
 }
+
+record class Person(string Name);

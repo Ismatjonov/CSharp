@@ -147,13 +147,24 @@ class Program
         // {
         //     return Task.FromResult(a + b);
         // }    // Extra memory allocation
+        
+        // var result = await AddAsync(4, 5);
+        // Console.WriteLine(result);
+        //
+        // ValueTask<int> AddAsync(int x, int y)
+        // {
+        //     return new ValueTask<int>(x + y);
+        // }    // correct solution!
+        
+        // -- we can also cast ValueTask to Task
+        var getMessage = GetMessageAsnc();
+        string message = await getMessage.AsTask();
+        Console.WriteLine(message);
 
-        var result = await AddAsync(4, 5);
-        Console.WriteLine(result);
-
-        ValueTask<int> AddAsync(int x, int y)
+        async ValueTask<string> GetMessageAsnc()
         {
-            return new ValueTask<int>(x + y);
+            await Task.Delay(0);
+            return "Hello";
         }
     }
 }

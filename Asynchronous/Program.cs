@@ -100,25 +100,43 @@ class Program
         //     Console.WriteLine(message);
         // }
         
-        // Task<T>
-        int n1 = await SquareAsync(5);
-        int n2 = await SquareAsync(6);
-        Console.WriteLine($"n1={n1}  n2={n2}");
-        async Task<int> SquareAsync(int n)
-        {
-            await Task.Delay(0);
-            return n * n;
-        }
-
-        Person person = await GetPersonAsync("Tom");
-        Console.WriteLine(person.Name);
+        // -- Task<T>
+        // int n1 = await SquareAsync(5);
+        // int n2 = await SquareAsync(6);
+        // Console.WriteLine($"n1={n1}  n2={n2}");
+        // async Task<int> SquareAsync(int n)
+        // {
+        //     await Task.Delay(0);
+        //     return n * n;
+        // }
+        //
+        // Person person = await GetPersonAsync("Tom");
+        // Console.WriteLine(person.Name);
+        //
+        // Console.WriteLine("Other actions in method Main");
+        //
+        // async Task<Person> GetPersonAsync(string name)
+        // {
+        //     await Task.Delay(0);
+        //     return new Person(name);
+        // }
+        
+        // -- Example --
+        var square5 = SquareAsync(5);
+        var square6 = SquareAsync(6);
 
         Console.WriteLine("Other actions in method Main");
 
-        async Task<Person> GetPersonAsync(string name)
+        int n1 = await square5;
+        int n2 = await square6;
+        Console.WriteLine($"n1={n1}, n2={n2}");
+
+        async Task<int> SquareAsync(int n)
         {
             await Task.Delay(0);
-            return new Person(name);
+            var result =  n * n;
+            Console.WriteLine($"The square of number {n} is {n * n}");
+            return result;
         }
     }
 }

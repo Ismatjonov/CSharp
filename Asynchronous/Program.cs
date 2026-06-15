@@ -215,22 +215,42 @@ class Program
         // }
         
         // ========== Error handling in asynchronous methods ==========
-        try
-        {
-            await PrintAsync("Hello Metanit.com");
-            await PrintAsync("Hi");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
+        // try
+        // {
+        //     await PrintAsync("Hello Metanit.com");
+        //     await PrintAsync("Hi");
+        // }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine(e.Message);
+        // }
+        //
+        // async Task PrintAsync(string message)
+        // {
+        //     if (message.Length < 3)
+        //         throw new ArgumentException($"Invalid string length: {message.Length}");
+        //     await Task.Delay(1000);
+        //     Console.WriteLine(message);
+        // }
+        
+        // -- Handling inside async method --
+        PrintAsync("Hello Metanit.com");
+        PrintAsync("Hi");
+        await Task.Delay(1000);
 
-        async Task PrintAsync(string message)
+        async void PrintAsync(string message)
         {
-            if (message.Length < 3)
-                throw new ArgumentException($"Invalid string length: {message.Length}");
-            await Task.Delay(1000);
-            Console.WriteLine(message);
+            try
+            {
+                if (message.Length < 3)
+                    throw new AggregateException($"Invalid message length: {message.Length}");
+                await Task.Delay(100);
+                Console.WriteLine(message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

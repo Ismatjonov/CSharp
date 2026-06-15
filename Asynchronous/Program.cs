@@ -184,20 +184,34 @@ class Program
         
         // -- Getting the result
         // ** Task.WhenAll() **
+        // var task1 = SquareAsync(4);
+        // var task2 = SquareAsync(5);
+        // var task3 = SquareAsync(6);
+        //
+        // int[] results = await Task.WhenAll(task1, task2, task3);
+        //
+        // foreach (int result in results)
+        // {
+        //     Console.WriteLine(result);
+        // }
+        // async Task<int> SquareAsync(int n)
+        // {
+        //     await Task.Delay(1000);
+        //     return n * n;
+        // }
+        
+        // ** Property Result **
         var task1 = SquareAsync(4);
         var task2 = SquareAsync(5);
         var task3 = SquareAsync(6);
         
-        int[] results = await Task.WhenAll(task1, task2, task3);
+        await Task.WhenAll(task1, task2, task3);
+        Console.WriteLine($"task2 result: {task2.Result}");
 
-        foreach (int result in results)
+        async Task<int> SquareAsync(int x)
         {
-            Console.WriteLine(result);
-        }
-        async Task<int> SquareAsync(int n)
-        {
-            await Task.Delay(1000);
-            return n * n;
+            Task.Delay(1000);
+            return x * x;
         }
     }
 }

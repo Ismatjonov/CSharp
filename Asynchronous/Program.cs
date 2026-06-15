@@ -254,23 +254,51 @@ class Program
         // }
         
         // --- Exclusion Study ---
-        var task = PrintAsync("Hi");
+        // var task = PrintAsync("Hi");
+        // try
+        // {
+        //     await task;
+        // }
+        // catch
+        // {
+        //     Console.WriteLine(task.Exception?.InnerException?.Message);
+        //     Console.WriteLine($"isFaulted: {task.IsFaulted}");
+        //     Console.WriteLine($"Status: {task.Status}");
+        // }
+        // async Task PrintAsync(string message)
+        // {
+        //     if (message.Length < 3)
+        //         throw new ArgumentException($"Invalid message length: {message.Length}");
+        //     Task.Delay(1000);
+        //     Console.WriteLine(message);
+        // }
+        
+        // --- Handling multiple exceptions. WhenAll ---
+        var task2 = PrintAsync("H");
+        var task1 = PrintAsync("Hi");
+        var allTasks = Task.WhenAll(task1, task2);
         try
         {
-            await task;
+            await allTasks;
         }
-        catch
+        catch (Exception ex)
         {
-            Console.WriteLine(task.Exception?.InnerException?.Message);
-            Console.WriteLine($"isFaulted: {task.IsFaulted}");
-            Console.WriteLine($"Status: {task.Status}");
+            Console.WriteLine($"Exception: {ex.Message}");
+            Console.WriteLine($"IsFaulted: {allTasks.IsFaulted}");
+            if (allTasks.Exception is not null)
+            {
+                foreach (var exception in allTasks.Exception.InnerExceptions)
+                {
+                    Console.WriteLine($"InnerException: {exception.Message}");
+                }
+            }
         }
 
         async Task PrintAsync(string message)
         {
             if (message.Length < 3)
-                throw new ArgumentException($"Invalid message length: {message.Length}");
-            Task.Delay(1000);
+                throw new ArgumentException($"Invalid message: {message}");
+            await Task.Delay(1000);
             Console.WriteLine(message);
         }
     }

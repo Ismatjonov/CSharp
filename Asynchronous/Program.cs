@@ -234,23 +234,44 @@ class Program
         // }
         
         // -- Handling inside async method --
-        PrintAsync("Hello Metanit.com");
-        PrintAsync("Hi");
-        await Task.Delay(1000);
-
-        async void PrintAsync(string message)
+        // PrintAsync("Hello Metanit.com");
+        // PrintAsync("Hi");
+        // await Task.Delay(1000);
+        //
+        // async void PrintAsync(string message)
+        // {
+        //     try
+        //     {
+        //         if (message.Length < 3)
+        //             throw new AggregateException($"Invalid message length: {message.Length}");
+        //         await Task.Delay(100);
+        //         Console.WriteLine(message);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Console.WriteLine(e.Message);
+        //     }
+        // }
+        
+        // --- Exclusion Study ---
+        var task = PrintAsync("Hi");
+        try
         {
-            try
-            {
-                if (message.Length < 3)
-                    throw new AggregateException($"Invalid message length: {message.Length}");
-                await Task.Delay(100);
-                Console.WriteLine(message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            await task;
+        }
+        catch
+        {
+            Console.WriteLine(task.Exception?.InnerException?.Message);
+            Console.WriteLine($"isFaulted: {task.IsFaulted}");
+            Console.WriteLine($"Status: {task.Status}");
+        }
+
+        async Task PrintAsync(string message)
+        {
+            if (message.Length < 3)
+                throw new ArgumentException($"Invalid message length: {message.Length}");
+            Task.Delay(1000);
+            Console.WriteLine(message);
         }
     }
 }

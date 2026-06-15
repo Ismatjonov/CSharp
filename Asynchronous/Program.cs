@@ -1,4 +1,6 @@
-﻿namespace Asynchronous;
+﻿using System.Formats.Asn1;
+
+namespace Asynchronous;
 
 class Program
 {
@@ -168,15 +170,34 @@ class Program
         // }
         
         // ========== Sequential and parallel execution ==========
-        var task1 = PrintAsync("Hello C#");
-        var task2 =  PrintAsync("Hello World");
-        var task3 = PrintAsync("Hello Metanit.com");
+        // var task1 = PrintAsync("Hello C#");
+        // var task2 =  PrintAsync("Hello World");
+        // var task3 = PrintAsync("Hello Metanit.com");
+        //
+        // // await Task.WhenAny(task1, task2, task3);
+        // await Task.WhenAll(task1, task2, task3);
+        // async Task PrintAsync(string message)
+        // {
+        //     await Task.Delay(2000);
+        //     Console.WriteLine(message);
+        // }
         
-        await Task.WhenAny(task1, task2, task3);
-        async Task PrintAsync(string message)
+        // -- Getting the result
+        // ** Task.WhenAll() **
+        var task1 = SquareAsync(4);
+        var task2 = SquareAsync(5);
+        var task3 = SquareAsync(6);
+        
+        int[] results = await Task.WhenAll(task1, task2, task3);
+
+        foreach (int result in results)
         {
-            await Task.Delay(2000);
-            Console.WriteLine(message);
+            Console.WriteLine(result);
+        }
+        async Task<int> SquareAsync(int n)
+        {
+            await Task.Delay(1000);
+            return n * n;
         }
     }
 }

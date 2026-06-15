@@ -201,17 +201,36 @@ class Program
         // }
         
         // ** Property Result **
-        var task1 = SquareAsync(4);
-        var task2 = SquareAsync(5);
-        var task3 = SquareAsync(6);
+        // var task1 = SquareAsync(4);
+        // var task2 = SquareAsync(5);
+        // var task3 = SquareAsync(6);
+        //
+        // await Task.WhenAll(task1, task2, task3);
+        // Console.WriteLine($"task2 result: {task2.Result}");
+        //
+        // async Task<int> SquareAsync(int x)
+        // {
+        //     Task.Delay(1000);
+        //     return x * x;
+        // }
         
-        await Task.WhenAll(task1, task2, task3);
-        Console.WriteLine($"task2 result: {task2.Result}");
-
-        async Task<int> SquareAsync(int x)
+        // ========== Error handling in asynchronous methods ==========
+        try
         {
-            Task.Delay(1000);
-            return x * x;
+            await PrintAsync("Hello Metanit.com");
+            await PrintAsync("Hi");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        async Task PrintAsync(string message)
+        {
+            if (message.Length < 3)
+                throw new ArgumentException($"Invalid string length: {message.Length}");
+            await Task.Delay(1000);
+            Console.WriteLine(message);
         }
     }
 }

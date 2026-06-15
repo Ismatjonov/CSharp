@@ -157,14 +157,26 @@ class Program
         // }    // correct solution!
         
         // -- we can also cast ValueTask to Task
-        var getMessage = GetMessageAsnc();
-        string message = await getMessage.AsTask();
-        Console.WriteLine(message);
-
-        async ValueTask<string> GetMessageAsnc()
+        // var getMessage = GetMessageAsnc();
+        // string message = await getMessage.AsTask();
+        // Console.WriteLine(message);
+        //
+        // async ValueTask<string> GetMessageAsnc()
+        // {
+        //     await Task.Delay(0);
+        //     return "Hello";
+        // }
+        
+        // ========== Sequential and parallel execution ==========
+        var task1 = PrintAsync("Hello C#");
+        var task2 =  PrintAsync("Hello World");
+        var task3 = PrintAsync("Hello Metanit.com");
+        
+        await Task.WhenAny(task1, task2, task3);
+        async Task PrintAsync(string message)
         {
-            await Task.Delay(0);
-            return "Hello";
+            await Task.Delay(2000);
+            Console.WriteLine(message);
         }
     }
 }

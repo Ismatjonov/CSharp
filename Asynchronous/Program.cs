@@ -274,32 +274,47 @@ class Program
         // }
         
         // --- Handling multiple exceptions. WhenAll ---
-        var task2 = PrintAsync("H");
-        var task1 = PrintAsync("Hi");
-        var allTasks = Task.WhenAll(task1, task2);
-        try
+        // var task2 = PrintAsync("H");
+        // var task1 = PrintAsync("Hi");
+        // var allTasks = Task.WhenAll(task1, task2);
+        // try
+        // {
+        //     await allTasks;
+        // }
+        // catch (Exception ex)
+        // {
+        //     Console.WriteLine($"Exception: {ex.Message}");
+        //     Console.WriteLine($"IsFaulted: {allTasks.IsFaulted}");
+        //     if (allTasks.Exception is not null)
+        //     {
+        //         foreach (var exception in allTasks.Exception.InnerExceptions)
+        //         {
+        //             Console.WriteLine($"InnerException: {exception.Message}");
+        //         }
+        //     }
+        // }
+        //
+        // async Task PrintAsync(string message)
+        // {
+        //     if (message.Length < 3)
+        //         throw new ArgumentException($"Invalid message: {message}");
+        //     await Task.Delay(1000);
+        //     Console.WriteLine(message);
+        // }
+        
+        // =========== Async Streams ==========
+        await foreach (var number in GetNumbersAsync())
         {
-            await allTasks;
+            Console.WriteLine(number);
         }
-        catch (Exception ex)
+ 
+        async IAsyncEnumerable<int> GetNumbersAsync()
         {
-            Console.WriteLine($"Exception: {ex.Message}");
-            Console.WriteLine($"IsFaulted: {allTasks.IsFaulted}");
-            if (allTasks.Exception is not null)
+            for (int i = 0; i < 10; i++)
             {
-                foreach (var exception in allTasks.Exception.InnerExceptions)
-                {
-                    Console.WriteLine($"InnerException: {exception.Message}");
-                }
+                await Task.Delay(100);
+                yield return i;
             }
-        }
-
-        async Task PrintAsync(string message)
-        {
-            if (message.Length < 3)
-                throw new ArgumentException($"Invalid message: {message}");
-            await Task.Delay(1000);
-            Console.WriteLine(message);
         }
     }
 }

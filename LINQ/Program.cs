@@ -82,6 +82,24 @@ class Program
         foreach (var p2 in personal2)
             Console.WriteLine($"{p2.FirstName} - {p2.Year}");
         Console.WriteLine();
+        
+        // --- Variables in queries and the let operator ---
+        var people5 = new List<Person>
+        {
+            new Person("Tom", 23),
+            new Person("Bob", 27)
+        };
+        var personnel = from p in people5
+            let name = $"Mr. {p.Name}"
+            let year = DateTime.Today.Year - p.Age
+            select new
+            {
+                Name = name,
+                Year = year
+            };
+        foreach(var p in personnel)
+            Console.WriteLine($"{p.Name} - {p.Year}");
+        Console.WriteLine();
     }
 }
 record  Person(string Name, int Age);

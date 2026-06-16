@@ -100,6 +100,19 @@ class Program
         foreach(var p in personnel)
             Console.WriteLine($"{p.Name} - {p.Year}");
         Console.WriteLine();
+        
+        // --- Selection from several sources ---
+        var courses = new List<Course> { new Course("C#"), new Course("Java") };
+        var students = new List<Student> { new Student("Tom"), new Student("Bob") };
+        
+        var enrollments = from course in courses
+            from student in students
+            select new { Student = student.Name, Course = course.Title };
+
+        foreach (var enrollment in enrollments)
+            Console.WriteLine($"{enrollment.Student} - {enrollment.Course}");
     }
 }
 record  Person(string Name, int Age);
+record Course(string Title);
+record Student(string Name);

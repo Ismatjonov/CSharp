@@ -111,8 +111,32 @@ class Program
 
         foreach (var enrollment in enrollments)
             Console.WriteLine($"{enrollment.Student} - {enrollment.Course}");
+        Console.WriteLine();
+        
+        // --- SelectMany & object flattening ---
+        var companies = new List<Company>
+        {
+            new Company("Microsoft", new List<Employee> { new Employee("Tom"), new Employee("Bob") }),
+            new Company("Google", new List<Employee> { new Employee("Mike"), new Employee("Sam") }),
+        };
+        var employees = companies.SelectMany(c => c.Staff);
+        
+        foreach(var employee in employees)
+            Console.WriteLine(employee.Name);
+        Console.WriteLine();
+        
+        // ** A similar example using LINQ operations **
+        var employess2 = from c in companies
+            from emp in c.Staff
+            select emp;
+        
+        foreach(var employee in employess2)
+            Console.WriteLine(employee.Name);
+        Console.WriteLine();
     }
 }
 record  Person(string Name, int Age);
+record  Employee(string Name);
 record Course(string Title);
 record Student(string Name);
+record Company(string Name, List<Employee> Staff);

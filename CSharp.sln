@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parallel", "Parallel\Parall
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asynchronous", "Asynchronous\Asynchronous.csproj", "{5C0E96B8-0755-4A78-AA52-C3391D8233CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQ", "LINQ\LINQ.csproj", "{02C66A29-18FF-4165-9C55-7FBADD365421}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{5C0E96B8-0755-4A78-AA52-C3391D8233CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0E96B8-0755-4A78-AA52-C3391D8233CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C0E96B8-0755-4A78-AA52-C3391D8233CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C66A29-18FF-4165-9C55-7FBADD365421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C66A29-18FF-4165-9C55-7FBADD365421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C66A29-18FF-4165-9C55-7FBADD365421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C66A29-18FF-4165-9C55-7FBADD365421}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

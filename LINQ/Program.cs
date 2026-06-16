@@ -4,6 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        // The basic of LINQ
+        /*
         string[] people = { "Tom", "Bob", "Sam", "Tim", "Tomas", "Bill" };
         var selectedPeople = new List<string>();
         
@@ -35,6 +37,7 @@ class Program
             Console.WriteLine(person);
         Console.WriteLine();
         
+        // Selects' methods
         // ========== Data projection ==========
         var people3 = new List<Person>
         {
@@ -149,10 +152,59 @@ class Program
         foreach(var employee in employees4)
             Console.WriteLine($"{employee.Name} - {employee.Employees}");
         Console.WriteLine();
+        */
+        
+        // ========== Filtering a collection ==========
+        string[] people = { "Tom", "Alice", "Bob", "Sam", "Tim", "Tomas", "Bill" };
+        var selectedPeople = people.Where(p => p.Length == 3);
+        
+        foreach(string person in selectedPeople)
+            Console.WriteLine(person);
+        Console.WriteLine();
+
+        int[] numbers = { 1, 2, 3, 4, 34, 10, 55, 56, 66, 67, 69, 77, 88 };
+        var selectedNumbers = numbers.Where(i => i % 2 == 0 && i > 10);
+        foreach(int number in selectedNumbers)
+            Console.Write(number + " ");
+        Console.WriteLine();
+        
+        // --- Selection of complex objects ---
+        var people2 = new List<Person>
+        {
+            new Person("Tom", 23, new List<string> { "english", "german" }),
+            new Person("Bob", 27, new List<string> { "english", "french" }),
+            new Person("Sam", 29, new List<string> { "english", "spanish" }),
+            new Person("Alice", 24, new List<string> { "spanish", "german" }),
+        };
+        var selectedPerson = from p in people2
+            where p.Age > 25
+                select p;
+        foreach(var person in selectedPerson)
+            Console.WriteLine($"{person.Name} - {person.Age}");
+        Console.WriteLine();
+        
+        // --- Complex filtering ---
+        var selectedPerson2 = from person in people2
+            from land in person.Languages
+            where person.Age > 25
+                where land == "spanish"
+                select person;
+
+        foreach (var person in selectedPerson2)
+            Console.WriteLine($"{person.Name} - {person.Age}");
+        Console.WriteLine();
+        
+        var selectedManyPerson = people2.SelectMany(u => u.Languages,
+            (u, l) => new { Person = u, Language = l })
+            .Where(u => u.Language == "english" && u.Person.Age < 28)
+            .Select(u => u.Person);
+        
+        foreach(var person in selectedManyPerson)
+            Console.WriteLine($"{person.Name} - {person.Age}");
+        Console.WriteLine(); 
     }
 }
-record  Person(string Name, int Age);
+record  Person(string Name, int Age, List<string> Languages);
 record  Employee(string Name);
 record Course(string Title);
-record Student(string Name);
 record Company(string Name, List<Employee> Staff);

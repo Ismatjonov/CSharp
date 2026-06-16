@@ -155,6 +155,7 @@ class Program
         */
         
         // ========== Filtering a collection ==========
+        /*
         string[] people = { "Tom", "Alice", "Bob", "Sam", "Tim", "Tomas", "Bill" };
         var selectedPeople = people.Where(p => p.Length == 3);
         
@@ -201,10 +202,24 @@ class Program
         
         foreach(var person in selectedManyPerson)
             Console.WriteLine($"{person.Name} - {person.Age}");
-        Console.WriteLine(); 
+        Console.WriteLine();
+        */
+        
+        // --- Filtering by data type ---
+        var people = new List<Person>
+        {
+            new Student("Tom"),
+            new Person("Sam"),
+            new Student("Bob"),
+            new Employee("Mike")
+        };
+        var students = people.OfType<Student>();
+        foreach(var student in students)
+            Console.WriteLine(student.Name);
     }
 }
-record  Person(string Name, int Age, List<string> Languages);
-record  Employee(string Name);
+record  Person(string Name);
+record Student(string Name) : Person(Name);
+record  Employee(string Name) : Person(Name);
 record Course(string Title);
 record Company(string Name, List<Employee> Staff);

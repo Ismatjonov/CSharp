@@ -303,18 +303,26 @@ class Program
         // }
         
         // =========== Async Streams ==========
-        await foreach (var number in GetNumbersAsync())
+        // await foreach (var number in GetNumbersAsync())
+        // {
+        //     Console.WriteLine(number);
+        // }
+        //
+        // async IAsyncEnumerable<int> GetNumbersAsync()
+        // {
+        //     for (int i = 0; i < 10; i++)
+        //     {
+        //         await Task.Delay(100);
+        //         yield return i;
+        //     }
+        // }
+        
+        // --- Stream Example ---
+        Repository repo = new Repository();
+        IAsyncEnumerable<string> data = repo.GetDataAsync();
+        await foreach (var name in data)
         {
-            Console.WriteLine(number);
-        }
- 
-        async IAsyncEnumerable<int> GetNumbersAsync()
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                await Task.Delay(100);
-                yield return i;
-            }
+            Console.WriteLine(name);
         }
     }
 }
@@ -332,3 +340,18 @@ class Account
 }
 
 record class Person(string Name);
+
+class Repository
+{
+    private string[] data = { "Tom", "Sam", "Kate", "Alice", "Bob" };
+
+    public async IAsyncEnumerable<string> GetDataAsync()
+    {
+        for (int i = 0; i < data.Length; i++)
+        {
+            Console.WriteLine($"Getting the { i + 1} element");
+            await Task.Delay(500);
+            yield return data[i];
+        }
+    }
+}

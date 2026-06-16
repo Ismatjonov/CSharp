@@ -34,5 +34,27 @@ class Program
         foreach(string person in selectedPeople2)
             Console.WriteLine(person);
         Console.WriteLine();
+        
+        // ========== Data projection ==========
+        var people3 = new List<Person>
+        {
+            new Person("Tom", 23),
+            new Person("Bob", 27),
+            new Person("Sam", 29),
+            new Person("Alice", 24)
+        };
+        
+        var names = from p in people3 select p.Name;
+        
+        foreach(string name in names)
+            Console.WriteLine(name);
+        Console.WriteLine();
+        
+        // ** Using extension method Select() **
+        var names2 = people3.Select(u => u.Name);
+        foreach(string name in names2)
+            Console.WriteLine(name);
+        Console.WriteLine();
     }
 }
+record  Person(string Name, int Age);

@@ -27,5 +27,12 @@ class Program
             Console.WriteLine(person);
         Console.WriteLine();
         
+        // --- LINQ extension methods ---
+        string[] people2 = { "Tom", "Bob","Tomas", "Sam", "Tim" };
+        var selectedPeople2 = people2.Where(p => p.ToUpper().StartsWith("T")).OrderBy(p => p);
+        
+        foreach(string person in selectedPeople2)
+            Console.WriteLine(person);
+        Console.WriteLine();
     }
 }

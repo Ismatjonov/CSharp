@@ -133,6 +133,22 @@ class Program
         foreach(var employee in employess2)
             Console.WriteLine(employee.Name);
         Console.WriteLine();
+        
+        // --- Add to employees their companies ---
+        var employees3 = companies.SelectMany(c => c.Staff, (c, emp) => new {Name = c.Name, Employees = emp.Name});
+        
+        foreach(var employee in employees3)
+            Console.WriteLine($"{employee.Employees} - {employee.Name}");
+        Console.WriteLine();
+        
+        // ** A similar example using query operations **
+        var employees4 = from c in companies
+            from emp in c.Staff
+            select new { Name = c.Name, Employees = emp.Name };
+        
+        foreach(var employee in employees4)
+            Console.WriteLine($"{employee.Name} - {employee.Employees}");
+        Console.WriteLine();
     }
 }
 record  Person(string Name, int Age);

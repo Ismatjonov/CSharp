@@ -263,7 +263,7 @@ class Program
         Console.WriteLine();*/
         
         // --- Sort in ascending and descending order ---
-        int[] numbers = { 3, 12, 4, 10 };
+        /*int[] numbers = { 3, 12, 4, 10 };
         var orderedNumbers = from n in numbers
             orderby n descending
                 select n;
@@ -291,6 +291,13 @@ class Program
         
         var sortedPeople2 = people.OrderBy(p => p.Name).ThenByDescending(p => p.Age);
         foreach(Person p in sortedPeople2) Console.WriteLine($"{p.Name} - {p.Age}");
+        Console.WriteLine();*/
+        
+        // --- Overriding the sorting criteria ---
+        string[] people = new[] { "Kate", "Tom", "Sam", "Mike", "Alice" };
+        var sortedPeople = people.OrderBy(p => p, new CustomStringComparer());
+        foreach(var person in sortedPeople)
+            Console.WriteLine(person);
         Console.WriteLine();
     }
 }
@@ -299,3 +306,13 @@ record  Person(string Name, int Age);
 // record  Employee(string Name) : Person(Name);
 // record Course(string Title);
 // record Company(string Name, List<Employee> Staff);
+
+class CustomStringComparer : IComparer<string>
+{
+    public int Compare(string? x, string? y)
+    {
+        int xLength = x?.Length ?? 0;
+        int yLength = y?.Length ?? 0;
+        return xLength - yLength;
+    }
+}

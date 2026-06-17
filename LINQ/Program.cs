@@ -243,7 +243,7 @@ class Program
         Console.WriteLine();*/
         
         // --- Sorting complex methods ---
-        var people = new List<Person>
+        /*var people = new List<Person>
         {
             new Person("Tom", 37),
             new Person("Sam", 28),
@@ -260,8 +260,19 @@ class Program
         var sortedPeople2 = people.OrderBy(p => p.Name);
         foreach(var person in sortedPeople2)
             Console.WriteLine($"{person.Name} - {person.Age}");
+        Console.WriteLine();*/
+        
+        // --- Sort in ascending and descending order ---
+        int[] numbers = { 3, 12, 4, 10 };
+        var orderedNumbers = from n in numbers
+            orderby n descending
+                select n;
+        foreach(int n in orderedNumbers) Console.WriteLine(n);
         Console.WriteLine();
         
+        var orderedWithNethod = numbers.OrderByDescending(n => n);
+        foreach(int n in orderedWithNethod) Console.WriteLine(n);
+        Console.WriteLine();
     }
 }
 record  Person(string Name, int Age);

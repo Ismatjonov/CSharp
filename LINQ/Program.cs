@@ -206,16 +206,33 @@ class Program
         */
         
         // --- Filtering by data type ---
-        var people = new List<Person>
-        {
-            new Student("Tom"),
-            new Person("Sam"),
-            new Student("Bob"),
-            new Employee("Mike")
-        };
-        var students = people.OfType<Student>();
-        foreach(var student in students)
-            Console.WriteLine(student.Name);
+        // var people = new List<Person>
+        // {
+        //     new Student("Tom"),
+        //     new Person("Sam"),
+        //     new Student("Bob"),
+        //     new Employee("Mike")
+        // };
+        // var students = people.OfType<Student>();
+        // foreach(var student in students)
+        //     Console.WriteLine(student.Name);
+        // Console.WriteLine();
+        
+        // ========== Sorting ==========
+        int[] numbers = { 3, 12, 4, 10 };
+        var orderedNumbers = from i in numbers
+            orderby i
+                select i;
+        
+        foreach(int i in orderedNumbers)
+            Console.WriteLine(i);
+        Console.WriteLine();
+
+        string[] people = { "Tom", "Bob", "Sam" };
+        var orderedPeople = from p in people orderby p select p;
+        foreach(string p in orderedPeople) Console.WriteLine(p);
+        Console.WriteLine();
+        
     }
 }
 record  Person(string Name);

@@ -219,7 +219,7 @@ class Program
         // Console.WriteLine();
         
         // ========== Sorting ==========
-        int[] numbers = { 3, 12, 4, 10 };
+        /*int[] numbers = { 3, 12, 4, 10 };
         var orderedNumbers = from i in numbers
             orderby i
                 select i;
@@ -233,10 +233,39 @@ class Program
         foreach(string p in orderedPeople) Console.WriteLine(p);
         Console.WriteLine();
         
+        // ** Extension method: OrderBy() **
+        var orderNumber = numbers.OrderBy(n => n);
+        foreach(int n in orderNumber) Console.WriteLine(n);
+        Console.WriteLine();
+        
+        var orderPeople = people.OrderBy(p => p);
+        foreach(string p in orderPeople) Console.WriteLine(p);
+        Console.WriteLine();*/
+        
+        // --- Sorting complex methods ---
+        var people = new List<Person>
+        {
+            new Person("Tom", 37),
+            new Person("Sam", 28),
+            new Person("Tom", 22),
+            new Person("Bob", 41)
+        };
+        var selectedPeople1 = from p in people
+            orderby p.Name
+                select p;
+        foreach(var person in selectedPeople1)
+            Console.WriteLine($"{person.Name} - {person.Age}");
+        Console.WriteLine();
+        
+        var sortedPeople2 = people.OrderBy(p => p.Name);
+        foreach(var person in sortedPeople2)
+            Console.WriteLine($"{person.Name} - {person.Age}");
+        Console.WriteLine();
+        
     }
 }
-record  Person(string Name);
-record Student(string Name) : Person(Name);
-record  Employee(string Name) : Person(Name);
-record Course(string Title);
-record Company(string Name, List<Employee> Staff);
+record  Person(string Name, int Age);
+// record Student(string Name) : Person(Name);
+// record  Employee(string Name) : Person(Name);
+// record Course(string Title);
+// record Company(string Name, List<Employee> Staff);

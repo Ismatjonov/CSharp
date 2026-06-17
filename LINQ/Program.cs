@@ -273,6 +273,25 @@ class Program
         var orderedWithNethod = numbers.OrderByDescending(n => n);
         foreach(int n in orderedWithNethod) Console.WriteLine(n);
         Console.WriteLine();
+        
+        // --- Multiple sorting criteria ---
+        var people = new List<Person>
+        {
+            new Person("Tom", 37),
+            new Person("Sam", 28),
+            new Person("Tom", 22),
+            new Person("Bob", 41),
+        };
+        
+        var sortedPeople1 = from p in people
+            orderby p.Name, p.Age
+                select p;
+        foreach(Person p in sortedPeople1) Console.WriteLine($"{p.Name} - {p.Age}");
+        Console.WriteLine();
+        
+        var sortedPeople2 = people.OrderBy(p => p.Name).ThenByDescending(p => p.Age);
+        foreach(Person p in sortedPeople2) Console.WriteLine($"{p.Name} - {p.Age}");
+        Console.WriteLine();
     }
 }
 record  Person(string Name, int Age);

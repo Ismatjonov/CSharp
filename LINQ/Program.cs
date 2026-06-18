@@ -345,7 +345,7 @@ class Program
         Console.WriteLine();*/
         
         // ========== Aggregate operations ==========
-        int[] numbers = { 1, 2, 3, 4, 5 };
+        /*int[] numbers = { 1, 2, 3, 4, 5 };
         int query = numbers.Aggregate((x, y) => x - y);
         Console.WriteLine(query);
 
@@ -386,7 +386,56 @@ class Program
         
         Console.WriteLine($"Min: {min}");
         Console.WriteLine($"Max: {max}");
-        Console.WriteLine($"Average: {average}");
+        Console.WriteLine($"Average: {average}");*/
+        
+        // ========= Methods: Skip() & Take()
+        string[] people = { "Tom", "Sam", "Bob", "Mike", "Kate" };
+        var result = people.Skip(2);
+        
+        foreach(string person in result)
+            Console.Write(person + " ");
+        Console.WriteLine();
+        
+        var lastResult = people.SkipLast(2);
+        
+        foreach(var person in lastResult)
+            Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // ** SkipWhile() **
+        var whileResult = people.SkipWhile(p => p.Length == 3);
+        
+        foreach(string person in whileResult)
+            Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // --- Take() ---
+        var takeResult = people.Take(3);
+        
+        foreach(string person in takeResult)
+            Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // ** TakeLast **
+        var takeLastResult = people.TakeLast(3);
+        
+        foreach(string person in takeLastResult)
+            Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // ** TakeWhile() **
+        var takeWhileResult = people.TakeWhile(p => p.Length == 3);
+        
+        foreach(string person in takeWhileResult)
+            Console.Write(person + " ");
+        Console.WriteLine();
+        
+        // ** Pagination output **
+        var Result = people.Skip(3).Take(2);
+        foreach(string person in Result)
+            Console.Write(person + " ");
+        Console.WriteLine();
+        
     }
 }
 // record  Person(string Name, int Age);

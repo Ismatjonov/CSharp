@@ -389,7 +389,7 @@ class Program
         Console.WriteLine($"Average: {average}");*/
         
         // ========= Methods: Skip() & Take()
-        string[] people = { "Tom", "Sam", "Bob", "Mike", "Kate" };
+       /*string[] people = { "Tom", "Sam", "Bob", "Mike", "Kate" };
         var result = people.Skip(2);
         
         foreach(string person in result)
@@ -434,8 +434,61 @@ class Program
         var Result = people.Skip(3).Take(2);
         foreach(string person in Result)
             Console.Write(person + " ");
-        Console.WriteLine();
+        Console.WriteLine();*/
         
+       // ========== Grouping ==========
+       Person[] people =
+       {
+           new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
+           new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft"),
+           new Person("Kate", "JetBrains"), new Person("Alice", "Microsoft"),
+       };
+
+       var companies = from perosn in people
+           group perosn by perosn.Company;
+
+       foreach (var company in companies)
+       {
+           Console.WriteLine(company.Key);
+           foreach (var person in company)
+           {
+               Console.WriteLine(person.Name);
+           }
+           Console.WriteLine();
+       }
+       
+       // --- Creating new object when grouping ---
+       var companies2 = from person in people
+           group person by person.Company into g
+               select new { Name = g.Key, Count = g.Count() };
+       
+       foreach(var company in companies2)
+           Console.WriteLine($"{company.Name} : {company.Count}");
+       
+       // Or you can use
+       var companies3 = people.GroupBy(person => person.Company).Select(g => new { Company = g.Key, Count = g.Count() });
+       Console.WriteLine();
+       
+       // ---Nested queries ---
+       var comps = from person in people
+           group person by person.Company
+           into g
+           select new
+           {
+               Name = g.Key,
+               Count = g.Count(),
+               Employees = from p in g select p
+           };
+
+       foreach (var company in comps)
+       {
+           Console.WriteLine($"{company.Name} : {company.Count}");
+           foreach (var person in company.Employees)
+           {
+               Console.WriteLine(person.Name);
+           }
+           Console.WriteLine();
+       }
     }
 }
 // record  Person(string Name, int Age);
@@ -466,4 +519,4 @@ class Program
     public override int GetHashCode() => Name.GetHashCode();
 }*/
 
-record Person(string Name, int Age);
+record Person(string Name, string Company);

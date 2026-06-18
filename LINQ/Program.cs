@@ -294,20 +294,66 @@ class Program
         Console.WriteLine();*/
         
         // --- Overriding the sorting criteria ---
-        string[] people = new[] { "Kate", "Tom", "Sam", "Mike", "Alice" };
-        var sortedPeople = people.OrderBy(p => p, new CustomStringComparer());
-        foreach(var person in sortedPeople)
-            Console.WriteLine(person);
+        // string[] people = new[] { "Kate", "Tom", "Sam", "Mike", "Alice" };
+        // var sortedPeople = people.OrderBy(p => p, new CustomStringComparer());
+        // foreach(var person in sortedPeople)
+        //     Console.WriteLine(person);
+        // Console.WriteLine();
+        
+        // --- Union, intersection, and difference of collections ---
+        
+        
+        string[] soft = { "Microsoft", "Google", "Apple" };
+        string[] hard = { "Apple", "IBM", "Samsung" };
+        
+        // ** Difference of sequences **
+        var result = soft.Except(hard);
+        foreach(string item in result)
+            Console.WriteLine(item);
+        Console.WriteLine();
+        
+        // ** Intersection of sequences **
+        var result2 = soft.Intersect(hard);
+        foreach(string item in result2)
+            Console.WriteLine(item);
+        Console.WriteLine();
+        
+        // ** Removing dublicates **
+        string[] soft2 = { "Microsoft", "Google", "Apple", "Microsoft", "Google" };
+        
+        var result3 = soft2.Distinct();
+        
+        foreach(string item in result3)
+            Console.WriteLine(item);
+        Console.WriteLine();
+
+        // ** Union sequences **
+        string[] soft3 = { "Microsoft", "Google", "Apple" };
+        string[] hard3 = { "Apple", "IBM", "Samsung" };
+        
+        var result4 = soft3.Union(hard3);
+        foreach(string item in result4)
+            Console.WriteLine(item);
+        Console.WriteLine();
+        
+        // ** Work with complex objects **
+        Person[] students = new[] { new Person("Tom"), new Person("Bob"), new Person("Sam") };
+        Person[] employees = new[] { new Person("Tom"), new Person("Bob"), new Person("Mike") };
+        
+        var people = students.Union(employees);
+        
+        foreach(var item in people)
+            Console.WriteLine(item.Name);
         Console.WriteLine();
     }
 }
-record  Person(string Name, int Age);
+// record  Person(string Name, int Age);
 // record Student(string Name) : Person(Name);
 // record  Employee(string Name) : Person(Name);
 // record Course(string Title);
 // record Company(string Name, List<Employee> Staff);
 
-class CustomStringComparer : IComparer<string>
+/*class CustomStringComparer : IComparer<string>
 {
     public int Compare(string? x, string? y)
     {
@@ -315,4 +361,16 @@ class CustomStringComparer : IComparer<string>
         int yLength = y?.Length ?? 0;
         return xLength - yLength;
     }
+}*/
+class Person
+{
+    public string Name { get; set; }
+    public Person(string name) => Name = name;
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is Person person) return Name == person.Name;
+        return false;
+    }
+    public override int GetHashCode() => Name.GetHashCode();
 }

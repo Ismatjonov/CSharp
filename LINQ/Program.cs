@@ -1,4 +1,6 @@
-﻿namespace LINQ;
+﻿using System.Diagnostics;
+
+namespace LINQ;
 
 class Program
 {
@@ -437,7 +439,7 @@ class Program
         Console.WriteLine();*/
         
        // ========== Grouping ==========
-       Person[] people =
+       /*Person[] people =
        {
            new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
            new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft"),
@@ -488,7 +490,65 @@ class Program
                Console.WriteLine(person.Name);
            }
            Console.WriteLine();
+       }*/
+       
+       // ========== Connecting collections ==========
+       Person[] people =
+       {
+           new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
+           new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft")
+       };
+       Company[] companies =
+       {
+           new Company("Microsoft", "C#"),
+           new Company("Google", "Go"),
+           new Company("Oracle", "Java")
+       };
+       var employees = from p in people
+           join c in companies on p.Company equals c.Title
+           select new { Name = p.Name, Company = c.Title, Language = c.Language };
+       
+       foreach(var e in employees)
+           Console.WriteLine($"{e.Name} - {e.Company} ({e.Language})");
+       Console.WriteLine();
+       
+       // --- method Join() ---
+       var employees2 = people.Join(companies,
+           p => p.Company,
+           c => c.Title,
+           (p, c) => new { Name = p.Name, Company = c.Title, Language = c.Language });
+       
+       foreach(var e in employees2)
+           Console.WriteLine($"{e.Name} - {e.Company} ({e.Language})");
+       Console.WriteLine();
+       
+       // --- GroupJoin ---
+       var personnel = companies.GroupJoin(people,
+           c => c.Title,
+           p => p.Company,
+           (c, employees) => new
+           {
+               Title = c.Title,
+               Employees = employees
+           });
+
+       foreach (var company in personnel)
+       {
+           Console.WriteLine(company.Title);
+           foreach(var emp in company.Employees)
+               Console.WriteLine(emp.Name);
+           Console.WriteLine();
        }
+       
+       // --- method Zip() ---
+       var courses = new List<Course> { new Course("C#"), new Course("Java") };
+       var students = new List<Student> { new Student("Tom"), new Student("Bob"), new Student("Mike") };
+
+       var enrollments = courses.Zip(students);
+       
+       foreach(var enrollment in enrollments)
+           Console.WriteLine($"{enrollment.First} - {enrollment.Second}");
+       Console.WriteLine();
     }
 }
 // record  Person(string Name, int Age);
@@ -520,3 +580,6 @@ class Program
 }*/
 
 record Person(string Name, string Company);
+record Company(string Title, string Language);
+record Course(string Title);
+record Student(string Name);

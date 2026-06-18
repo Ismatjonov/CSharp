@@ -675,6 +675,24 @@ class Program
         
         foreach(var person in selectedPeople2)
             Console.WriteLine(person);*/
+        
+       // ========== Delegates in LINQ queries ==========
+       string[] people = ["Tom", "Bob", "Kate", "Tim", "Mike", "Sam"];
+       var result = people.Where(Length3);
+       
+       foreach(var person in result)
+           Console.WriteLine(person);
+       
+       bool Length3(string name) => name.Length == 3;
+
+       int[] numbers = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7];
+       var _result = numbers.Where(i => i > 0).Select(Square);
+
+       foreach (int n in _result)
+       {
+           Console.WriteLine(n);
+       }
+       int Square(int number) => number * number;
 
     }
 }

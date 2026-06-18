@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace LINQ;
 
@@ -493,7 +493,7 @@ class Program
        }*/
        
        // ========== Connecting collections ==========
-       Person[] people =
+       /*Person[] people =
        {
            new Person("Tom", "Microsoft"), new Person("Sam", "Google"),
            new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft")
@@ -548,7 +548,134 @@ class Program
        
        foreach(var enrollment in enrollments)
            Console.WriteLine($"{enrollment.First} - {enrollment.Second}");
+       Console.WriteLine();*/
+       
+       // ========== Checking availability and retrieving items ==========
+       /*string[] people = { "Tom", "Tim", "Bob", "Sam" };
+       bool allHas3Chars = people.All(s => s.Length == 3);
+       Console.WriteLine(allHas3Chars);
+
+       bool alllStartWithT = people.All(s => s.StartsWith("T"));
+       Console.WriteLine(alllStartWithT);
+       
+       // ** Any() **
+       bool allHasMore3Chars = people.Any(s => s.Length > 3);
+       Console.WriteLine(allHasMore3Chars);
+       
+       bool allStartsWithT = people.Any(s => s.StartsWith("T"));
+       Console.WriteLine(allStartsWithT);
+       
+       // ** Contains() **
+       bool hasTom = people.Contains("Tom");
+       Console.WriteLine(hasTom);
+       
+       bool hasMike = people.Contains("Mike");
+       Console.WriteLine(hasMike);
+       
+       // ** objects **
+       Person[] people1 =
+       {
+           new Person("Tom"),
+           new Person("Bob"),
+           new Person("sam"),
+       };
+       var tom = new Person("Tom");
+       var mike = new Person("Mike");
+       bool hasTom1 = people1.Contains(tom);
+       Console.WriteLine(hasTom1);
+       
+       bool hasMike1 = people1.Contains(mike);
+       Console.WriteLine(hasMike1);
+
+       // Diagnostic
+       string[] people2 = { "tom","Tim", "bOb", "Sam" };
+
+       bool hastom = people2.Contains("Tom", new CustomStringComparer());
+       Console.WriteLine(hastom);
+       
+       bool hasbob = people2.Contains("Bob", new CustomStringComparer());
+       Console.WriteLine(hasbob);
+       
+       // --- First/FirstOrdefault
+       string[] people3 = { "Tom", "Tim", "Bob", "Sam" };
+       
+       var first  = people3.First();
+       Console.WriteLine(first);
+       
+       string[] people4 = { "Tom", "Bob", "Kate", "Tim", "Mike", "Sam" };
+       var firstWith4Chars = people4.First(f => f.Length == 4);
+       Console.WriteLine(firstWith4Chars);
+       
+       // var firstWith5Chars = people4.First(f => f.Length == 5);
+       // Console.WriteLine(firstWith5Chars);   // ! exception
+       //
+       // var First = new string[] { }.First(); ! exception
+       // Console.WriteLine(First); 
+       
+       var _first = people4.FirstOrDefault();
+       Console.WriteLine(_first);
+       
+       var _firstWith4Chars = people4.FirstOrDefault(f => f.Length == 4);
+       Console.WriteLine(_firstWith4Chars);
+       
+       var firstOrDefault = new string[] {}.FirstOrDefault();
+       Console.WriteLine(firstOrDefault);
+       
+       // Customize
+       string? firstWith5Chars = people4.FirstOrDefault(f => f.Length == 5, "Undefined");
+       Console.WriteLine(firstWith5Chars);
+       
+       string? _firstOrDefault = new string[] {}.FirstOrDefault("Hello");
+       Console.WriteLine(_firstOrDefault);
+       
+       int fistNumber = new int[] {}.FirstOrDefault(100);
+       Console.WriteLine(fistNumber);
+
        Console.WriteLine();
+
+       // --- Last & LAstOrDefault
+        string last = people4.Last();
+        Console.WriteLine(last);
+        
+        string lastWith4Chars = people4.Last(s => s.Length == 4);
+        Console.WriteLine(lastWith4Chars);
+        
+        // ** LastOrDefault **
+        string? _last = people4.LastOrDefault();
+        Console.WriteLine(_last);
+        
+        string? _lastWith4Chars = people4.LastOrDefault(s => s.Length == 4);
+        Console.WriteLine(_lastWith4Chars);
+        
+        string? lastWith5Chars = people4.LastOrDefault(s => s.Length == 5);
+        Console.WriteLine(lastWith5Chars);
+        
+        string? lastWith5CharsOrDefault = people4.LastOrDefault(s => s.Length == 5, "Undefined");
+        Console.WriteLine(lastWith5CharsOrDefault);
+        
+        string? lastOrDefault = people4.LastOrDefault("hello");
+        Console.WriteLine(lastOrDefault);*/
+       
+       // ========== Deferred and immediate execution of LINQ ==========
+       /*string[] people = ["Tom", "Sam", "Bob"];
+       var selectedPeople = people.Where(s => s.Length == 3).OrderBy(s => s);
+       
+       foreach(var person in selectedPeople)
+           Console.WriteLine(person);
+       
+        var count = people.Where(s => s.Length == 3).OrderBy(s => s);
+        Console.WriteLine(count.Count());
+
+        // people[2] = "mike";
+        Console.WriteLine(count.Count());
+        
+        // ** ToArray, ToDictionary **
+        var selectedPeople2 = people.Where(s => s.Length == 3).OrderBy(s => s).ToList();
+        people[2] = "Mike";
+        
+        foreach(var person in selectedPeople2)
+            Console.WriteLine(person);*/
+
     }
 }
 // record  Person(string Name, int Age);
@@ -579,7 +706,30 @@ class Program
     public override int GetHashCode() => Name.GetHashCode();
 }*/
 
-record Person(string Name, string Company);
+// record Person(string Name, string Company);
 record Company(string Title, string Language);
 record Course(string Title);
 record Student(string Name);
+
+class Person
+{
+    public string Name { get; set; }
+    public Person(string name) => Name = name;
+    public override bool Equals(object? obj)
+    {
+        if (obj is Person person) return Name == person.Name;
+        return false;
+    }
+    public override int GetHashCode() => Name.GetHashCode();
+}
+
+class CustomStringComparer : IEqualityComparer<string>
+{
+    public bool Equals(string? x, string? y)
+    {
+        if (x is null && y is null) return false;
+        return x.ToLower() == y.ToLower();
+    }
+    public int GetHashCode(string obj) => obj.ToLower().GetHashCode();
+}
+

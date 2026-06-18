@@ -300,10 +300,8 @@ class Program
         //     Console.WriteLine(person);
         // Console.WriteLine();
         
-        // --- Union, intersection, and difference of collections ---
-        
-        
-        string[] soft = { "Microsoft", "Google", "Apple" };
+        // ========== Union, intersection, and difference of collections ==========
+        /*string[] soft = { "Microsoft", "Google", "Apple" };
         string[] hard = { "Apple", "IBM", "Samsung" };
         
         // ** Difference of sequences **
@@ -344,7 +342,51 @@ class Program
         
         foreach(var item in people)
             Console.WriteLine(item.Name);
+        Console.WriteLine();*/
+        
+        // ========== Aggregate operations ==========
+        int[] numbers = { 1, 2, 3, 4, 5 };
+        int query = numbers.Aggregate((x, y) => x - y);
+        Console.WriteLine(query);
+
+        string[] words = { "Gaudeamus", "igitur", "Juvenes", "dum", "sumus" };
+        var sentences = words.Aggregate("Text:", (first, next) => $"{first} {next}");
+        Console.WriteLine(sentences);
+        
+        // ** mathod Count() **
+        int[] numbers2 = { 1, 2, 3, 4, 10, 34, 55, 66, 77, 88 };
+        int size = numbers2.Count();
+        Console.WriteLine(size);
+        
+        int evenSize = numbers2.Count(x => x % 2 == 0 && x > 10);
+        Console.WriteLine(evenSize);
+        
+        // ** method Sum() **
+        int sum = numbers2.Sum();
+        Console.WriteLine(sum);
+        
+        Person[] people = { new Person("Tom", 37), new Person("Bob", 27), new Person("Jane", 41) };
+
+        int ageSum = people.Sum(p => p.Age);
+        Console.WriteLine(ageSum);
+        
+        // ** Max, Min & Average
+        int min = numbers2.Min();
+        int max = numbers2.Max();
+        double average = numbers2.Average();
+
+        Console.WriteLine($"Min: {min}");
+        Console.WriteLine($"Max: {max}");
+        Console.WriteLine($"Average: {average}");
         Console.WriteLine();
+        
+        min = people.Min(p => p.Age);
+        max = people.Max(p => p.Age);
+        average = people.Average(p => p.Age);
+        
+        Console.WriteLine($"Min: {min}");
+        Console.WriteLine($"Max: {max}");
+        Console.WriteLine($"Average: {average}");
     }
 }
 // record  Person(string Name, int Age);
@@ -362,7 +404,7 @@ class Program
         return xLength - yLength;
     }
 }*/
-class Person
+/*class Person
 {
     public string Name { get; set; }
     public Person(string name) => Name = name;
@@ -373,4 +415,6 @@ class Person
         return false;
     }
     public override int GetHashCode() => Name.GetHashCode();
-}
+}*/
+
+record Person(string Name, int Age);

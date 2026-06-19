@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel.DataAnnotations;
+
+using System.Reflection;
 
 namespace REFlection;
 
@@ -250,10 +252,37 @@ class Program
             // calling method Main
             main?.Invoke(null, new object[] { new string[] { } });
         }
+        Console.WriteLine();
+        
+        // ========== Attributes in .NET ==========
+        Person tom = new Person("Tom", 35);
+        Person bob = new Person("Bob", 16);
+        bool tomIsValid = ValidateUser(tom);
+        bool bobIsValid = ValidateUser(bob);
+
+        Console.WriteLine($"validation result Tom: {tomIsValid}");
+        Console.WriteLine($"validation result Bob: {bobIsValid}");
+
+        bool ValidateUser(Person user)
+        {
+            Type userType = typeof(Person);
+            // getting all attributes of class Person
+            object[] attributes = userType.GetCustomAttributes(false);
+            
+            // running from all attributes
+            foreach (Attribute attr in attributes)
+            {
+                // if attr is AgeValidationAttribute type
+                if (attr is AgeValidationAttribute ageAttribute)
+                    return user.Age >= ageAttribute.Age;
+            }
+            return true;
+        }
+
     }
 }
 
-
+[AgeValidation(18)]
 class Person
 {
     public string Name { get; set; }
@@ -264,9 +293,6 @@ class Person
         Name = name;
         Age = age;
     }
-    public Person(string name) : this(name, 1) { }
-    private Person() : this("Tom") { }
-    
 }
 
 interface IEater
@@ -308,4 +334,12 @@ class Animal
         Age = age;
     }
     public void Print() => Console.WriteLine($"{Name} - {Age}");
+}
+
+[AttributeUsage(AttributeTargets.Class)]
+class AgeValidationAttribute : Attribute
+{
+    public int Age { get; set; }
+    public AgeValidationAttribute() { }
+    public AgeValidationAttribute(int age) => Age = age;
 }

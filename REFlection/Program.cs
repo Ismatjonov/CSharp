@@ -103,6 +103,35 @@ class Program
             Console.WriteLine(")");
         }
         Console.WriteLine();
+        
+        // --- Invoke() ---
+        var myPrinter = new Printer("Hello World");
+        var printer = typeof(Printer).GetMethod("Print");
+        printer?.Invoke(myPrinter, null);
+        
+        // if method has private mod
+        var thePrinter = new Printer("Hello METANIT.COM");
+        
+        var thePrint = typeof(Printer).GetMethod("Print", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        thePrint?.Invoke(thePrinter, null);
+        
+        // getting a result
+        var tajikPrint = new Printer("Hello, Tajikistan!");
+        var createMessage = typeof(Printer).GetMethod("CreateMessage");
+        var result = createMessage?.Invoke(tajikPrint, parameters: null);
+        Console.WriteLine(result);
+        
+        // Passing parameters
+        var paramPrint = new Printer("Hello Me");
+        var printMessage = typeof(Printer).GetMethod("PrintMessage");
+        printMessage?.Invoke(paramPrint, new object[] { "Hello World", 3 });
+        Console.WriteLine();
+        
+        // Calling a generic methods
+        var p = new Printer("MILF");
+        var printValue = typeof(Printer).GetMethod("PrintValue");
+        var printStringValue = printValue?.MakeGenericMethod(typeof(string));
+        printStringValue?.Invoke(p, new object[] {"Hello Khujand"});
     }
 }
 
@@ -131,9 +160,18 @@ interface IMovable
 
 class Printer
 {
-    public void PrintMessage(string message, int times = 1)
+    public string Text { get; set; }
+    public Printer(string text) => Text = text;
+    private void Print() => Console.WriteLine(Text);
+    public string CreateMessage() => Text;
+
+    public void PrintMessage(string message, int times)
     {
         while (times-- > 0) Console.WriteLine(message);
     }
-    public void CreateMessage(out string message) => message = "Hello Metanit.com";
+
+    public void PrintValue<T>(T value)
+    {
+        Console.WriteLine(value);
+    }
 }

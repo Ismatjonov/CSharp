@@ -12,9 +12,9 @@ class Program
         Console.WriteLine(myType.Name);
         
         // method GetType() : Object
-        Person tom = new("Tom", 27);
-        Type tomType = tom.GetType();
-        Console.WriteLine(tomType.Name);
+        // Person tom = new("Tom", 27);
+        // Type tomType = tom.GetType();
+        // Console.WriteLine(tomType.Name);
         
         // static method Type.GetType()
         Type? personType = Type.GetType("REFlection.Person", false, true);
@@ -122,7 +122,7 @@ class Program
         Console.WriteLine(result);
         
         // Passing parameters
-        var paramPrint = new Printer("Hello Me");
+        var paramPrint = new Printer("Shonen Jump");
         var printMessage = typeof(Printer).GetMethod("PrintMessage");
         printMessage?.Invoke(paramPrint, new object[] { "Hello World", 3 });
         Console.WriteLine();
@@ -132,20 +132,49 @@ class Program
         var printValue = typeof(Printer).GetMethod("PrintValue");
         var printStringValue = printValue?.MakeGenericMethod(typeof(string));
         printStringValue?.Invoke(p, new object[] {"Hello Khujand"});
+        
+        // --- Getting constructors ---
+        Type type = typeof(Person);
+        Console.WriteLine("Constructors:");
+        foreach (ConstructorInfo ci in type.GetConstructors(BindingFlags.Instance | BindingFlags.Public |
+                                                            BindingFlags.NonPublic))
+        {
+            // getting mods
+            string modificator = "";
+            if (ci.IsPublic) modificator += "public ";
+            else if (ci.IsPrivate) modificator += "private ";
+            else if(ci.IsAssembly) modificator += "internal ";
+            else if(ci.IsFamily) modificator += "protected ";
+            else if(ci.IsFamilyAndAssembly) modificator += "private protected ";
+            else if(ci.IsFamilyOrAssembly) modificator += "protected internal ";
+
+            Console.Write($"{modificator} {type.Name} (");
+            // getting constructor's params
+            ParameterInfo[] parameters = ci.GetParameters();
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                var param = parameters[i];
+                Console.Write($"{param.ParameterType.Name} {param.Name}");
+                if (i < parameters.Length - 1) Console.Write(", ");
+            }
+            Console.WriteLine(")");
+        }
     }
 }
 
 class Person
 {
-    string name;
+    public string Name { get; set; }
     public int Age { get; set; }
 
     public Person(string name, int age)
     {
-        this.name = name;
+        Name = name;
         Age = age;
     }
-    public void Print() => Console.WriteLine($"Name: {name}, Age: {Age}");
+    public Person(string name) : this(name, 1) { }
+    private Person() : this("Tom") { }
+    
 }
 
 interface IEater

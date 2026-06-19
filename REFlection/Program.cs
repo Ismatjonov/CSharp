@@ -216,6 +216,40 @@ class Program
         
         ageProp?.SetValue(kitty, 5);
         kitty.Print();
+        Console.WriteLine();
+        
+        // ========== Dynamic assembly loading and late binding ==========
+        const string PATH = @"C:\Users\HOME\RiderProjects\CSharp\MyApp\bin\Debug\net10.0\MyApp.dll";
+        Assembly asm = Assembly.UnsafeLoadFrom(PATH);
+        Console.WriteLine(asm.FullName);
+        
+        Type[] types = asm.GetTypes();
+        foreach(Type ty in types)
+            Console.WriteLine(ty.Name);
+        Console.WriteLine();
+        
+        // --- Late binding ---
+        Type? t = asm.GetType("MyApp.Program");
+        if (t is not null)
+        {
+            // getting method Square
+            MethodInfo? square = t.GetMethod("Square", BindingFlags.Static | BindingFlags.NonPublic);
+            
+            // calling method,  passing him value for parameters and the get result
+            object? _result = square?.Invoke(null, new object[] { 7 });
+            Console.WriteLine(_result);
+        }
+        Console.WriteLine();
+        
+        Type? program = asm.GetType("MyApp.Program");
+        if (program is not null)
+        {
+            // getting method Main
+            MethodInfo? main = program.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic);
+            
+            // calling method Main
+            main?.Invoke(null, new object[] { new string[] { } });
+        }
     }
 }
 

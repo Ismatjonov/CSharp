@@ -677,7 +677,7 @@ class Program
             Console.WriteLine(person);*/
         
        // ========== Delegates in LINQ queries ==========
-       string[] people = ["Tom", "Bob", "Kate", "Tim", "Mike", "Sam"];
+       /*string[] people = ["Tom", "Bob", "Kate", "Tim", "Mike", "Sam"];
        var result = people.Where(Length3);
        
        foreach(var person in result)
@@ -692,8 +692,109 @@ class Program
        {
            Console.WriteLine(n);
        }
-       int Square(int number) => number * number;
+       int Square(int number) => number * number;*/
+       
+       
+       // ----------------------------------------------------
+       
+       // ========== PARALLEL LINQ ==========
+       // Introduction to Parallel LINQ: The AsParallel Method
 
+       /*int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8 };
+       var squares = from n in numbers.AsParallel()
+           select Square(n);
+       
+       foreach(var square in squares)
+           Console.WriteLine(square);
+       Console.WriteLine();
+       
+       int Square(int n) => n * n;
+       
+       // --- ForAll() ---
+       (from n in numbers.AsParallel() select Square(n)).ForAll(Console.WriteLine);
+
+       Console.WriteLine();
+       
+       numbers.AsParallel().Select(n => Square(n)).ForAll(Console.WriteLine);*/
+       
+       // ===== Method AsOrdered =====
+       // int[] numbers = { -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, };
+       // var squares = from n in numbers.AsParallel().AsOrdered()
+       //     where n > 0
+       //         select Square(n);
+       //
+       // var query = from n in squares.AsUnordered()
+       //     where n > 4
+       //     select n;
+       //
+       // foreach (var number in query)
+       //     Console.WriteLine(number);
+       // Console.WriteLine();
+       //
+       // int Square(int n) => n * n;
+       
+       // ========== Error handling and operation cancellation =========
+       /*object[] numbers = { 1, 2, 3, 4, 5, "б" };
+       var squares = from n in numbers.AsParallel()
+           let x = (int)n
+           select Square(x);
+
+       try
+       {
+           squares.ForAll(n => Console.WriteLine(n));
+       }
+       catch (AggregateException ex)
+       {
+           foreach (var e in ex.InnerExceptions)
+           {
+               Console.WriteLine(e.Message);
+           }
+       }
+       int Square(int x) => x * x;*/
+       
+       // --- Interrupting parallel operations ---
+       CancellationTokenSource cts = new CancellationTokenSource();
+
+       new Task(() =>
+       {
+           Thread.Sleep(400);
+           cts.Cancel();
+       }).Start();
+
+       try
+       {
+           int[] nums = Enumerable.Range(0, 100).ToArray();
+           var sqrt = from n in nums.AsParallel().WithCancellation(cts.Token)
+               select Square(n);
+           foreach (var n in sqrt)
+               Console.WriteLine(n);
+           Console.WriteLine();
+
+       }
+       catch (OperationCanceledException)
+       {
+           Console.WriteLine("Operation was cancelled");
+       }
+       catch (AggregateException ex)
+       {
+           if (ex.InnerExceptions != null)
+           {
+               foreach (var e in ex.InnerExceptions)
+                   Console.WriteLine(e.Message);
+           }
+       }
+       finally
+       {
+           cts.Dispose();
+       }
+
+       int Square(int n)
+       {
+           var result = n * n;
+           Console.WriteLine($"The squared number {n} is: {result}");
+           Thread.Sleep(1000);
+           return result;
+       }
     }
 }
 // record  Person(string Name, int Age);

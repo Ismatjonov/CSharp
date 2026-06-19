@@ -159,8 +159,44 @@ class Program
             }
             Console.WriteLine(")");
         }
+        Console.WriteLine();
+        
+        // ========== Exploring fields and properties using reflection ==========
+        Type animalType = typeof(Animal);
+        Console.WriteLine("Fields:");
+        foreach (FieldInfo fi in animalType.GetFields(
+                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
+        {
+            string modificator = "";
+
+            // getting mods
+            if (fi.IsPublic) modificator += "public ";
+            else if (fi.IsPrivate) modificator += "private ";
+            else if (fi.IsAssembly) modificator += "internal ";
+            else if (fi.IsFamily) modificator += "protected ";
+            else if (fi.IsFamilyAndAssembly) modificator += "private protected ";
+            else if (fi.IsFamilyOrAssembly) modificator += "protected internal ";
+            
+            // if field is static
+            if (fi.IsStatic) modificator += "static ";
+
+            Console.WriteLine($"{modificator} {fi.FieldType.Name} {fi.Name}");
+        }
+        Console.WriteLine();
+        
+        // --- Getting and changing the value of a field ---
+        Animal dog = new Animal("Rex", 3);
+        
+        var name = animalType.GetField("name", BindingFlags.Instance | BindingFlags.NonPublic);
+        
+        var value = name?.GetValue(dog);
+        Console.WriteLine(value);
+        
+        name?.SetValue(dog, "Bobby");
+        dog.Print();
     }
 }
+
 
 class Person
 {
@@ -203,4 +239,18 @@ class Printer
     {
         Console.WriteLine(value);
     }
+}
+
+class Animal
+{
+    private static int minAge = 1;
+    private string name;
+    private int age;
+
+    public Animal(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+    public void Print() => Console.WriteLine($"{name} - {age}");
 }

@@ -56,6 +56,29 @@ class Program
         foreach(MemberInfo mi in print)
             Console.WriteLine($"{mi.MemberType} {mi.Name}");
         Console.WriteLine();
+        
+        // ========== Exploring Methods and Designers through Reflection ==========
+        Type printType = typeof(Printer);
+        Console.WriteLine("Methods: ");
+        foreach (MethodInfo method in printType.GetMethods())
+        {
+            string modificator = "";
+            
+            if (method.IsStatic) modificator += "static ";
+            if (method.IsVirtual) modificator += "virtual ";
+
+            Console.WriteLine($"{modificator}{method.ReturnType.Name} {method.Name} ()");
+        }
+        Console.WriteLine();
+        
+        // ** BindingFlags **
+        Console.WriteLine("methods:");
+        foreach (MethodInfo method in printType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance |
+                                                           BindingFlags.NonPublic | BindingFlags.Public))
+        {
+            Console.WriteLine($"{method.ReturnType.Name} {method.Name}");
+        }
+        Console.WriteLine();
     }
 }
 
@@ -80,4 +103,15 @@ interface IEater
 interface IMovable
 {
     void Move();
+}
+
+class Printer
+{
+    public string DefaultMesage { get; set; } = "Hello";
+
+    public void PrintMessage(string message, int times = 1)
+    {
+        while(times-- > 0) Console.WriteLine(message);
+    }
+    public string CreateMesage() => DefaultMesage;
 }

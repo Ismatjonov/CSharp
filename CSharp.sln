@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asynchronous", "Asynchronou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQ", "LINQ\LINQ.csproj", "{02C66A29-18FF-4165-9C55-7FBADD365421}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REFlection", "REFlection\REFlection.csproj", "{EDE3CF4F-3196-4B70-ADBE-735C0EF791DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +68,9 @@ Global
 		{02C66A29-18FF-4165-9C55-7FBADD365421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02C66A29-18FF-4165-9C55-7FBADD365421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02C66A29-18FF-4165-9C55-7FBADD365421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDE3CF4F-3196-4B70-ADBE-735C0EF791DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE3CF4F-3196-4B70-ADBE-735C0EF791DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE3CF4F-3196-4B70-ADBE-735C0EF791DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE3CF4F-3196-4B70-ADBE-735C0EF791DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

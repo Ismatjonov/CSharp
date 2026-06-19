@@ -194,6 +194,28 @@ class Program
         
         name?.SetValue(dog, "Bobby");
         dog.Print();
+        Console.WriteLine();
+        
+        // --- Properties ---
+        foreach (PropertyInfo pi in typeof(Animal).GetProperties(BindingFlags.Instance | BindingFlags.Public |
+                                                                 BindingFlags.NonPublic | BindingFlags.Static))
+        {
+            Console.Write($"{pi.PropertyType} {pi.Name} {{");
+            
+            if (pi.CanRead) Console.Write("get;");
+            if (pi.CanWrite) Console.Write("set;");
+            Console.WriteLine("}");
+        }
+        Console.WriteLine();
+        
+        // --- get and set value in properties ---
+        Animal kitty = new Animal("Kitty", 4);
+        var ageProp = animalType.GetProperty("Age");
+        var age = ageProp?.GetValue(kitty);
+        Console.WriteLine(age);
+        
+        ageProp?.SetValue(kitty, 5);
+        kitty.Print();
     }
 }
 
@@ -243,14 +265,13 @@ class Printer
 
 class Animal
 {
-    private static int minAge = 1;
-    private string name;
-    private int age;
+    public string Name { get; set; }
+    public int Age { get; set; }
 
     public Animal(string name, int age)
     {
-        this.name = name;
-        this.age = age;
+        Name = name;
+        Age = age;
     }
-    public void Print() => Console.WriteLine($"{name} - {age}");
+    public void Print() => Console.WriteLine($"{Name} - {Age}");
 }

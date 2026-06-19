@@ -79,6 +79,30 @@ class Program
             Console.WriteLine($"{method.ReturnType.Name} {method.Name}");
         }
         Console.WriteLine();
+        
+        // --- Exploring Parameters ---
+        foreach (MethodInfo method in printType.GetMethods())
+        {
+            Console.Write($"{method.ReturnType.Name} {method.Name} (");
+            //получаем все параметры
+            ParameterInfo[] parameters = method.GetParameters();
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                var param = parameters[i];
+                // получаем модификаторы параметра
+                string modificator = "";
+                if (param.IsIn) modificator = "in";
+                else if (param.IsOut) modificator = "out";
+ 
+                Console.Write($"{param.ParameterType.Name} {modificator} {param.Name}");
+                // если параметр имеет значение по умолчанию
+                if (param.HasDefaultValue) Console.Write($"={param.DefaultValue}");
+                // если не последний параметр, добавляем запятую
+                if (i < parameters.Length - 1) Console.Write(", ");
+            }
+            Console.WriteLine(")");
+        }
+        Console.WriteLine();
     }
 }
 
@@ -107,11 +131,9 @@ interface IMovable
 
 class Printer
 {
-    public string DefaultMesage { get; set; } = "Hello";
-
     public void PrintMessage(string message, int times = 1)
     {
-        while(times-- > 0) Console.WriteLine(message);
+        while (times-- > 0) Console.WriteLine(message);
     }
-    public string CreateMesage() => DefaultMesage;
+    public void CreateMessage(out string message) => message = "Hello Metanit.com";
 }

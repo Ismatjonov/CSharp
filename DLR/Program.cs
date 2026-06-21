@@ -1,4 +1,6 @@
 ﻿using System.Dynamic;
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
 
 namespace DLR;
 
@@ -6,14 +8,14 @@ class Program
 {
     static void Main(string[] args)
     {
-        dynamic x = 3;
-        Console.WriteLine(x);
+        dynamic _x = 3;
+        Console.WriteLine(_x);
         
-        x = "Hello World!";
-        Console.WriteLine(x);
+        _x = "Hello World!";
+        Console.WriteLine(_x);
 
-        x = new Person("Tom", 37);
-        Console.WriteLine(x);
+        _x = new Person("Tom", 37);
+        Console.WriteLine(_x);
 
         object obj = 24;
         dynamic dyn = 24;
@@ -57,6 +59,38 @@ class Program
         Console.WriteLine($"{person2.Name} - {person2.Age}");
         person2.IncrementAge(4);
         Console.WriteLine($"{person2.Name} - {person2.Age}");
+        Console.WriteLine();
+        
+        // ========== Using IronPython in .NET ==========
+        ScriptEngine engine = Python.CreateEngine();
+        engine.Execute("print('Hello World!')");
+        Console.WriteLine();
+        engine.ExecuteFile("hello.py");
+        Console.WriteLine();
+        
+        //--- object ScriptScope ---
+        int y = 22;
+        
+        ScriptEngine engine2 = Python.CreateEngine();
+        ScriptScope scope = engine2.CreateScope();
+        scope.SetVariable("y", y);
+        engine2.ExecuteFile("hello2.py", scope);
+        dynamic x = scope.GetVariable("x");
+        dynamic z = scope.GetVariable("z");
+        Console.WriteLine($"{x} + {y} = {z}");
+        Console.WriteLine();
+        
+        // --- Calling function from IronPython ---
+        int number = 5;
+        
+        ScriptEngine eng = Python.CreateEngine();
+        ScriptScope scp = eng.CreateScope();
+        
+        eng.ExecuteFile("hello.py", scp);
+        dynamic square = scp.GetVariable("square");
+        
+        dynamic result = square(number);
+        Console.WriteLine(result);
     }
 }
 

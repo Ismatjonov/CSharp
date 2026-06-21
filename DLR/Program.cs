@@ -26,6 +26,22 @@ class Program
         dynamic bob = new Person("Bob", "twenty-two");
         Console.WriteLine(bob);
         Console.WriteLine(bob.GetSalary("twenty-eight", "string"));
+        Console.WriteLine();
+        
+        // ========== DynamicObject & ExpandoObject ==========
+        dynamic person = new System.Dynamic.ExpandoObject();
+        person.Name = "Tom";
+        person.Age = 46;
+        person.Language = new List<string> {"englisg", "german","french"};
+
+        Console.WriteLine($"{person.Name} - {person.Age}");
+        foreach(var lang in person.Language)
+            Console.WriteLine(lang);
+        
+        // methods
+        person.IncrementAge = (Action<int>)(x => person.Age += x);
+        person.IncrementAge(6);
+        Console.WriteLine($"{person.Name} - {person.Age}");
     }
 }
 

@@ -40,6 +40,28 @@ class Program
                 tom?.Dispose();
             }
         }
+        Console.WriteLine();
+        // ========== Construction using ==========
+        Test3();
+
+        void Test3()
+        {
+            using Person tom = new Person("Tom") ;
+                // tom is available only in block using
+                // some actions with object Person
+                Console.WriteLine($"Name: {tom.Name}");
+                Console.WriteLine("End of Test");
+        }
+        
+        // ---- Freeing up a lot of resources ----
+        Test4();
+        void Test4()
+        {
+            using Person tom = new Person("Tom");
+            using Person bob = new Person("Bob");
+            Console.WriteLine($"Person 1: {tom.Name}, Person 2: {tom.Name}");
+            Console.WriteLine("End of method Test");
+        }
         
     }
 }

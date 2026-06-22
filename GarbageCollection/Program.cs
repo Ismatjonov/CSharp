@@ -1,4 +1,6 @@
-﻿namespace GarbageCollection;
+﻿using System.Net.Quic;
+
+namespace GarbageCollection;
 
 class Program
 {
@@ -63,6 +65,11 @@ class Program
             Console.WriteLine("End of method Test");
         }
         
+        // --- Another Examole ----
+        
+        // creating connection
+        using var con = new Connection();
+        con.Open(new Socket()); // opening conditional socket for network interactions
     }
 }
 
@@ -120,5 +127,42 @@ public class Derived : SomeClass
         IsDisposed = true;
         // Обращение к методу Dispose базового класса
         base.Dispose(disposing);
+    }
+}
+
+// class Socket
+public class Socket
+{
+    public bool IsOpened { get; set; }  // is socket open
+}
+
+// class of net connection
+public class Connection : IDisposable
+{
+    Socket? activeSocket = null;
+
+    public void Open(Socket? socket)
+    {
+        if (activeSocket != socket) // checking socket
+        {
+            Close();    // close socket if another socket has been set recently
+            activeSocket = socket;
+            if (activeSocket != null) activeSocket.IsOpened = true;
+            Console.WriteLine("Connection opened. Available to send packages via net");
+        }
+    }
+    // closing socket
+    public void Close()
+    {
+        if (activeSocket is not null)
+        {
+            activeSocket.IsOpened = false;
+            Console.WriteLine("Connection closed...");
+        }
+    }
+
+    public void Dispose()
+    {
+        Close();
     }
 }

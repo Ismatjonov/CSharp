@@ -68,8 +68,20 @@ class Program
         // --- Another Examole ----
         
         // creating connection
-        using var con = new Connection();
-        con.Open(new Socket()); // opening conditional socket for network interactions
+        // using var con = new Connection();
+        // con.Open(new Socket()); // opening conditional socket for network interactions
+        
+        
+        // ---- Abstracting the completion of using ----
+        var con = new Connection();
+
+        using var closeSocket = new Connection.ScopeExit(() =>
+        {
+            con.Close();
+            Console.WriteLine("Socket is free");
+        });
+        
+        con.Open(new Socket());
     }
 }
 
@@ -84,7 +96,7 @@ class Person : IDisposable
     }
 }
 
-public class SomeClass : IDisposable
+class SomeClass : IDisposable
 {
     private bool disposed = false;
     
@@ -113,7 +125,7 @@ public class SomeClass : IDisposable
     }
 }
 
-public class Derived : SomeClass
+class Derived : SomeClass
 {
     private bool IsDisposed = false;
  
@@ -131,13 +143,13 @@ public class Derived : SomeClass
 }
 
 // class Socket
-public class Socket
+class Socket
 {
     public bool IsOpened { get; set; }  // is socket open
 }
 
 // class of net connection
-public class Connection : IDisposable
+class Connection
 {
     Socket? activeSocket = null;
 
@@ -160,9 +172,18 @@ public class Connection : IDisposable
             Console.WriteLine("Connection closed...");
         }
     }
-
-    public void Dispose()
+    public ref struct ScopeExit
     {
-        Close();
+        public ScopeExit(Action action)
+        {
+            this.action = action;
+        }
+
+        public void Dispose()
+        {
+            action.Invoke();
+        }
+        
+        Action action;
     }
 }

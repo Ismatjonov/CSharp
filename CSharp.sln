@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApp", "MyApp\MyApp.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLR", "DLR\DLR.csproj", "{C45D0D1E-2EC6-4507-9D95-AD884321B727}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarbageCollection", "GarbageCollection\GarbageCollection.csproj", "{52F12352-2B59-40B3-8469-F6F106078E71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +86,9 @@ Global
 		{C45D0D1E-2EC6-4507-9D95-AD884321B727}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C45D0D1E-2EC6-4507-9D95-AD884321B727}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C45D0D1E-2EC6-4507-9D95-AD884321B727}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F12352-2B59-40B3-8469-F6F106078E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F12352-2B59-40B3-8469-F6F106078E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F12352-2B59-40B3-8469-F6F106078E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F12352-2B59-40B3-8469-F6F106078E71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -6,7 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Test();
+        /*Test();
         
         void Test()
         {
@@ -82,6 +82,33 @@ class Program
         });
         
         con.Open(new Socket());
+        Console.WriteLine();*/
+        
+        // ========== Signposts =========
+        unsafe
+        {
+            int* x;
+            int y = 10;
+
+            x = &y;
+            Console.WriteLine(*x);
+            
+            ulong addr = (ulong)x;
+            Console.WriteLine($"Address of variable y: {addr}");
+        }
+        
+        // ---- Pointer to another pointer ----
+        unsafe
+        {
+            int* x;
+            int y = 10;
+            
+            x = &y;
+            int** z = &x;
+            **z = **z + 40;
+            Console.WriteLine(y);
+            Console.WriteLine(**z);
+        }
     }
 }
 

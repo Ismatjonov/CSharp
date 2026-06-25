@@ -109,6 +109,91 @@ class Program
             Console.WriteLine(y);
             Console.WriteLine(**z);
         }
+
+        unsafe
+        {
+            Point point = new Point(0, 0);
+            Console.WriteLine(point);
+            Point* p = &point;
+
+            p->X = 30;
+            Console.WriteLine(p->X);
+
+            (*p).Y = 180;
+            Console.WriteLine((*p).Y);
+
+            Console.WriteLine(point);
+
+        }
+
+        unsafe
+        {
+            const int size = 7;
+            int* square = stackalloc int[size];
+            int* p = square;
+
+            for (int i = 1; i <= size; i++, p++)
+            {
+                *p = i * i;
+            }
+
+            for (int i = 0; i < size; i++)
+            {
+                Console.WriteLine(square[i]);
+            }
+        }
+
+        unsafe
+        {
+            const int size = 7;
+            int* factorial = stackalloc int[size];
+            int* p = factorial;
+
+            *(p++) = 1;
+
+            for (int i = 1; i <= size; i++, p++)
+            {
+                *p = p[-1] * i;
+            }
+
+            for (int i = 0; i < size; i++)
+            {
+                Console.WriteLine(factorial[i]);
+            }
+        }
+
+        unsafe
+        {
+            Pointer pointer = new Pointer();
+            fixed (int* pX = &pointer.x)
+            {
+                *pX = 30;
+            }
+            fixed (int* pY = &pointer.y)
+            {
+                *pY = 150;
+            }
+
+            Console.WriteLine(pointer);
+        }
+
+        unsafe
+        {
+            int[] numbers = { 0, 1, 2, 3, 8, 77 };
+            string str = "Hello World!";
+            fixed (int* p = numbers)
+            {
+                int third = *(p + 2);
+                Console.WriteLine(third);
+            }
+
+            fixed (char* p = str)
+            {
+                char forth = *(p + 3);
+                Console.WriteLine(forth);
+            }
+        }
+        
     }
 }
 
@@ -213,4 +298,24 @@ class Connection
         
         Action action;
     }
+}
+
+struct Point
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public Point(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+    public override string ToString()=> $"X: {X}, Y: {Y}";
+}
+
+class Pointer
+{
+    public int x;
+    public int y;
+    public override string ToString()=> $"X: {x}, Y: {y}";
 }

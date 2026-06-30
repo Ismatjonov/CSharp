@@ -181,7 +181,7 @@ class Program
         }*/
         
         // ---- reading and recording files ----
-        string path = @"C:\app\note.txt";
+        /*string path = @"C:\app\note.txt";
         string text = "Hello, Metanit.com";
         
         // record
@@ -199,6 +199,27 @@ class Program
             await fs.ReadExactlyAsync(buffer, 0, buffer.Length);
             string textFromFile = Encoding.Default.GetString(buffer);
             Console.WriteLine($"Text from file: {textFromFile}");
+        }*/
+        
+        // ---- Random file access ----
+        string path = @"note.dat";
+        string text = "Hello World";
+
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            byte[] input = Encoding.Default.GetBytes(text);
+            fs.Write(input, 0, input.Length);
+            Console.WriteLine("Text has been written to file.");
+        }
+
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            fs.Seek(-5, SeekOrigin.End);
+            
+            byte[] output = new byte[5];
+            await fs.ReadAsync(output, 0, output.Length);
+            string textFromFile = Encoding.Default.GetString(output);
+            Console.WriteLine($"Text: {textFromFile}");
         }
     }
 }

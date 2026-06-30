@@ -314,6 +314,31 @@ class Program
             Console.WriteLine("File has been written");
         }
 
+        // ---- BinaryReader ----
+        using (BinaryReader reader = new BinaryReader(File.Open(@"person.dat", FileMode.Open)))
+        {
+            string name = reader.ReadString();
+            int age = reader.ReadInt32();
+            Console.WriteLine($"Name: {name}, Age: {age}");
+        }
+        
+        // ------ Tema ------
+        List<Person> persons = new List<Person>();
+
+        using (BinaryReader reader = new BinaryReader(File.Open(@"people.dat", FileMode.Open)))
+        {
+            while (reader.PeekChar() > -1)
+            {
+                string name = reader.ReadString();
+                int age = reader.ReadInt32();
+                persons.Add(new Person(name, age));
+            }
+        }   
+
+        foreach (var person in persons)
+        {
+            Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
+        }
     }
 }
 

@@ -223,7 +223,7 @@ class Program
         }*/
         
         // ---- Complex examole ----
-        string path = "note2.dat";
+        /*string path = "note2.dat";
  
         string text = "hello world";
  
@@ -252,6 +252,21 @@ class Program
             // декодируем байты в строку
             string textFromFile = Encoding.Default.GetString(output);
             Console.WriteLine($"Текст из файла: {textFromFile}"); // hello house
+        }*/
+        
+        // ---- StreamWriter & StreamReader ----
+        string path = @"note1.dat";
+        string text = "Hello World\nHello METANIT.COM";
+
+        using (StreamWriter writer = new StreamWriter(path, true))
+        {
+            await writer.WriteLineAsync(text);
+        }
+
+        using (StreamWriter writer = new StreamWriter(path, true))
+        {
+            await writer.WriteLineAsync("Addition");
+            await writer.WriteAsync("4,5");
         }
     }
 }

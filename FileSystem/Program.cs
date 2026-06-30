@@ -1,12 +1,13 @@
 ﻿using System.Data.Common;
+using System.Text;
 
 namespace FileSystem;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        DriveInfo[] drives = DriveInfo.GetDrives();
+        /*DriveInfo[] drives = DriveInfo.GetDrives();
 
         foreach (DriveInfo drive in drives)
         {
@@ -93,7 +94,7 @@ class Program
         else
         {
             Console.WriteLine("Directory is not exists");
-        }*/
+        }#1#
         
         // ---- Moving a directory ----
         string oldPath = @"C:\SomeFolder";
@@ -106,5 +107,61 @@ class Program
             // or like this
             // Directory.Move(oldPath, newPath);
         }
+
+        Console.WriteLine();*/
+        
+        // ========== Working with files. Class File & FileInfo ==========
+        
+        // ---- getting info from files ----
+        /*string PATH = @"C:\Users\Home\Documents\content.txt";
+        FileInfo fileInfo = new FileInfo(PATH);
+        
+        if (fileInfo.Exists)
+        {
+            Console.WriteLine($"File name: {fileInfo.Name}");
+            Console.WriteLine($"Creation date: {fileInfo.CreationTime}");
+            Console.WriteLine($"File size: {fileInfo.Length}");
+        }
+
+        Console.WriteLine();
+        // ---- deleting a file ----
+        if (fileInfo.Exists)
+        {
+            fileInfo.Delete();
+            Console.WriteLine("File has been deleted");
+        }*/
+        
+        // ---- Moving a file ----
+        /*string oldPath = @"C:\OldDir\content.txt";
+        string newPath = @"C:\NewDir\index.txt";
+        FileInfo fileInf = new FileInfo(oldPath);
+        if (fileInf.Exists)
+        {
+            fileInf.MoveTo(newPath, true);
+            // or like this, using class 'File'
+            // File.Move(oldPath, newPath);
+        }*/
+        
+        // ---- Coping file ----
+        /*string oldPath = @"C:\OldDir\content.txt";
+        string newPath = @"C:\NewDir\index2.txt";
+        FileInfo fileInfo = new FileInfo(oldPath);
+        if (fileInfo.Exists)
+        {
+            fileInfo.CopyTo(newPath, true);
+        }*/
+        
+        // ----- Reading and recording files -----
+        string path = @"C:\app\content.txt";
+
+        string originalText = "Hello Metanit.com";
+        
+        await File.WriteAllTextAsync(path, originalText, Encoding.GetEncoding("iso-8859-1"));
+        
+        await File.AppendAllTextAsync(path, "\nHello code.", Encoding.GetEncoding("iso-8859-1"));
+
+        string fileText = await File.ReadAllTextAsync(path, Encoding.GetEncoding("iso-8859-1"));
+        Console.WriteLine(fileText);
+        Console.WriteLine();
     }
 }

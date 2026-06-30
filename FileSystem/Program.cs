@@ -152,7 +152,7 @@ class Program
         }*/
         
         // ----- Reading and recording files -----
-        string path = @"C:\app\content.txt";
+        /*string path = @"C:\app\content.txt";
 
         string originalText = "Hello Metanit.com";
         
@@ -162,6 +162,43 @@ class Program
 
         string fileText = await File.ReadAllTextAsync(path, Encoding.GetEncoding("iso-8859-1"));
         Console.WriteLine(fileText);
-        Console.WriteLine();
+        Console.WriteLine();*/
+        
+        // ========== FileStream. Reading and recording files ==========
+
+        /*FileStream? fstream = null;
+        try
+        {
+            fstream = new FileStream("note3.dat", FileMode.OpenOrCreate);
+            // operation with fstream
+        }
+        catch (Exception ex)
+        {
+        }
+        finally
+        {
+            fstream?.Close();
+        }*/
+        
+        // ---- reading and recording files ----
+        string path = @"C:\app\note.txt";
+        string text = "Hello, Metanit.com";
+        
+        // record
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            byte[] buffer = Encoding.Default.GetBytes(text);
+            await fs.WriteAsync(buffer, 0, buffer.Length);
+            Console.WriteLine("Text has been written to file.");
+        }
+        
+        // reading
+        using (FileStream fs = File.OpenRead(path))
+        {
+            byte[] buffer = new byte[fs.Length];
+            await fs.ReadExactlyAsync(buffer, 0, buffer.Length);
+            string textFromFile = Encoding.Default.GetString(buffer);
+            Console.WriteLine($"Text from file: {textFromFile}");
+        }
     }
 }

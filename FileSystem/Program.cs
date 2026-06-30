@@ -255,7 +255,7 @@ class Program
         }*/
         
         // ---- StreamWriter & StreamReader ----
-        string path = @"note1.dat";
+        /*string path = @"note1.dat";
         string text = "Hello World\nHello METANIT.COM";
 
         using (StreamWriter writer = new StreamWriter(path, true))
@@ -267,6 +267,22 @@ class Program
         {
             await writer.WriteLineAsync("Addition");
             await writer.WriteAsync("4,5");
+        }*/
+
+        string path = @"note1.txt";
+        using (StreamReader reader = new StreamReader(path))
+        {
+            string text = await reader.ReadToEndAsync();
+            Console.WriteLine(text);
+        }
+
+        using (StreamReader reader = new StreamReader(@"C:\app\note.txt"))
+        {
+            string? line;
+            while ((line = await reader.ReadLineAsync()) != null)
+            {
+                Console.WriteLine(line);
+            }
         }
     }
 }

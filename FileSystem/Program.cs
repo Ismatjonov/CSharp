@@ -269,7 +269,7 @@ class Program
             await writer.WriteAsync("4,5");
         }*/
 
-        string path = @"note1.txt";
+        /*string path = @"note1.txt";
         using (StreamReader reader = new StreamReader(path))
         {
             string text = await reader.ReadToEndAsync();
@@ -283,6 +283,48 @@ class Program
             {
                 Console.WriteLine(line);
             }
+        }*/
+        
+        // ========== BinaryWriter & BinaryReader ==========
+
+        string path = "person.dat";
+
+        using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate)))
+        {
+            writer.Write("Tom");
+            writer.Write(37);
+            Console.WriteLine("File has been written");
         }
+        
+        string path2 = "people.dat";
+
+        Person[] people =
+        {
+            new Person("Tom", 37),
+            new Person("Bob", 41)
+        };
+
+        using (BinaryWriter writer = new BinaryWriter(File.Open(path2, FileMode.OpenOrCreate)))
+        {
+            foreach (Person person in people)
+            {
+                writer.Write(person.Name);
+                writer.Write(person.Age);
+            }
+            Console.WriteLine("File has been written");
+        }
+
+    }
+}
+
+class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public Person(string name, int age)
+    {
+        Name = name;
+        Age = age;
     }
 }

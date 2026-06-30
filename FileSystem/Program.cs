@@ -1,5 +1,6 @@
 ﻿using System.Data.Common;
 using System.Text;
+using System.IO.Compression;
 
 namespace FileSystem;
 
@@ -334,10 +335,42 @@ class Program
                 persons.Add(new Person(name, age));
             }
         }   
-
         foreach (var person in persons)
         {
             Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
+        }
+        
+        // ========== Archiving and compressing files ==========
+
+        string sourceFile = "book.pdf";
+        string compressedFile = "book.gz";
+        string targetFile = "book_new.pdf";
+
+        await CompressAsync(sourceFile, compressedFile);
+        await CompressAsync(compressedFile, targetFile);
+
+        async Task CompressAsync(string sourceFile, string compressedFile)
+        {
+            using FileStream sourceStream = new FileStream(sourceFile, FileMode.OpenOrCreate);
+            
+            using FileStream targetStream = File.Create(compressedFile);
+            
+            using GZipStream compressionStream = new GZipStream(sourceStream, CompressionMode.Compress);
+            await sourceStream.CopyToAsync(compressionStream);
+
+            Console.WriteLine($"File compression {compressedFile} was successfully compressed");
+            Console.WriteLine($"Original file size: {sourceStream.Length}, Compressed file size: {targetStream.Length}");
+        }
+
+        async Task DecompressAsync(string compressedFile, string targetFile)
+        {
+            using FileStream sourceStream = new FileStream(compressedFile, FileMode.OpenOrCreate);
+            
+            using FileStream targetStream = File.Create(targetFile);
+            
+            using GZipStream decompressionStream = new GZipStream(sourceStream, CompressionMode.Decompress);
+            await decompressionStream.CopyToAsync(targetStream);
+            Console.WriteLine($"File restored: {targetFile}");
         }
     }
 }

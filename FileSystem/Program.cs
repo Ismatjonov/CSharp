@@ -288,7 +288,7 @@ class Program
         
         // ========== BinaryWriter & BinaryReader ==========
 
-        string path = "person.dat";
+        /*string path = "person.dat";
 
         using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate)))
         {
@@ -338,11 +338,11 @@ class Program
         foreach (var person in persons)
         {
             Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
-        }
+        }*/
         
         // ========== Archiving and compressing files ==========
 
-        string sourceFile = "book.pdf";
+        /*string sourceFile = "book.pdf";
         string compressedFile = "book.gz";
         string targetFile = "book_new.pdf";
 
@@ -371,7 +371,19 @@ class Program
             using GZipStream decompressionStream = new GZipStream(sourceStream, CompressionMode.Decompress);
             await decompressionStream.CopyToAsync(targetStream);
             Console.WriteLine($"File restored: {targetFile}");
-        }
+        }*/
+        
+        // ------ ZipFile ------
+        string sourceFolder = @"C:\test";
+        string zipFile = @"C:\Users\HOME\Desktop\test.zip";
+        string targetFolder = @"C:\Users\HOME\Desktop\newtest";
+ 
+        ZipFile.CreateFromDirectory(sourceFolder, zipFile);
+        Console.WriteLine($"Папка {sourceFolder} архивирована в файл {zipFile}");
+        ZipFile.ExtractToDirectory(zipFile, targetFolder);
+ 
+        Console.WriteLine($"Файл {zipFile} распакован в папку {targetFolder}");
+        
     }
 }
 

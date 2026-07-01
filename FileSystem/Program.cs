@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using System.Text;
 using System.IO.Compression;
+using System.Text.Json;
 
 namespace FileSystem;
 
@@ -374,7 +375,7 @@ class Program
         }*/
         
         // ------ ZipFile ------
-        string sourceFolder = @"C:\test";
+        /*string sourceFolder = @"C:\test";
         string zipFile = @"C:\Users\HOME\Desktop\test.zip";
         string targetFolder = @"C:\Users\HOME\Desktop\newtest";
  
@@ -382,8 +383,15 @@ class Program
         Console.WriteLine($"Папка {sourceFolder} архивирована в файл {zipFile}");
         ZipFile.ExtractToDirectory(zipFile, targetFolder);
  
-        Console.WriteLine($"Файл {zipFile} распакован в папку {targetFolder}");
+        Console.WriteLine($"Файл {zipFile} распакован в папку {targetFolder}");*/
         
+        
+        // ===================== JSON ====================
+        Person tom = new Person("Tom", 37);
+        string json = JsonSerializer.Serialize(tom);
+        Console.WriteLine(json);
+        Person? restoredPerson = JsonSerializer.Deserialize<Person>(json);
+        Console.WriteLine(restoredPerson?.Name);
     }
 }
 

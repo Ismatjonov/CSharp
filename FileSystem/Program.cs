@@ -387,11 +387,28 @@ class Program
         
         
         // ===================== JSON ====================
-        Person tom = new Person("Tom", 37);
-        string json = JsonSerializer.Serialize(tom);
+        Person bob = new Person("Bob", 37);
+        string json = JsonSerializer.Serialize(bob);
         Console.WriteLine(json);
         Person? restoredPerson = JsonSerializer.Deserialize<Person>(json);
         Console.WriteLine(restoredPerson?.Name);
+        
+        // --- Recording and reading json files ----
+        
+        // recording data
+        using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+        {
+            Person tom = new Person("Tom", 37);
+            await JsonSerializer.SerializeAsync<Person>(fs, tom);
+            Console.WriteLine("Data has been saved to file");
+        }
+        
+        // reading data
+        using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+        {
+            Person? person = await JsonSerializer.DeserializeAsync<Person>(fs);
+            Console.WriteLine($"Name: {person?.Name}, Age: {person?.Age}");
+        }
     }
 }
 

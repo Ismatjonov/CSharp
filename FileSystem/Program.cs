@@ -1,7 +1,9 @@
 ﻿using System.Data.Common;
 using System.Text;
 using System.IO.Compression;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 namespace FileSystem;
 
@@ -409,6 +411,29 @@ class Program
             Person? person = await JsonSerializer.DeserializeAsync<Person>(fs);
             Console.WriteLine($"Name: {person?.Name}, Age: {person?.Age}");
         }
+        
+        // ---- Setting serializing with JsonSerializerOptions ----
+        Person max = new Person("Max", 37);
+        var option = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
+        string _json = JsonSerializer.Serialize<Person>(max, option);
+        Console.WriteLine(_json);
+        Person? _restoredPerson = JsonSerializer.Deserialize<Person>(_json);
+        Console.WriteLine(_restoredPerson?.Name);
+        
+        Person bakhtovar = new Person("Бахтовар", 20);
+        var opt = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            WriteIndented = true
+        };
+        string json2 = JsonSerializer.Serialize(bakhtovar, opt);
+        Console.WriteLine(json2);
+        
+        Person? rp = JsonSerializer.Deserialize<Person>(json2);
+        Console.WriteLine(rp?.Name);
     }
 }
 

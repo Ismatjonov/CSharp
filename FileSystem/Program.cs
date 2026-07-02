@@ -3,6 +3,7 @@ using System.Text;
 using System.IO.Compression;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.Unicode;
 
 namespace FileSystem;
@@ -389,7 +390,7 @@ class Program
         
         
         // ===================== JSON ====================
-        Person bob = new Person("Bob", 37);
+        /*Person bob = new Person("Bob", 37);
         string json = JsonSerializer.Serialize(bob);
         Console.WriteLine(json);
         Person? restoredPerson = JsonSerializer.Deserialize<Person>(json);
@@ -434,12 +435,25 @@ class Program
         
         Person? rp = JsonSerializer.Deserialize<Person>(json2);
         Console.WriteLine(rp?.Name);
+
+        Console.WriteLine();*/
+        
+        // ------ Setting serializing with attributes ------
+        Person sam = new Person("Sam", 22);
+        
+        string json3 = JsonSerializer.Serialize(sam);
+        Console.WriteLine(json3);
+        
+        Person? sam2 = JsonSerializer.Deserialize<Person>(json3);
+        Console.WriteLine($"Name: {sam2?.Name}, Age: {sam2?.Age}");
     }
 }
 
 class Person
 {
+    [JsonPropertyName("FirstName")]
     public string Name { get; set; }
+    [JsonIgnore]
     public int Age { get; set; }
 
     public Person(string name, int age)

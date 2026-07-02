@@ -169,7 +169,7 @@ class Program
         Console.WriteLine("Data saved");*/
         
         // ---- More advanced ---
-        XDocument xDoc = new XDocument(new XElement("people",
+        /*XDocument xDoc = new XDocument(new XElement("people",
             new XElement("person",
                 new XAttribute("name", "Adolf"),
                 new XElement("company", "JetBrains"),
@@ -181,7 +181,31 @@ class Program
             ));
         xDoc.Save(path);
 
-        Console.WriteLine("Data saved");
+        Console.WriteLine("Data saved");*/
+        
+        
+        // ======================= Selection elements in LINQ to XML ====================
+        XDocument xDoc = XDocument.Load(path);
+        
+        // getting rootNode
+        XElement? people = xDoc.Element("people");
+        if (people is not null)
+        {
+            // all elements
+            foreach (XElement person in people.Elements("person"))
+            {
+                
+                XAttribute? name = person.Attribute("name");
+                XElement? company = person.Element("company");
+                XElement? age = person.Element("age");
+
+                Console.WriteLine($"Person: {name?.Value}");
+                Console.WriteLine($"Company: {company?.Value}");
+                Console.WriteLine($"Age: {age?.Value}");
+
+                Console.WriteLine();
+            }
+        }
     }
 }
 class Person

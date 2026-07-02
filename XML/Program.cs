@@ -56,6 +56,44 @@ class Program
             foreach(Person person in people)
                 Console.WriteLine($"{person.Name} ({person.Company}) - {person.Age}");
         }
+        
+        // ===================== Modifying an XML Document =====================
+        XmlDocument xD = new XmlDocument();
+        xD.Load("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
+        XmlElement? xR = xD.DocumentElement;
+        
+        // creating a new element
+        XmlElement personElem = xD.CreateElement("person");
+        
+        // creating attribute name
+        XmlAttribute nameAttr = xD.CreateAttribute("name");
+        
+        // creating elements company and age
+        XmlElement companyElem = xD.CreateElement("company");
+        XmlElement ageElem = xD.CreateElement("age");
+        
+        // creating text values for elements and attributes
+        XmlText nameText = xD.CreateTextNode("Mark");
+        XmlText companyText = xD.CreateTextNode("Facebook");
+        XmlText ageText = xD.CreateTextNode("30");
+        
+        // adding nodes
+        nameAttr.AppendChild(nameText);
+        companyElem.AppendChild(companyText);
+        ageElem.AppendChild(ageText);
+        
+        // adding attribute name
+        personElem.Attributes.Append(nameAttr);
+        
+        // adding elements company and age
+        personElem.AppendChild(companyElem);
+        personElem.AppendChild(ageElem);
+        
+        // adding in root element new element person
+        xR?.AppendChild(personElem);
+        
+        // save edited document to the file
+        xD.Save("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
     }
 }
 class Person

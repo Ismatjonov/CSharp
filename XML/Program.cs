@@ -121,7 +121,7 @@ class Program
         // }
         
         // ==================== LINQ to XML =====================
-        XDocument xDoc = new XDocument();
+        /*XDocument xDoc = new XDocument();
         
         // creating first element person
         XElement tom = new XElement("person");
@@ -166,9 +166,22 @@ class Program
         // save document
         xDoc.Save(path);
         
+        Console.WriteLine("Data saved");*/
+        
+        // ---- More advanced ---
+        XDocument xDoc = new XDocument(new XElement("people",
+            new XElement("person",
+                new XAttribute("name", "Adolf"),
+                new XElement("company", "JetBrains"),
+                new XElement("age", 19)),
+            new XElement("person",
+                new XAttribute("name", "Mark"),
+                new XElement("company", "Facebook"),
+                new XElement("age", 18))
+            ));
+        xDoc.Save(path);
+
         Console.WriteLine("Data saved");
-        
-        
     }
 }
 class Person

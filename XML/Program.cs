@@ -6,6 +6,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        string path = "C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml";
+        
         XmlDocument xDoc = new XmlDocument();
         xDoc.Load("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
         
@@ -58,7 +60,7 @@ class Program
         }
         
         // ===================== Modifying an XML Document =====================
-        XmlDocument xD = new XmlDocument();
+        /*XmlDocument xD = new XmlDocument();
         xD.Load("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
         XmlElement? xR = xD.DocumentElement;
         
@@ -101,7 +103,21 @@ class Program
         XmlElement? _xmlRoot = xmlDocument.DocumentElement;
         XmlNode? firstNode = _xmlRoot.FirstChild;
         if(firstNode is not null) _xmlRoot.RemoveChild(firstNode);
-        xmlDocument.Save("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
+        xmlDocument.Save("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");*/
+        
+        // ==================== XPath ==================== 
+        XmlDocument xmlDocument = new XmlDocument();
+        xmlDocument.Load(path);
+        XmlElement root = xmlDocument.DocumentElement;
+        
+        // select all child elements
+        XmlNodeList? nodes = root.SelectNodes("person");
+        XmlNodeList? companyNode = root.SelectNodes("person[@name='Tom']");
+        if (nodes is not null)
+        {
+            foreach(XmlNode node in companyNode)
+                Console.WriteLine(node.OuterXml);
+        }
     }
 }
 class Person

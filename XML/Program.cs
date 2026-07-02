@@ -206,6 +206,34 @@ class Program
                 Console.WriteLine();
             }
         }
+        
+        // ------- Processing --------
+        XDocument xDocument = XDocument.Load(path);
+        
+        var microsoft = xDocument.Element("people")?
+            .Elements("person").Where(p => p.Element("company").Value == "Microsoft")
+            .Select(p => new
+            {
+                name = p.Attribute("name")?.Value,
+                company = p.Element("company")?.Value,
+                age = p.Element("age")?.Value
+            });
+
+        if (microsoft is not null)
+        {
+            foreach(var person in microsoft)
+                Console.WriteLine($"Name: {person.name}, Age: {person.age}");
+        }
+
+        var tom = xDocument.Element("people")   // getting root element people
+            .Elements("person") // getting all elements person
+            .FirstOrDefault(p => p.Attribute("name")?.Value == "Tom");
+        
+        var _name = tom?.Attribute("name")?.Value;
+        var _age = tom?.Element("age")?.Value;
+        var _company = tom?.Element("company")?.Value;
+
+        Console.WriteLine($"Name: {_name}, Age: {_age}, Company: {_company}");
     }
 }
 class Person

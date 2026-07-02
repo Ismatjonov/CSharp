@@ -94,6 +94,14 @@ class Program
         
         // save edited document to the file
         xD.Save("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
+        
+        // ----- Removing nodes ------
+        XmlDocument xmlDocument = new XmlDocument();
+        xmlDocument.Load("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
+        XmlElement? _xmlRoot = xmlDocument.DocumentElement;
+        XmlNode? firstNode = _xmlRoot.FirstChild;
+        if(firstNode is not null) _xmlRoot.RemoveChild(firstNode);
+        xmlDocument.Save("C:\\Users\\HOME\\RiderProjects\\CSharp\\XML\\people.xml");
     }
 }
 class Person

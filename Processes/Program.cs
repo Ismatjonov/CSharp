@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.Loader;
 
 namespace Processes;
 
@@ -53,7 +54,7 @@ class Program
         
         
         // ==================== Application domains =====================
-        AppDomain domain = AppDomain.CurrentDomain;
+        /*AppDomain domain = AppDomain.CurrentDomain;
         Console.WriteLine($"Name: {domain.FriendlyName}");
         Console.WriteLine($"Base Directory: {domain.BaseDirectory}");
         Console.WriteLine();
@@ -62,6 +63,56 @@ class Program
         foreach (Assembly asm in assembly)
         {
             Console.WriteLine(asm.GetName().Name);
+        }*/
+        
+        // ======== AssemblyLoadContext and dynamic assembly loading and unloading =========
+        Sqaure(8);
+        
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+
+        Console.WriteLine();
+
+        foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            Console.WriteLine(asm.GetName().Name);
+        }
+
+        void Sqaure(int number)
+        {
+            var context = new AssemblyLoadContext(name: "Sqaure", isCollectible: true);
+            
+            // setting up unloading handle
+            context.Unloading += Context_Unloading;
+            
+            // getting MyApp path
+            var assemblyPath = Path.Combine(Directory.GetCurrentDirectory(), "C:\\Users\\HOME\\RiderProjects\\CSharp\\MyApp\\bin\\Debug\\net10.0\\MyApp.dll");
+            
+            // loading assembly
+            Assembly assembly = context.LoadFromAssemblyPath(assemblyPath);
+            
+            // getting type 'Program' from MyApp.dll
+            var type = assembly.GetType("MyApp.Program");
+            if (type is not null)
+            {
+                // getting his method Square
+                var squareMethod = type.GetMethod("Square", BindingFlags.Static | BindingFlags.NonPublic);
+                // invoke method
+                var result = squareMethod.Invoke(null, new object[] { number });
+                if (result is int)
+                {
+                    Console.WriteLine($"The result is {result}");
+                }
+            }
+            // watching with assemblies had been uploaded
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+                Console.WriteLine(asm.GetName().Name);
+            context.Unload();
+        }
+
+        void Context_Unloading(AssemblyLoadContext obj)
+        {
+            Console.WriteLine($"MyApp library has been unloaded");
         }
     }
 }

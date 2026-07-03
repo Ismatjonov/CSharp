@@ -3,9 +3,15 @@
   <Person>
     <Name>Tom</Name>
     <Age>37</Age>
+    <Company>
+      <Name>Microsoft</Name>
+    </Company>
   </Person>
   <Person>
     <Name>Bob</Name>
     <Age>41</Age>
+    <Company>
+      <Name>Google</Name>
+    </Company>
   </Person>
 </ArrayOfPerson>

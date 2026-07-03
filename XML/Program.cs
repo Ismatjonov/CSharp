@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Diagnostics.Contracts;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -292,7 +293,7 @@ class Program
         
         // ---- Serialization ----
         // object for serialization
-        Person person = new Person("Tom", 37);
+        /*Person person = new Person("Tom", 37);
  
         // passing in constructor type Person
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(Person));
@@ -334,19 +335,58 @@ class Program
                 foreach(Person p in newPeople)
                     Console.WriteLine($"Name: {p?.Name} --- Age: {p?.Age}");
             }
+        }*/
+        
+        // ------ Working with complex objects ------
+        var microsoft = new Company("Microsoft");
+        var google = new Company("Google");
+
+        Person[] people = new Person[]
+        {
+            new Person("Tom", 37, microsoft),
+            new Person("Bob", 41, google),
+        };
+        
+        XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            formatter.Serialize(fs, people);
+        }
+
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            Person[]? newPeople = formatter.Deserialize(fs) as Person[];
+
+            if (newPeople != null)
+            {
+                foreach (Person person in newPeople)
+                {
+                    Console.WriteLine($"Name: {person.Name}");
+                    Console.WriteLine($"Age: {person.Age}");
+                    Console.WriteLine($"Company: {person.Company.Name}");
+                }
+            }
         }
     }
 }
-//[Serializable]
+
+public class Company
+{
+    public string Name { get; set; } = "Undefined";
+    public Company() { }
+    public Company(string name) => Name = name;
+}
 public class Person
 {
     public string Name { get; set; } = "Undefined";
     public int Age { get; set; } = 1;
+    public Company Company { get; set; } = new Company();
  
     public Person() { }
-    public Person(string name, int age)
+    public Person(string name, int age, Company company)
     {
         Name = name;
         Age = age;
+        Company = company;
     }
 }

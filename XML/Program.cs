@@ -208,7 +208,7 @@ class Program
         }
         
         // ------- Processing --------
-        XDocument xDocument = XDocument.Load(path);
+        /*XDocument xDocument = XDocument.Load(path);
         
         var microsoft = xDocument.Element("people")?
             .Elements("person").Where(p => p.Element("company").Value == "Microsoft")
@@ -233,7 +233,9 @@ class Program
         var _age = tom?.Element("age")?.Value;
         var _company = tom?.Element("company")?.Value;
 
-        Console.WriteLine($"Name: {_name}, Age: {_age}, Company: {_company}");
+        Console.WriteLine($"Name: {_name}, Age: {_age}, Company: {_company}");*/
+        
+        
         
         // =============== Modifying document in LINQ to XML ===============
         
@@ -251,6 +253,23 @@ class Program
             xdoc.Save(path);
         }
 
+        Console.WriteLine(xdoc);
+        
+        // Editing data
+        var tom = xdoc.Element("people")
+            .Elements("person")
+            .FirstOrDefault(p => p.Attribute("name")?.Value == "Tom");
+
+        if (tom is not null)
+        {
+            var name = tom.Attribute("name");
+            if (name != null) name.Value = "Tomas";
+            
+            var age = tom.Element("age");
+            if (age != null) age.Value = "22";
+            
+            xdoc.Save(path);
+        }
         Console.WriteLine(xdoc);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace XML;
 
@@ -185,7 +186,7 @@ class Program
         
         
         // ======================= Selection elements in LINQ to XML ====================
-        XDocument xDoc = XDocument.Load(path);
+        /*XDocument xDoc = XDocument.Load(path);
         
         // getting rootNode
         XElement? people = xDoc.Element("people");
@@ -205,7 +206,7 @@ class Program
 
                 Console.WriteLine();
             }
-        }
+        }*/
         
         // ------- Processing --------
         /*XDocument xDocument = XDocument.Load(path);
@@ -240,7 +241,7 @@ class Program
         // =============== Modifying document in LINQ to XML ===============
         
         // Adding data
-        XDocument xdoc = XDocument.Load(path);
+        /*XDocument xdoc = XDocument.Load(path);
         XElement? root = xdoc.Element("people");
 
         if (root is not null)
@@ -284,12 +285,44 @@ class Program
                 xdoc.Save(path);
             }
         }
-        Console.WriteLine(xdoc);
+        Console.WriteLine(xdoc);*/
+        
+        
+        // =============== Serialization in XML. XmlSerializer ===============
+        
+        // ---- Serialization ----
+        // object for serialization
+        Person person = new Person("Tom", 37);
+ 
+        // passing in constructor type Person
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(Person));
+ 
+        // getting a stream, where we record serialized object
+        using (FileStream fs = new FileStream("person.xml", FileMode.OpenOrCreate))
+        {
+            xmlSerializer.Serialize(fs, person);
+ 
+            Console.WriteLine("Object has been serialized");
+        }
+        
+        // ---- Deserialization ----
+        using (FileStream fs = new FileStream("person.xml", FileMode.OpenOrCreate))
+        {
+            Person? deserializedPerson = xmlSerializer.Deserialize(fs) as Person;
+            Console.WriteLine($"Name: {deserializedPerson?.Name}, Age: {deserializedPerson?.Age}");
+        }
     }
 }
-class Person
+//[Serializable]
+public class Person
 {
-    public string? Name { get; set; }
-    public int Age { get; set; }
-    public string? Company { get; set; }
+    public string Name { get; set; } = "Undefined";
+    public int Age { get; set; } = 1;
+ 
+    public Person() { }
+    public Person(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
 }

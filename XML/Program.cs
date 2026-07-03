@@ -311,6 +311,30 @@ class Program
             Person? deserializedPerson = xmlSerializer.Deserialize(fs) as Person;
             Console.WriteLine($"Name: {deserializedPerson?.Name}, Age: {deserializedPerson?.Age}");
         }
+        
+        // ------ Serialization and Deserialization of collection ------
+        Person[] people =
+        {
+            new Person("Tom", 37),
+            new Person("Bob", 41),
+        };
+        
+        XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            formatter.Serialize(fs, people);
+        }
+
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+            Person[]? newPeople = formatter.Deserialize(fs) as Person[];
+
+            if (newPeople is not null)
+            {
+                foreach(Person p in newPeople)
+                    Console.WriteLine($"Name: {p?.Name} --- Age: {p?.Age}");
+            }
+        }
     }
 }
 //[Serializable]

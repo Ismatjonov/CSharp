@@ -31,5 +31,12 @@ class Program
         
         foreach(ProcessThread thread in processThread)
             Console.WriteLine($"ThreadId: {thread.Id}");
+        Console.WriteLine();
+        
+        // ------ Module Processes ------
+        ProcessModuleCollection processModules = proc.Modules;
+        
+        foreach(ProcessModule module in processModules)
+            Console.WriteLine($"Name: {module.ModuleName},  FileName: {module.FileName}");
     }
 }

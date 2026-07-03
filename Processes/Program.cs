@@ -23,7 +23,13 @@ class Program
         Process[] riderProcesses = Process.GetProcessesByName("telegram");
         foreach(Process riderProcess in riderProcesses)
             Console.WriteLine($"Id: {riderProcess.Id}");
+        Console.WriteLine();
         
+        // ---- Threads Process ----
+        Process proc = Process.GetProcessesByName("rider64")[0];
+        ProcessThreadCollection processThread = proc.Threads;
         
+        foreach(ProcessThread thread in processThread)
+            Console.WriteLine($"ThreadId: {thread.Id}");
     }
 }

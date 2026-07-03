@@ -246,7 +246,7 @@ class Program
         if (root is not null)
         {
             root.Add(new XElement("person",
-                new XAttribute("name", "Sam"),
+                new XAttribute("name", "Bob"),
                 new XElement("company", "Jetbrains"),
                 new XElement("age", 28)));
             
@@ -269,6 +269,20 @@ class Program
             if (age != null) age.Value = "22";
             
             xdoc.Save(path);
+        }
+        Console.WriteLine(xdoc);
+        
+        // Removing data
+        if (root is not null)
+        {
+            var bob = root.Elements("person")
+                .FirstOrDefault(p => p.Attribute("name")?.Value == "Bob");
+
+            if (bob != null)
+            {
+                bob.Remove();
+                xdoc.Save(path);
+            }
         }
         Console.WriteLine(xdoc);
     }

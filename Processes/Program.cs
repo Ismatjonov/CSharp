@@ -38,5 +38,15 @@ class Program
         
         foreach(ProcessModule module in processModules)
             Console.WriteLine($"Name: {module.ModuleName},  FileName: {module.FileName}");
+        Console.WriteLine();
+        
+        // ------ Starting a new processes ------
+        Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
+        
+        ProcessStartInfo procInfo = new ProcessStartInfo();
+        procInfo.FileName = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+
+        procInfo.Arguments = "http://bakhtovar-portfolio.web.app";
+        Process.Start(procInfo);
     }
 }

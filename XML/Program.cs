@@ -234,6 +234,24 @@ class Program
         var _company = tom?.Element("company")?.Value;
 
         Console.WriteLine($"Name: {_name}, Age: {_age}, Company: {_company}");
+        
+        // =============== Modifying document in LINQ to XML ===============
+        
+        // Adding data
+        XDocument xdoc = XDocument.Load(path);
+        XElement? root = xdoc.Element("people");
+
+        if (root is not null)
+        {
+            root.Add(new XElement("person",
+                new XAttribute("name", "Sam"),
+                new XElement("company", "Jetbrains"),
+                new XElement("age", 28)));
+            
+            xdoc.Save(path);
+        }
+
+        Console.WriteLine(xdoc);
     }
 }
 class Person

@@ -8,4 +8,8 @@
     <company>Google</company>
     <age>41</age>
   </person>
+  <person name="Sam">
+    <company>Jetbrains</company>
+    <age>28</age>
+  </person>
 </people>

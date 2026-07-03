@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSystem", "FileSystem\Fi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XML", "XML\XML.csproj", "{3D1DCF2D-C6B6-4F08-9811-B9C966EA6196}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Processes", "Processes\Processes.csproj", "{431B75B4-B61D-4A07-B944-8C46F7406056}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,5 +104,9 @@ Global
 		{3D1DCF2D-C6B6-4F08-9811-B9C966EA6196}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D1DCF2D-C6B6-4F08-9811-B9C966EA6196}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D1DCF2D-C6B6-4F08-9811-B9C966EA6196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{431B75B4-B61D-4A07-B944-8C46F7406056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431B75B4-B61D-4A07-B944-8C46F7406056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431B75B4-B61D-4A07-B944-8C46F7406056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431B75B4-B61D-4A07-B944-8C46F7406056}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
